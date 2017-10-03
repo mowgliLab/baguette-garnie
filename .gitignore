@@ -1,0 +1,11 @@
+/*.iml
+/.idea
+*/node_modules
+*.project
+.settings
+*.log
+**/dist
+**/target
+/out/
+*.orig
+angular_easy_auto/package-lock.json
