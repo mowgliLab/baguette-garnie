@@ -12,3 +12,4 @@
 angular_easy_auto/package-lock.json
 */package-lock.json
 bg-back-end/.tscache/
+bg-back-end/src/config.json

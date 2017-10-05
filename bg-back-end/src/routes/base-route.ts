@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { IConnectionConfig } from 'mysql';
+import {StorageConfig} from '../options';
 
 /**
  * Constructor
@@ -7,15 +8,9 @@ import { IConnectionConfig } from 'mysql';
  * @class BaseRoute
  */
 export class BaseRoute {
-    static connexionOptions = <IConnectionConfig> {
-        host: 'localhost',
-        user: 'user',
-        password: 'password',
-        database: 'dbName'
-    };
 
+    static connexionOptions = <IConnectionConfig> StorageConfig.parsed;
     protected title: string;
-
     private scripts: string[];
 
     /**
