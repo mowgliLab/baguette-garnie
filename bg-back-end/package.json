@@ -1,0 +1,35 @@
+{
+  "name": "bg-back-end",
+  "version": "1.0.0",
+  "description": "REST api for 'la baguette garnie'",
+  "main": "index.js",
+  "scripts": {
+    "dev": "SET NODE_ENV=development && nodemon ./bin/www",
+    "grunt": "grunt",
+    "start": "node ./bin/www"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.1",
+    "method-override": "^2.3.10",
+    "morgan": "^1.9.0",
+    "mysql": "^2.14.1"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.16.5",
+    "@types/cookie-parser": "^1.4.1",
+    "@types/errorhandler": "0.0.31",
+    "@types/method-override": "0.0.30",
+    "@types/morgan": "^1.7.33",
+    "@types/mysql": "0.0.34",
+    "errorhandler": "^1.5.0",
+    "grunt": "^1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-ts": "^6.0.0-beta.16",
+    "typescript": "^2.5.3"
+  }
+}
