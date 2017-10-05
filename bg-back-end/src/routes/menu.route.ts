@@ -3,6 +3,10 @@ import { BaseRoute } from './base-route';
 
 import  mysql = require('mysql');
 
+import _ = require('lodash');
+import { Menu } from '../models/menu.model';
+import { Sandwich } from '../models/sandwich.model';
+
 
 /**
  * / route
@@ -51,21 +55,42 @@ export class MenuRoute extends BaseRoute {
      * @next {NextFunction} Execute the next method.
      */
     public getPublicMenu(req: Request, res: Response, next: NextFunction) {
-        const sql = 'select s.*\n' +
-            'from menu as m\n' +
-            '\tleft join sandwich_on_menu as som\n' +
-            '\t\ton som.som_menu_id = m.menu_id\n' +
-            '\tleft join sandwich as s\n' +
-            '\t\ton s.sandwich_id = som.som_sandwich_id\n' +
-            'where m.menu_is_active';
+        const getMenuSql =
+            'SELECT m.*\n' +
+            'FROM menu AS m\n' +
+            'WHERE m.menu_is_active';
+
+        const getSandwichesSql =
+            'SELECT\n' +
+            '  s.*,\n' +
+            '  som.som_order_number as sandwich_order_number,\n' +
+            '  (SELECT truncate(b.bread_price + SUM(t.topping_price), 2)\n' +
+            '   FROM sandwich AS s2\n' +
+            '     LEFT JOIN bread AS b\n' +
+            '       ON s2.sandwich_bread_id = b.bread_id\n' +
+            '     LEFT JOIN topping_on_sandwich AS tos\n' +
+            '       ON tos.tos_sandwich_id = s2.sandwich_id\n' +
+            '     LEFT JOIN topping AS t\n' +
+            '       ON t.topping_id = tos.tos_topping_id\n' +
+            '   WHERE s2.sandwich_id = s.sandwich_id) AS sandwich_price\n' +
+            'FROM menu AS m\n' +
+            '  LEFT JOIN sandwich_on_menu AS som\n' +
+            '    ON som.som_menu_id = m.menu_id\n' +
+            '  LEFT JOIN sandwich AS s\n' +
+            '    ON s.sandwich_id = som.som_sandwich_id\n' +
+            'WHERE m.menu_is_active';
+
         const con = mysql.createConnection(BaseRoute.connexionOptions);
         con.connect(err => {
             if (err) throw err;
             console.log('Connected');
-            con.query(sql, (err, result) => {
+            con.query(getSandwichesSql, (err, sResult) => {
                 if (err) throw err;
-                console.log(result);
-                res.json({sandwiches: result});
+                con.query(getMenuSql, (err, mResult) => {
+                    const sandwiches = _.map(sResult, s => Sandwich.fromDbRow(s));
+                    const menu = Menu.fromDbRow(mResult[0], sandwiches);
+                    res.json(menu);
+                });
             });
         });
     }

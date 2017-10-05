@@ -14,6 +14,7 @@
     "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.1",
+    "lodash": "4.17.4",
     "method-override": "^2.3.10",
     "morgan": "^1.9.0",
     "mysql": "^2.14.1"
@@ -22,6 +23,7 @@
     "@types/body-parser": "^1.16.5",
     "@types/cookie-parser": "^1.4.1",
     "@types/errorhandler": "0.0.31",
+    "@types/lodash": "4.14.74",
     "@types/method-override": "0.0.30",
     "@types/morgan": "^1.7.33",
     "@types/mysql": "0.0.34",
