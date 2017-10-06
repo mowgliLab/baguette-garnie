@@ -1,3 +1,13 @@
-<p>
-  Welcome on menu-page !!!
-</p>
+<div class="row" *ngIf="menu">
+    <div class="col-md-12" align="center">
+        <h2><u>{{menu.name}}</u></h2>
+    </div>
+    <div class="col-md-12" align="center">
+        <p>
+            !!!Description du menu!!!
+        </p>
+    </div>
+    <div class="container section" id="menu-section">
+        <p>!!!Nom du sandwich (de la liste)!!!</p>
+    </div>
+</div>

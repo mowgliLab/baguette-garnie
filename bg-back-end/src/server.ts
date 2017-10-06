@@ -92,6 +92,14 @@ export class Server {
         //use override middlware
         this.app.use(methodOverride());
 
+        // Allow cross origine
+        this.app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+            console.log('manage headers');
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+            next();
+        });
+
         //catch 404 and forward to error handler
         this.app.use(function (err: any, req: express.Request, res: express.Response, next: express.NextFunction) {
             err.status = 404;
