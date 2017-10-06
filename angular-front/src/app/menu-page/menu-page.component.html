@@ -8,6 +8,9 @@
         </p>
     </div>
     <div class="container section" id="menu-section">
-        <p>!!!Nom du sandwich (de la liste)!!!</p>
+        <div class="row">
+            <app-sandwich-element class="col-md-4" *ngFor="let sandwich of menu.sandwiches"
+                                  [sandwich]="sandwich"></app-sandwich-element>
+        </div>
     </div>
 </div>

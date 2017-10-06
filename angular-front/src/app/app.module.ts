@@ -9,13 +9,15 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { MenuPageComponent } from './menu-page/menu-page.component';
 import { MenuService } from './services/menu.service';
 import { HttpModule } from '@angular/http';
+import { SandwichElementComponent } from './sandwich-element/sandwich-element.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         HomeComponent,
         NavbarComponent,
-        MenuPageComponent
+        MenuPageComponent,
+        SandwichElementComponent
     ],
     imports: [
         BrowserModule,

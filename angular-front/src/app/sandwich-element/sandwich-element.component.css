@@ -1,0 +1,23 @@
+
+.menuPanel {
+    border-style: groove;
+    width: 400px;
+    height: 500px;
+}
+
+.panelMenu {
+    width: 300px;
+    height: 350px;
+    border: solid black;
+}
+
+#photoPanelSand {
+    text-align: center;
+    font-size: 20px;
+}
+
+#photoSand {
+    text-align: left;
+    width: 200px;
+
+}
