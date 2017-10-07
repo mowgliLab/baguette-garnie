@@ -9,9 +9,18 @@
     </div>
     <div class="container section" id="menu-section">
         <div class="row">
-            <div class="card-deck">
-                <app-sandwich-element class="col-md-4" *ngFor="let sandwich of menu.sandwiches"
-                                      [sandwich]="sandwich"></app-sandwich-element>
+            <app-sandwich-element class="col-md-4" *ngFor="let sandwich of menu.sandwiches"
+                                  [sandwich]="sandwich"></app-sandwich-element>
+
+            <div class="card clickable-card" style="width: 20rem;" (click)="openCustomSandwichEditor($event)">
+                <img class="card-img-top" src="../../../assets/img/mystery-sandwich.jpg"
+                     alt="sandwich">
+                <div class="card-body">
+                    <h4 class="card-title">Votre sandwich</h4>
+                    <p class="card-text">Créez vous même le sandwich de vos rêves grâce au configurateur de sandwich</p>
+                    <p><b>€???</b></p>
+                    <button (click)="openCustomSandwichEditor($event)" class="btn btn-primary">Créer mon sandwich</button>
+                </div>
             </div>
         </div>
     </div>

@@ -1,0 +1,11 @@
+
+.clickable-card {
+    cursor: pointer;
+    cursor: hand;
+    transition: all .2s ease-in-out;
+}
+
+.clickable-card:hover {
+    background-color: #eeeeee;
+    transform: scale(1.015);
+}

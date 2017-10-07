@@ -22,4 +22,9 @@ export class MenuPageComponent implements OnInit {
             });
     }
 
+    openCustomSandwichEditor(event: any) {
+        event.stopPropagation();
+        alert('open editor');
+        return false;
+    }
 }
