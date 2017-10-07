@@ -10,6 +10,8 @@ import { MenuPageComponent } from './components/menu-page/menu-page.component';
 import { MenuService } from './services/menu.service';
 import { HttpModule } from '@angular/http';
 import { SandwichElementComponent } from './components/sandwich-element/sandwich-element.component';
+import { ContactPageComponent } from './components/contact-page/contact-page.component';
+import { TeamPageComponent } from './components/team-page/team-page.component';
 
 @NgModule({
     declarations: [
@@ -17,7 +19,9 @@ import { SandwichElementComponent } from './components/sandwich-element/sandwich
         HomeComponent,
         NavbarComponent,
         MenuPageComponent,
-        SandwichElementComponent
+        SandwichElementComponent,
+        ContactPageComponent,
+        TeamPageComponent
     ],
     imports: [
         BrowserModule,
