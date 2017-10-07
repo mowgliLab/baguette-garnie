@@ -16,4 +16,15 @@ export class SandwichElementComponent implements OnInit {
     ngOnInit() {
     }
 
+    showDetails(event: any) {
+        event.stopPropagation();
+        alert('show details');
+        return false;
+    }
+
+    addToOrder(event: any) {
+        event.stopPropagation();
+        alert('add to order');
+        return false;
+    }
 }

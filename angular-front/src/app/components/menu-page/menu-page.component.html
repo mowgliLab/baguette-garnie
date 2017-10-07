@@ -9,8 +9,10 @@
     </div>
     <div class="container section" id="menu-section">
         <div class="row">
-            <app-sandwich-element class="col-md-4" *ngFor="let sandwich of menu.sandwiches"
-                                  [sandwich]="sandwich"></app-sandwich-element>
+            <div class="card-deck">
+                <app-sandwich-element class="col-md-4" *ngFor="let sandwich of menu.sandwiches"
+                                      [sandwich]="sandwich"></app-sandwich-element>
+            </div>
         </div>
     </div>
 </div>

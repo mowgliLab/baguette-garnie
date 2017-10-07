@@ -1,11 +1,22 @@
-<div class="container panelMenu">
-    <div id="photoPanelSand">
-        <p>{{sandwich.name}}</p>
-        <img id="photoSand" [src]="sandwich.imageSrc"
-             alt="sandwich" width="175px">
-    </div>
-    <div id="descrSand">
-        <p>{{sandwich.description}}</p>
-        <button>Ajouter au panier</button>
+<!--<div class="container panelMenu menuPanel">-->
+<!--<div id="photoPanelSand">-->
+<!--<p>{{sandwich.name}}</p>-->
+<!--<img id="photoSand" [src]="sandwich.imageSrc"-->
+<!--alt="sandwich" width="175px">-->
+<!--</div>-->
+<!--<div id="descrSand">-->
+<!--<p>{{sandwich.description}}</p>-->
+<!--<button>Ajouter au panier</button>-->
+<!--</div>-->
+<!--</div>-->
+
+<div class="card clickable-card" style="width: 20rem;" (click)="showDetails($event)">
+    <img class="card-img-top" [src]="sandwich.imageSrc"
+         alt="sandwich">
+    <div class="card-body">
+        <h4 class="card-title">{{sandwich.name}}</h4>
+        <p class="card-text">{{sandwich.description}}</p>
+        <p><b>{{sandwich.price | currency:'EUR':true}}</b></p>
+        <button (click)="addToOrder($event)" class="btn btn-primary">Ajouter au panier</button>
     </div>
 </div>

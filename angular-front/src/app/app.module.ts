@@ -12,6 +12,7 @@ import { HttpModule } from '@angular/http';
 import { SandwichElementComponent } from './components/sandwich-element/sandwich-element.component';
 import { ContactPageComponent } from './components/contact-page/contact-page.component';
 import { TeamPageComponent } from './components/team-page/team-page.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -27,6 +28,7 @@ import { TeamPageComponent } from './components/team-page/team-page.component';
         BrowserModule,
         AppRoutingModule,
         HttpModule,
+        FormsModule
     ],
     providers: [
         MenuService
