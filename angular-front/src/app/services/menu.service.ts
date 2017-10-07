@@ -3,9 +3,9 @@ import { Http, Headers } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
-import { Menu } from '../models/menu.model';
+import { MenuModel } from '../models/menu.model';
 
-@Injectable()
+@Injectable() 
 export class MenuService {
 
     private baseUrl = 'http://localhost:8080/'
@@ -14,10 +14,10 @@ export class MenuService {
 
     constructor(private http: Http) {}
 
-    getMenu(): Promise<Menu> {
+    getMenu(): Promise<MenuModel> {
         return this.http.get(this.baseUrl + this.menuUrl)
             .toPromise()
-            .then(response => response.json() as Menu)
+            .then(response => response.json() as MenuModel)
             .catch(this.handleError);
     }
 
