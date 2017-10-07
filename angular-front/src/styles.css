@@ -1,1 +1,34 @@
 /* You can add global styles to this file, and also import other style files */
+.section {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.columnTeam {
+    float: center;
+    margin: 0 auto;
+    width: 33.3%;
+    margin-bottom: 16px;
+    padding: 0 8px;
+}
+
+/* Add some shadows to create a card effect */
+.cardTeam {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Some left and right padding inside the container */
+.container {
+    padding: 0 16px;
+}
+
+/* Clear floats */
+.container::after, .row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.titleTeam {
+    color: grey;
+}
