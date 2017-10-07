@@ -15,6 +15,7 @@ import { TeamPageComponent } from './components/team-page/team-page.component';
 import { FormsModule } from '@angular/forms';
 import { SandwichDetailsComponent } from './components/sandwich-details/sandwich-details.component';
 import { ModalModule, BsModalService } from 'ngx-bootstrap/modal';
+import { SandwichService } from './services/sandwich.service';
 
 @NgModule({
     declarations: [
@@ -36,6 +37,7 @@ import { ModalModule, BsModalService } from 'ngx-bootstrap/modal';
     ],
     providers: [
         MenuService,
+        SandwichService,
         BsModalService
     ],
     bootstrap: [AppComponent]

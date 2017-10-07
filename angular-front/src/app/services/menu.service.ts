@@ -5,7 +5,7 @@ import 'rxjs/add/operator/toPromise';
 
 import { MenuModel } from '../models/menu.model';
 
-@Injectable() 
+@Injectable()
 export class MenuService {
 
     private baseUrl = 'http://localhost:8080/'
