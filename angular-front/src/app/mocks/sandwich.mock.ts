@@ -6,7 +6,7 @@ export const SANDWICH: SandwichModel = {
     description: 'Une délicieuse baguette ornée de jambon/fromage et de crudités.',
     imageSrc: 'http://www.pointchaud.be/images/i_products/Medium_Dagobert.jpg',
     orderNumber: null,
-    price: undefined,
+    price: 3.15,
     toppings: [{
         id: 1,
         name: 'Jambon',

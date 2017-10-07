@@ -13,7 +13,6 @@ import { SandwichElementComponent } from './components/sandwich-element/sandwich
 import { ContactPageComponent } from './components/contact-page/contact-page.component';
 import { TeamPageComponent } from './components/team-page/team-page.component';
 import { FormsModule } from '@angular/forms';
-import { SandwichDetailsComponent } from './components/sandwich-details/sandwich-details.component';
 import { ModalModule, BsModalService } from 'ngx-bootstrap/modal';
 import { SandwichService } from './services/sandwich.service';
 
@@ -25,8 +24,7 @@ import { SandwichService } from './services/sandwich.service';
         MenuPageComponent,
         SandwichElementComponent,
         ContactPageComponent,
-        TeamPageComponent,
-        SandwichDetailsComponent
+        TeamPageComponent
     ],
     imports: [
         BrowserModule,

@@ -1,8 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SandwichModel } from '../../models/sandwich.model';
-import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
-import { SandwichDetailsComponent } from '../sandwich-details/sandwich-details.component';
 
 @Component({
     selector: 'app-sandwich-element',
@@ -12,32 +10,25 @@ import { SandwichDetailsComponent } from '../sandwich-details/sandwich-details.c
 export class SandwichElementComponent implements OnInit {
 
     @Input() sandwich: SandwichModel;
+    @Output() showDetails: EventEmitter<SandwichModel> = new EventEmitter();
+    @Output() addToOrder: EventEmitter<SandwichModel> = new EventEmitter();
 
     public modalRef: BsModalRef;
 
-    constructor(private modalService: BsModalService) {
-    }
+    constructor() { }
 
     ngOnInit() {
     }
 
-    showDetails(event: any) {
+    showDetailsClick(event: any, modalTemplate: any) {
         event.stopPropagation();
-
-        let list = ['Open a modal with component', 'Pass your data', 'Do something else', '...'];
-        this.modalRef = this.modalService.show(SandwichDetailsComponent);
-        this.modalRef.content.title = 'Modal with component';
-        this.modalRef.content.list = list;
-        setTimeout(() => {
-            list.push('PROFIT!!!');
-        }, 2000);
-
+        this.showDetails.emit(this.sandwich);
         return false;
     }
 
-    addToOrder(event: any, template) {
+    addToOrderClick(event: any, template) {
         event.stopPropagation();
-        this.modalRef = this.modalService.show(template);
+        this.addToOrder.emit(this.sandwich);
         return false;
     }
 
