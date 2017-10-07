@@ -1,15 +1,3 @@
-<!--<div class="container panelMenu menuPanel">-->
-<!--<div id="photoPanelSand">-->
-<!--<p>{{sandwich.name}}</p>-->
-<!--<img id="photoSand" [src]="sandwich.imageSrc"-->
-<!--alt="sandwich" width="175px">-->
-<!--</div>-->
-<!--<div id="descrSand">-->
-<!--<p>{{sandwich.description}}</p>-->
-<!--<button>Ajouter au panier</button>-->
-<!--</div>-->
-<!--</div>-->
-
 <div class="card clickable-card" style="width: 20rem;" (click)="showDetails($event)">
     <img class="card-img-top" [src]="sandwich.imageSrc"
          alt="sandwich">
@@ -17,6 +5,41 @@
         <h4 class="card-title">{{sandwich.name}}</h4>
         <p class="card-text">{{sandwich.description}}</p>
         <p><b>{{sandwich.price | currency:'EUR':true}}</b></p>
-        <button (click)="addToOrder($event)" class="btn btn-primary">Ajouter au panier</button>
+        <button (click)="addToOrder($event, template)" class="btn btn-primary">
+            Ajouter au panier
+        </button>
     </div>
 </div>
+
+<!-- Popover templage -->
+<!--<ng-template #template >-->
+    <!--<div class="modal-dialog modal-lg">-->
+    <!--<form>-->
+        <!--<div class="form-group row">-->
+            <!--<label for="qty" class="col-sm-5 col-form-label">Quantité</label>-->
+            <!--<div class="col-sm-5">-->
+                <!--<input type="number" class="form-control" id="qty">-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group row">-->
+            <!--<label for="bread" class="col-sm-5 col-form-label">Pain</label>-->
+            <!--<div class="col-sm-5">-->
+                <!--<select id="bread" class="form-control">-->
+                    <!--<option>pain blanc</option>-->
+                    <!--<option>pain gris</option>-->
+                    <!--<option>pain vert</option>-->
+                    <!--<option>pain bleu</option>-->
+                <!--</select>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group row text-right">-->
+            <!--<div>-->
+                <!--<button type="button" class="btn btn-default">Autre garniture</button>-->
+            <!--</div>-->
+            <!--<div>-->
+                <!--<button type="submit" class="btn btn-primary">Ajouter</button>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</form>-->
+    <!--</div>-->
+<!--</ng-template>-->
