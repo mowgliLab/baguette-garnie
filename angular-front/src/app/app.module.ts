@@ -4,12 +4,12 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { MenuPageComponent } from './menu-page/menu-page.component';
+import { HomeComponent } from './components/home/home.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { MenuPageComponent } from './components/menu-page/menu-page.component';
 import { MenuService } from './services/menu.service';
 import { HttpModule } from '@angular/http';
-import { SandwichElementComponent } from './sandwich-element/sandwich-element.component';
+import { SandwichElementComponent } from './components/sandwich-element/sandwich-element.component';
 
 @NgModule({
     declarations: [
@@ -29,5 +29,4 @@ import { SandwichElementComponent } from './sandwich-element/sandwich-element.co
     ],
     bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule {}

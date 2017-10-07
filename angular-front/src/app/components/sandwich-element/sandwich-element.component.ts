@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Sandwich } from '../models/sandwich.model';
+import { Sandwich } from '../../models/sandwich.model';
 
 @Component({
     selector: 'app-sandwich-element',
