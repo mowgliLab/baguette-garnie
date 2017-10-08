@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "SET NODE_ENV=development && nodemon ./bin/www",
-    "grunt": "grunt",
+    "build": "grunt",
     "start": "node ./bin/www"
   },
   "author": "",
@@ -17,7 +17,9 @@
     "lodash": "4.17.4",
     "method-override": "^2.3.10",
     "morgan": "^1.9.0",
-    "mysql": "^2.14.1"
+    "mysql": "^2.14.1",
+    "reflect-metadata": "^0.1.10",
+    "typeorm": "0.1.0-alpha.50"
   },
   "devDependencies": {
     "@types/body-parser": "^1.16.5",
@@ -27,6 +29,7 @@
     "@types/method-override": "0.0.30",
     "@types/morgan": "^1.7.33",
     "@types/mysql": "0.0.34",
+    "@types/reflect-metadata": "0.0.5",
     "errorhandler": "^1.5.0",
     "grunt": "^1.0.1",
     "grunt-contrib-copy": "^1.0.0",

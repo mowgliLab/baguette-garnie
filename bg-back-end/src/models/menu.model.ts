@@ -1,14 +1,14 @@
 
-import { Sandwich } from './sandwich.model';
+import { SandwichModel } from './sandwich.model';
 
-export class Menu {
+export class MenuModel {
     public id: number;
     public name: string;
-    public sandwiches: Sandwich[];
+    public sandwiches: SandwichModel[];
 
-    public static fromDbRow(dbRow: any, sandwiches: Sandwich[]): Menu {
+    public static fromDbRow(dbRow: any, sandwiches: SandwichModel[]): MenuModel {
         console.log(dbRow);
-        return <Menu> {
+        return <MenuModel> {
             id: dbRow.menu_id,
             name: dbRow.menu_name,
             sandwiches: sandwiches

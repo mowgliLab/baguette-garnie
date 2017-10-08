@@ -1,5 +1,5 @@
 
-import { Menu } from '../models/menu.model';
+import { MenuModel } from '../models/menu.model';
 
 export class MenuBl {
 

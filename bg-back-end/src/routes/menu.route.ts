@@ -4,8 +4,8 @@ import { BaseRoute } from './base-route';
 import  mysql = require('mysql');
 
 import _ = require('lodash');
-import { Menu } from '../models/menu.model';
-import { Sandwich } from '../models/sandwich.model';
+import { MenuModel } from '../models/menu.model';
+import { SandwichModel } from '../models/sandwich.model';
 
 
 /**
@@ -87,8 +87,8 @@ export class MenuRoute extends BaseRoute {
             con.query(getSandwichesSql, (err, sResult) => {
                 if (err) throw err;
                 con.query(getMenuSql, (err, mResult) => {
-                    const sandwiches = _.map(sResult, s => Sandwich.fromDbRow(s));
-                    const menu = Menu.fromDbRow(mResult[0], sandwiches);
+                    const sandwiches = _.map(sResult, s => SandwichModel.fromDbRow(s));
+                    const menu = MenuModel.fromDbRow(mResult[0], sandwiches);
                     res.json(menu);
                 });
             });

@@ -1,5 +1,5 @@
 
-export class Sandwich {
+export class SandwichModel {
     public id: number;
     public name: string;
     public description: string;
@@ -7,9 +7,9 @@ export class Sandwich {
     public orderNumber: number;
     public price: number;
 
-    public static fromDbRow(dbRow: any): Sandwich {
+    public static fromDbRow(dbRow: any): SandwichModel {
         console.log(dbRow);
-        return <Sandwich> {
+        return <SandwichModel> {
             id: dbRow.sandwich_id,
             name: dbRow.sandwich_name,
             description: dbRow.sandwich_description,

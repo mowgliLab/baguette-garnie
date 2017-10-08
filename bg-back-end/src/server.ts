@@ -6,8 +6,14 @@ import * as path from "path";
 
 import { MenuRoute } from './routes/menu.route';
 
-import errorHandler = require("errorhandler");
-import methodOverride = require("method-override");
+import * as errorHandler from 'errorhandler';
+import * as methodOverride from 'method-override';
+
+import 'reflect-metadata';
+import { MenuEntity } from './entyties/menu.entity';
+import { ConnectionManagerBl } from './business-logic/connection-manager.bl';
+import { SandwichEntity } from './entyties/sandwich.entity';
+import { UserEntity } from './entyties/user.entity';
 
 /**
  * The server.
@@ -42,7 +48,7 @@ export class Server {
 
         //configure application
         this.config();
-
+        
         //add api
         this.api();
     }
