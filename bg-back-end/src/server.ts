@@ -1,8 +1,8 @@
-import * as bodyParser from "body-parser";
-import * as cookieParser from "cookie-parser";
-import * as express from "express";
-import * as logger from "morgan";
-import * as path from "path";
+import * as bodyParser from 'body-parser';
+import * as cookieParser from 'cookie-parser';
+import * as express from 'express';
+import * as logger from 'morgan';
+import * as path from 'path';
 
 import { MenuRoute } from './routes/menu.route';
 
@@ -10,10 +10,10 @@ import * as errorHandler from 'errorhandler';
 import * as methodOverride from 'method-override';
 
 import 'reflect-metadata';
-import { MenuEntity } from './entyties/menu.entity';
+import { ConnectionManager, getConnectionManager } from 'typeorm';
 import { ConnectionManagerBl } from './business-logic/connection-manager.bl';
-import { SandwichEntity } from './entyties/sandwich.entity';
-import { UserEntity } from './entyties/user.entity';
+import * as _ from 'lodash';
+import { MenuEntity } from './entyties/menu.entity';
 
 /**
  * The server.
@@ -43,13 +43,13 @@ export class Server {
      * @constructor
      */
     constructor() {
-        //create expressjs application
+        // create expressjs application
         this.app = express();
 
-        //configure application
+        // configure application
         this.config();
-        
-        //add api
+
+        // add api
         this.api();
     }
 
@@ -78,41 +78,49 @@ export class Server {
      * @method config
      */
     public config() {
-        //add static paths
-        this.app.use(express.static(path.join(__dirname, "public")));
+        // add static paths
+        this.app.use(express.static(path.join(__dirname, 'public')));
 
-        //use logger middlware
-        this.app.use(logger("dev"));
+        // use logger middlware
+        this.app.use(logger('dev'));
 
-        //use json form parser middlware
+        // use json form parser middlware
         this.app.use(bodyParser.json());
 
-        //use query string parser middlware
+        // use query string parser middlware
         this.app.use(bodyParser.urlencoded({
             extended: true
         }));
 
-        //use cookie parser middleware
-        this.app.use(cookieParser("SECRET_GOES_HERE"));
+        // use cookie parser middleware
+        this.app.use(cookieParser('SECRET_GOES_HERE'));
 
-        //use override middlware
+        // use override middlware
         this.app.use(methodOverride());
 
         // Allow cross origine
         this.app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
             console.log('manage headers');
-            res.header("Access-Control-Allow-Origin", "*");
-            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+            res.header('Access-Control-Allow-Origin', '*');
+            res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
             next();
         });
 
-        //catch 404 and forward to error handler
+        // Create connection
+        const connectionManager: ConnectionManager = getConnectionManager();
+        const options = _.merge(ConnectionManagerBl.connexionOptions, ConnectionManagerBl.entities);
+        connectionManager.create(options).connect().then(connection => {
+            // create menuRepository
+            connection.getRepository(MenuEntity);
+        });
+
+        // catch 404 and forward to error handler
         this.app.use(function (err: any, req: express.Request, res: express.Response, next: express.NextFunction) {
             err.status = 404;
             next(err);
         });
 
-        //error handling
+        // error handling
         this.app.use(errorHandler());
     }
 

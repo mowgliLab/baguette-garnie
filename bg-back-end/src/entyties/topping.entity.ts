@@ -5,22 +5,26 @@ import { SandwichEntity } from './sandwich.entity';
 export class ToppingEntity {
 
     @PrimaryGeneratedColumn({
-        name: 'topping_id'
+        name: 'topping_id',
+        type: 'int'
     })
     public id: number;
 
     @Column({
-        name: 'topping_name'
+        name: 'topping_name',
+        type: 'varchar'
     })
     public name: string;
 
     @Column({
-        name: 'topping_price'
+        name: 'topping_price',
+        type: 'double'
     })
     public price: number;
 
     @Column({
-        name: 'topping_order_number'
+        name: 'topping_order_number',
+        type: 'int'
     })
     public orderNumber: number;
 

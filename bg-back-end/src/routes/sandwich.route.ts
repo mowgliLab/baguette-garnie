@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import { BaseRoute } from './base-route';
-
-import { MenuBl } from '../business-logic/menu.bl';
+import { SandwichBl } from '../business-logic/sandwich.bl';
 
 
 /**
@@ -9,10 +8,10 @@ import { MenuBl } from '../business-logic/menu.bl';
  *
  * @class User
  */
-export class MenuRoute extends BaseRoute {
+export class SandwichRoute extends BaseRoute {
 
-    static readonly publicRoute = '/public';
-    private menuBl: MenuBl;
+    static readonly publicRoute = '/public/sandwich';
+    private sandwichBl: SandwichBl;
 
     /**
      * Create the routes.
@@ -22,11 +21,11 @@ export class MenuRoute extends BaseRoute {
      * @static
      */
     public static create(router: Router) {
-        console.log('[IndexRoute::create] Creating index route.');
+        console.log('[SandwichRoute::create] Creating sandwich route.');
 
         // add home page route
-        router.get(MenuRoute.publicRoute + '/menu', (req: Request, res: Response, next: NextFunction) => {
-            new MenuRoute().getPublicMenu(req, res, next);
+        router.get(SandwichRoute.publicRoute, (req: Request, res: Response, next: NextFunction) => {
+            new SandwichRoute().getSandwiches(req, res, next);
         });
     }
 
@@ -38,7 +37,7 @@ export class MenuRoute extends BaseRoute {
      */
     constructor() {
         super();
-        this.menuBl = new MenuBl();
+        this.sandwichBl = new SandwichBl();
     }
 
     /**
@@ -50,10 +49,8 @@ export class MenuRoute extends BaseRoute {
      * @param res {Response} The express Response object.
      * @next {NextFunction} Execute the next method.
      */
-    public getPublicMenu(req: Request, res: Response, next: NextFunction) {
-        this.menuBl.getActiveMenu()
-            .then(menu => {
-                res.json(menu);
-            });
+    public getSandwiches(req: Request, res: Response, next: NextFunction) {
+        res.json(this.sandwichBl.getSandwiches());
+        next();
     }
 }

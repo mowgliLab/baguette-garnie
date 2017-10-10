@@ -1,4 +1,4 @@
-import { Connection, ConnectionManager, ConnectionOptions, getConnectionManager } from 'typeorm';
+import { Connection, ConnectionOptions, getConnection, createConnection, ConnectionManager, getConnectionManager } from 'typeorm';
 import { MenuEntity } from '../entyties/menu.entity';
 import { SandwichEntity } from '../entyties/sandwich.entity';
 import { BreadEntity } from '../entyties/bread.entity';
@@ -13,8 +13,8 @@ import * as _ from 'lodash';
 
 export class ConnectionManagerBl {
 
-    static connexionOptions = <ConnectionOptions> StorageConfig.parsed;
-    static entities = {entities: [
+    public static connexionOptions = <ConnectionOptions> StorageConfig.parsed;
+    public static entities = {entities: [
         BreadEntity,
         MenuEntity,
         OrderEntity,
@@ -26,8 +26,20 @@ export class ConnectionManagerBl {
     ]};
 
     public static getConnection(): Connection {
-        const connectionManager: ConnectionManager = getConnectionManager();
-        const options = _.merge(ConnectionManagerBl.connexionOptions, ConnectionManagerBl.entities);
-        return connectionManager.create(options);
+        try {
+            // if connection already exist, return it;
+            console.log('try to get connection');
+            const connection = getConnection();
+            console.log(connection);
+            if (connection) {
+                return connection;
+            }
+        } catch (error) {
+            // else initialize it.
+            const connectionManager: ConnectionManager = getConnectionManager();
+            const options = _.merge(ConnectionManagerBl.connexionOptions, ConnectionManagerBl.entities);
+            return connectionManager.create(options);
+        }
+
     }
 }

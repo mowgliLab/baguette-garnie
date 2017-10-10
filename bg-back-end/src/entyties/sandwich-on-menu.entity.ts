@@ -18,19 +18,20 @@ export class SandwichOnMenuEntity {
     public menuId: number;
 
     @Column({
-        name: 'som_order_number'
+        name: 'som_order_number',
+        type: 'int'
     })
     public orderNumber: number;
 
 
     // ---------------- RELATIONS ----------------
-    @ManyToOne(type => SandwichEntity, sandwich => sandwich.sandwichOnMenus)
+    @ManyToOne(type => SandwichEntity, sandwich => sandwich.sandwichOnMenus, {eager: true})
     @JoinColumn({
         name: 'som_sandwich_id'
     })
     public sandwich: SandwichEntity;
 
-    @ManyToOne(type => MenuEntity, menu => menu.sandwichOnMenus)
+    @ManyToOne(type => MenuEntity, menu => menu.sandwichOnMenus, {eager: true})
     @JoinColumn({
         name: 'som_menu_id'
     })

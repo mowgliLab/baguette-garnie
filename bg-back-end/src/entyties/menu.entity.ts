@@ -11,9 +11,16 @@ export class MenuEntity {
     public id: number;
 
     @Column({
-        name: 'menu_name'
+        name: 'menu_name',
+        type: 'varchar'
     })
     public name: string;
+
+    @Column({
+        name: 'menu_is_active',
+        type: 'tinyint'
+    })
+    public isActive: boolean;
 
 
     // ---------------- RELATIONS ----------------

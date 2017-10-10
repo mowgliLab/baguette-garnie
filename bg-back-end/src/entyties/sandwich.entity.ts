@@ -18,22 +18,26 @@ export class SandwichEntity {
     public id: number;
 
     @Column({
-        name: 'sandwich_name'
+        name: 'sandwich_name',
+        type: 'varchar'
     })
     public name: string;
 
     @Column({
-        name: 'sandwich_description'
+        name: 'sandwich_description',
+        type: 'varchar'
     })
     public description: string;
 
     @Column({
-        name: 'sandwich_is_custom'
+        name: 'sandwich_is_custom',
+        type: 'tinyint'
     })
     public isCustom: boolean;
 
     @Column({
-        name: 'sandwich_image_src'
+        name: 'sandwich_image_src',
+        type: 'varchar'
     })
     public imageSrc: string;
 

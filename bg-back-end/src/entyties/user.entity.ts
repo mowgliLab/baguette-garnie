@@ -6,27 +6,32 @@ import { OrderEntity } from './order.entity';
 export class UserEntity {
 
     @PrimaryGeneratedColumn({
-        name: 'user_id'
+        name: 'user_id',
+        type: 'int'
     })
     public id: number;
 
     @Column({
-        name: 'user_mail'
+        name: 'user_mail',
+        type: 'varchar'
     })
     public mail: string;
 
     @Column({
-        name: 'user_firstname'
+        name: 'user_firstname',
+        type: 'varchar'
     })
     public firstname: string;
 
     @Column({
-        name: 'user_lastname'
+        name: 'user_lastname',
+        type: 'varchar'
     })
     public lastname: string;
 
     @Column({
-        name: 'user_total_loyalty'
+        name: 'user_total_loyalty',
+        type: 'int'
     })
     public totalLoyalty: number;
 

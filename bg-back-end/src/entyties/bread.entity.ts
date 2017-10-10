@@ -11,12 +11,14 @@ export class BreadEntity {
     public id: number;
 
     @Column({
-        name: 'bread_name'
+        name: 'bread_name',
+        type: 'varchar'
     })
     public name: string;
 
     @Column({
-        name: 'bread_description'
+        name: 'bread_description',
+        type: 'varchar'
     })
     public description: string;
 

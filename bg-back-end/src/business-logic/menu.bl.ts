@@ -1,8 +1,20 @@
 
 import { MenuModel } from '../models/menu.model';
+import { MenuEntity } from '../entyties/menu.entity';
+import { getRepository } from 'typeorm';
 
 export class MenuBl {
 
-    // put the logic here and use promise.
+    public getActiveMenu (): Promise<MenuModel> {
+        const menuRepository = getRepository(MenuEntity);
+        return menuRepository.createQueryBuilder('menu')
+            .leftJoinAndSelect('menu.sandwichOnMenus', 'sandwichOnMenu')
+            .leftJoinAndSelect('sandwichOnMenu.sandwich', 'sandwich')
+            .leftJoinAndSelect('sandwich.toppings', 'topping')
+            .leftJoinAndSelect('sandwich.bread', 'bread')
+            .where('menu.isActive = true').getOne().then(menu => {
+                return MenuModel.fromEntity(menu);
+        });
+    }
 
 }

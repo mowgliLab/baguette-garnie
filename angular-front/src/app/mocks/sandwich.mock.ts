@@ -35,4 +35,4 @@ export const SANDWICH: SandwichModel = {
         orderNumber: undefined,
         price: 1.5
     }
-}
+};

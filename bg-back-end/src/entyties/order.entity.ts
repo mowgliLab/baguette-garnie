@@ -9,7 +9,8 @@ import { OrderRowEntity } from './order-row.entity';
 export class OrderEntity {
 
     @PrimaryGeneratedColumn({
-        name: 'order_id'
+        name: 'order_id',
+        type: 'int'
     })
     public id: number;
 
