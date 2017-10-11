@@ -11,15 +11,24 @@ Configuration for bg-back-end project
 in path 'baguette-garnie/bg-back-end/src/' create a new file config.json
 
 
-`content of config.json :\n
-{\n
-  "type": "mysql",\n
-  "host": "YOUR_HOST",\n
-  "username": "YOUR_USERNAME",\n
-  "password": "YOUR_PASSWORD",\n
-  "database": "projet_integration_2017",\n
-  "synchronize": false,\n
-  "logging": false\n
+`content of config.json :
+
+{
+
+  "type": "mysql",
+  
+  "host": "YOUR_HOST",
+  
+  "username": "YOUR_USERNAME",
+  
+  "password": "YOUR_PASSWORD",
+  
+  "database": "projet_integration_2017",
+  
+  "synchronize": false,
+  
+  "logging": false
+  
 }`
 
 
