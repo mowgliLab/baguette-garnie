@@ -17,11 +17,11 @@ export class SandwichService {
     }
 
     getSandwich(id: number): Promise<SandwichModel> {
-        // return this.http.get(`${this.baseUrl}/${this.baseUrl}/${id}`)
-        //     .toPromise()
-        //     .then(response => response.json() as SandwichModel)
-        //     .catch(this.handleError);
-        return Promise.resolve(SANDWICH);
+        return this.http.get(`${this.baseUrl}/${this.sandwichUrl}/${id}`)
+            .toPromise()
+            .then(response => response.json() as SandwichModel)
+            .catch(this.handleError);
+        // return Promise.resolve(SANDWICH);
     }
 
     // ---------------- PRIVATE ----------------
