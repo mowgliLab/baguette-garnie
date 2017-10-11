@@ -14,6 +14,12 @@ import { ConnectionManager, getConnectionManager } from 'typeorm';
 import { ConnectionManagerBl } from './business-logic/connection-manager.bl';
 import * as _ from 'lodash';
 import { MenuEntity } from './entyties/menu.entity';
+import { SandwichEntity } from './entyties/sandwich.entity';
+import { SandwichRoute } from './routes/sandwich.route';
+import { ToppingRoute } from './routes/topping.route';
+import { ToppingEntity } from './entyties/topping.entity';
+import { BreadEntity } from './entyties/bread.entity';
+import { BreadRoute } from './routes/bread.route';
 
 /**
  * The server.
@@ -66,6 +72,9 @@ export class Server {
 
         // Menu request
         MenuRoute.create(router);
+        SandwichRoute.create(router);
+        ToppingRoute.create(router);
+        BreadRoute.create(router);
 
         // Use router middleware
         this.app.use('/api', router);
@@ -112,6 +121,15 @@ export class Server {
         connectionManager.create(options).connect().then(connection => {
             // create menuRepository
             connection.getRepository(MenuEntity);
+
+            // create sandwichRepository
+            connection.getRepository(SandwichEntity);
+
+            // create toppingRepository
+            connection.getRepository(ToppingEntity);
+
+            // create breadRepository
+            connection.getRepository(BreadEntity);
         });
 
         // catch 404 and forward to error handler

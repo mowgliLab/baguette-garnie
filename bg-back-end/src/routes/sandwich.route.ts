@@ -24,8 +24,12 @@ export class SandwichRoute extends BaseRoute {
         console.log('[SandwichRoute::create] Creating sandwich route.');
 
         // add home page route
-        router.get(SandwichRoute.publicRoute, (req: Request, res: Response, next: NextFunction) => {
-            new SandwichRoute().getSandwiches(req, res, next);
+        // router.get(SandwichRoute.publicRoute, (req: Request, res: Response, next: NextFunction) => {
+        //     new SandwichRoute().getSandwiches(req, res, next);
+        // });
+
+        router.get(`${SandwichRoute.publicRoute}/:id`, (req: Request, res: Response, next: NextFunction) => {
+            new SandwichRoute().getSandwich(req, res, next);
         });
     }
 
@@ -49,8 +53,10 @@ export class SandwichRoute extends BaseRoute {
      * @param res {Response} The express Response object.
      * @next {NextFunction} Execute the next method.
      */
-    public getSandwiches(req: Request, res: Response, next: NextFunction) {
-        res.json(this.sandwichBl.getSandwiches());
-        next();
+    public getSandwich(req: Request, res: Response, next: NextFunction) {
+        this.sandwichBl.getSandwich(+req.params['id'])
+            .then(sandwich => {
+                res.json(sandwich);
+            });
     }
 }

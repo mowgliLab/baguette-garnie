@@ -1,5 +1,7 @@
 import { SandwichEntity } from '../entyties/sandwich.entity';
 import { SandwichOnMenuEntity } from '../entyties/sandwich-on-menu.entity';
+import { ToppingModel } from './topping.model';
+import { BreadModel } from './bread.model';
 
 export class SandwichModel {
     public id: number;
@@ -7,7 +9,10 @@ export class SandwichModel {
     public description: string;
     public imageSrc: string;
     public orderNumber: number;
+
     public price: number;
+    public toppings: ToppingModel[];
+    public bread: BreadModel;
 
     public static fromDbRow(dbRow: any): SandwichModel {
         console.log(dbRow);
@@ -41,16 +46,14 @@ export class SandwichModel {
         result.orderNumber = orderNumber;
         result.price = 5.25; // TODO Implement!!!
 
-        /*
         if (sandwichEntity.toppings && sandwichEntity.toppings.length > 0) {
-            result.toppings = ToppingModel[];
+            result.toppings = [];
             for (const topping of sandwichEntity.toppings) {
                 result.toppings.push(ToppingModel.fromEntity(topping));
             }
         }
 
-        result.bread = sandwichEntity.bread;
-        */
+        result.bread = BreadModel.fromEntity(sandwichEntity.bread);
 
         return result;
     }

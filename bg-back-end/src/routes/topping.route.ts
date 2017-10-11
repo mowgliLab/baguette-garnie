@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import { BaseRoute } from './base-route';
-
-import { MenuBl } from '../business-logic/menu.bl';
+import { ToppingBl } from '../business-logic/topping.bl';
 
 
 /**
@@ -9,10 +8,10 @@ import { MenuBl } from '../business-logic/menu.bl';
  *
  * @class User
  */
-export class MenuRoute extends BaseRoute {
+export class ToppingRoute extends BaseRoute {
 
-    static readonly publicRoute = '/public/menu';
-    private menuBl: MenuBl;
+    static readonly publicRoute = '/public/topping';
+    private toppingBl: ToppingBl;
 
     /**
      * Create the routes.
@@ -22,11 +21,11 @@ export class MenuRoute extends BaseRoute {
      * @static
      */
     public static create(router: Router) {
-        console.log('[MenuRoute::create] Creating menu route.');
+        console.log('[ToppingRoute::create] Creating topping route.');
+        const toppingRoute = new ToppingRoute();
 
-        // add home page route
-        router.get(MenuRoute.publicRoute, (req: Request, res: Response, next: NextFunction) => {
-            new MenuRoute().getPublicMenu(req, res, next);
+        router.get(`${ToppingRoute.publicRoute}`, (req: Request, res: Response, next: NextFunction) => {
+            toppingRoute.getToppings(req, res, next);
         });
     }
 
@@ -38,7 +37,7 @@ export class MenuRoute extends BaseRoute {
      */
     constructor() {
         super();
-        this.menuBl = new MenuBl();
+        this.toppingBl = new ToppingBl();
     }
 
     /**
@@ -50,10 +49,10 @@ export class MenuRoute extends BaseRoute {
      * @param res {Response} The express Response object.
      * @next {NextFunction} Execute the next method.
      */
-    public getPublicMenu(req: Request, res: Response, next: NextFunction) {
-        this.menuBl.getActiveMenu()
-            .then(menu => {
-                res.json(menu);
+    public getToppings(req: Request, res: Response, next: NextFunction) {
+        this.toppingBl.getToppings()
+            .then(toppings => {
+                res.json(toppings);
             });
     }
 }
