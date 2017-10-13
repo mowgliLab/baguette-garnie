@@ -33,7 +33,9 @@ npm install
 npm run build
 npm run start
 ```
-(server is running on port 8080)
+(server is running on port 8080 with https protocol)
+
+ex: [https://localhost:8080/api/public/menu](https://localhost:8080/api/public/menu)
 
 
 Install and run angular-front
@@ -44,4 +46,6 @@ npm install
 npm run build
 npm run start
 ```
-(preview is running on port 4000)
+(preview is running on port 4200)
+
+ex: [http://localhost:4200](http://localhost:4200)
