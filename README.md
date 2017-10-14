@@ -11,8 +11,8 @@ Configuration for bg-back-end project
 in path 'baguette-garnie/bg-back-end/src/' create a new file config.json
 
 
-```json
 content of config.json :
+```json
 {
     "type": "mysql",  
     "host": "YOUR_HOST",  
@@ -33,9 +33,9 @@ npm install
 npm run build
 npm run start
 ```
-(server is running on port 8080 with https protocol)
+(server is running on port 8080 with http protocol)
 
-ex: [https://localhost:8080/api/public/menu](https://localhost:8080/api/public/menu)
+ex: [http://localhost:8080/api/public/menu](http://localhost:8080/api/public/menu)
 
 
 Install and run angular-front

@@ -4,19 +4,19 @@
 //module dependencies
 var server = require("../dist/server");
 var debug = require("debug")("express:server");
-var https = require('https');
+var http = require('http');
 var fs = require('fs');
 
 //create http server
 var httpPort = normalizePort(process.env.PORT || 8080);
 var app = server.Server.bootstrap().app;
 app.set("port", httpPort);
-var options = {
-    pfx: fs.readFileSync('bin/cert/mycert2.pfx'),
-    passphrase: 'password'
-};
+// var options = {
+//     pfx: fs.readFileSync('bin/cert/mycert2.pfx'),
+//     passphrase: 'password'
+// };
 
-var httpServer = https.createServer(options, app);
+var httpServer = http.createServer(app);
 
 //listen on provided ports
 httpServer.listen(httpPort);
