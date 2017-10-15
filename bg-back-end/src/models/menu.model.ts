@@ -1,6 +1,7 @@
 
 import { SandwichModel } from './sandwich.model';
 import { MenuEntity } from '../entyties/menu.entity';
+import * as _ from 'lodash';
 
 export class MenuModel {
     public id: number;
@@ -13,7 +14,7 @@ export class MenuModel {
             id: dbRow.menu_id,
             name: dbRow.menu_name,
             sandwiches: sandwiches
-        }
+        };
     }
 
     public static fromEntity (entity: MenuEntity): MenuModel {
@@ -25,7 +26,7 @@ export class MenuModel {
         if (entity.sandwichOnMenus && entity.sandwichOnMenus.length > 0) {
             result.sandwiches = [];
             for (const som of entity.sandwichOnMenus) {
-                result.sandwiches.push(SandwichModel.fromEntity(som));
+                result.sandwiches.push(_.omit(SandwichModel.fromEntity(som), ['bread', 'toppings']));
             }
         }
 

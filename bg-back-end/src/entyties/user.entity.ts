@@ -1,6 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, BeforeInsert, AfterLoad } from 'typeorm';
 import { SandwichEntity } from './sandwich.entity';
 import { OrderEntity } from './order.entity';
+
+import * as bcrypt from 'bcrypt';
 
 @Entity('user')
 export class UserEntity {
@@ -39,6 +41,8 @@ export class UserEntity {
         name: 'user_password',
         type: 'blob'
     })
+    public passwordBfr: Buffer;
+
     public password: string;
 
 
@@ -49,4 +53,16 @@ export class UserEntity {
     @OneToMany(type => OrderEntity, order => order.user)
     public orders: OrderEntity[];
 
+
+    // ---------------- LISTENERS ----------------
+    @BeforeInsert()
+    cryptPassword() {
+        this.password = bcrypt.hashSync(this.password, 10);
+        this.passwordBfr = new Buffer(this.password);
+    }
+
+    @AfterLoad()
+    fillPasswordString() {
+        this.password = this.passwordBfr.toString();
+    }
 }

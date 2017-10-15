@@ -1,8 +1,7 @@
 import * as bodyParser from 'body-parser';
-import * as cookieParser from 'cookie-parser';
 import * as express from 'express';
 import * as logger from 'morgan';
-import * as path from 'path';
+import * as session from 'express-session';
 
 import { MenuRoute } from './routes/menu.route';
 
@@ -20,6 +19,8 @@ import { ToppingRoute } from './routes/topping.route';
 import { ToppingEntity } from './entyties/topping.entity';
 import { BreadEntity } from './entyties/bread.entity';
 import { BreadRoute } from './routes/bread.route';
+import { UserEntity } from './entyties/user.entity';
+import { UserRoute } from './routes/user.route';
 
 /**
  * The server.
@@ -75,6 +76,7 @@ export class Server {
         SandwichRoute.create(router);
         ToppingRoute.create(router);
         BreadRoute.create(router);
+        UserRoute.create(router);
 
         // Use router middleware
         this.app.use('/api', router);
@@ -88,7 +90,7 @@ export class Server {
      */
     public config() {
         // add static paths
-        this.app.use(express.static(path.join(__dirname, 'public')));
+        // this.app.use(express.static(path.join(__dirname, 'public')));
 
         // use logger middlware
         this.app.use(logger('dev'));
@@ -101,17 +103,29 @@ export class Server {
             extended: true
         }));
 
+        // use session to manage sessions
+        this.app.use(session({
+            secret: 'topping frog',
+            name: 'sessionId',
+            resave: true,
+            saveUninitialized: false,
+            cookie: {
+                // maxAge: 3600000
+                maxAge: 3600000 * 4,
+            }
+        }));
+
         // use cookie parser middleware
-        this.app.use(cookieParser('SECRET_GOES_HERE'));
+        // this.app.use(cookieParser('SECRET_GOES_HERE'));
 
         // use override middlware
         this.app.use(methodOverride());
 
         // Allow cross origine
         this.app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
-            console.log('manage headers');
-            res.header('Access-Control-Allow-Origin', '*');
+            res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
             res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+            res.header('Access-Control-Allow-Credentials', 'true');
             next();
         });
 
@@ -130,6 +144,9 @@ export class Server {
 
             // create breadRepository
             connection.getRepository(BreadEntity);
+
+            // create userRepository
+            connection.getRepository(UserEntity);
         });
 
         // catch 404 and forward to error handler
