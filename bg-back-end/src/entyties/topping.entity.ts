@@ -28,6 +28,12 @@ export class ToppingEntity {
     })
     public orderNumber: number;
 
+    @Column({
+        name: 'topping_type',
+        type: 'int'
+    })
+    public type: number;
+
 
     // ---------------- RELATIONS ----------------
     @ManyToMany(type => SandwichEntity, sandwich => sandwich.toppings)

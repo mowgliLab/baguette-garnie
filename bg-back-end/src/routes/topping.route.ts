@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response, Router } from 'express';
+import { Request, Response, Router } from 'express';
 import { BaseRoute } from './base-route';
 import { ToppingBl } from '../business-logic/topping.bl';
 
@@ -24,8 +24,8 @@ export class ToppingRoute extends BaseRoute {
         console.log('[ToppingRoute::create] Creating topping route.');
         const toppingRoute = new ToppingRoute();
 
-        router.get(`${ToppingRoute.publicRoute}`, (req: Request, res: Response, next: NextFunction) => {
-            toppingRoute.getToppings(req, res, next);
+        router.get(`${ToppingRoute.publicRoute}`, (req: Request, res: Response) => {
+            toppingRoute.getToppings(req, res);
         });
     }
 
@@ -49,7 +49,7 @@ export class ToppingRoute extends BaseRoute {
      * @param res {Response} The express Response object.
      * @next {NextFunction} Execute the next method.
      */
-    public getToppings(req: Request, res: Response, next: NextFunction) {
+    public getToppings(req: Request, res: Response) {
         this.toppingBl.getToppings()
             .then(toppings => {
                 res.json(toppings);

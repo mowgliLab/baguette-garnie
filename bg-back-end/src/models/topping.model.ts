@@ -5,6 +5,7 @@ export class ToppingModel {
     public name: string;
     public price: number;
     public orderNumber: number;
+    public type: number;
 
     public static fromEntity(entity: ToppingEntity): ToppingModel {
         const result = new ToppingModel();
@@ -13,6 +14,7 @@ export class ToppingModel {
         result.name = entity.name;
         result.price = entity.price;
         result.orderNumber = entity.orderNumber;
+        result.type = entity.type;
 
         return result;
     }

@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response, Router } from 'express';
+import { Request, Response, Router } from 'express';
 import { BaseRoute } from './base-route';
 
 import { MenuBl } from '../business-logic/menu.bl';
@@ -25,8 +25,8 @@ export class MenuRoute extends BaseRoute {
         console.log('[MenuRoute::create] Creating menu route.');
 
         // add home page route
-        router.get(MenuRoute.publicRoute, (req: Request, res: Response, next: NextFunction) => {
-            new MenuRoute().getPublicMenu(req, res, next);
+        router.get(MenuRoute.publicRoute, (req: Request, res: Response) => {
+            new MenuRoute().getPublicMenu(req, res);
         });
     }
 
@@ -50,7 +50,7 @@ export class MenuRoute extends BaseRoute {
      * @param res {Response} The express Response object.
      * @next {NextFunction} Execute the next method.
      */
-    public getPublicMenu(req: Request, res: Response, next: NextFunction) {
+    public getPublicMenu(req: Request, res: Response) {
         this.menuBl.getActiveMenu()
             .then(menu => {
                 res.json(menu);

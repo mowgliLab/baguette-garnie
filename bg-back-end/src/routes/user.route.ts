@@ -22,9 +22,9 @@ export class UserRoute extends BaseRoute {
         console.log('[UserRoute::create] Creating user route.');
         const userRoute = new UserRoute();
 
-        // add home page route
+        // --------------- AUTHENTICATION ---------------
         router.post(`${UserRoute.publicRoute}/register`, (req: Request, res: Response) => {
-            userRoute.insertUser(req, res);
+            userRoute.register(req, res);
         });
 
         router.post(`${UserRoute.publicRoute}/login`, (req: Request, res: Response) => {
@@ -35,12 +35,15 @@ export class UserRoute extends BaseRoute {
             userRoute.logout(req, res, next);
         });
 
-        router.get(`${UserRoute.publicRoute}/encrypt`, (req: Request, res: Response) => {
-            userRoute.encryptAll(req, res);
-        });
-
         router.get(`${UserRoute.publicRoute}/check`, (req: Request, res: Response) => {
             userRoute.isAuthenticate(req, res);
+        });
+
+
+
+        // --------------- USER UTILS ---------------
+        router.get(`${UserRoute.publicRoute}/encrypt`, (req: Request, res: Response) => {
+            userRoute.encryptAll(req, res);
         });
 
         router.get(`${UserRoute.publicRoute}/:id`, (req: Request, res: Response) => {
@@ -72,18 +75,12 @@ export class UserRoute extends BaseRoute {
      * @param res {Response} The express Response object.
      * @next {NextFunction} Execute the next method.
      */
-    public insertUser(req: Request, res: Response) {
+    public register(req: Request, res: Response) {
         console.log(req);
         const user = req.body['user'] as UserModel;
         this.userBl.addUser(user).then(id => {
             user.id = id;
             res.json(_.omit(user, ['password']));
-        });
-    }
-
-    public getUser(req: Request, res: Response) {
-        this.userBl.getUser(+req.params['id']).then(user => {
-            res.json(user);
         });
     }
 
@@ -125,6 +122,8 @@ export class UserRoute extends BaseRoute {
     }
 
 
+
+
     // TODO remove after dev.
     public encryptAll(req: Request, res: Response) {
         this.userBl.getUsers().then(users => {
@@ -140,6 +139,12 @@ export class UserRoute extends BaseRoute {
     public getUsers(req: Request, res: Response) {
         this.userBl.getUsers().then(users => {
             res.json(users);
+        });
+    }
+
+    public getUser(req: Request, res: Response) {
+        this.userBl.getUser(+req.params['id']).then(user => {
+            res.json(user);
         });
     }
 

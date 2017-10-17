@@ -110,13 +110,9 @@ export class Server {
             resave: true,
             saveUninitialized: false,
             cookie: {
-                // maxAge: 3600000
-                maxAge: 3600000 * 4,
+                maxAge: 3600000
             }
         }));
-
-        // use cookie parser middleware
-        // this.app.use(cookieParser('SECRET_GOES_HERE'));
 
         // use override middlware
         this.app.use(methodOverride());

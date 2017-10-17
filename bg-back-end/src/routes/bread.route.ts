@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response, Router } from 'express';
+import { Request, Response, Router } from 'express';
 import { BaseRoute } from './base-route';
 import { BreadBl } from '../business-logic/bread.bl';
 
@@ -24,8 +24,8 @@ export class BreadRoute extends BaseRoute {
         console.log('[BreadRoute::create] Creating bread route.');
         const breadRoute = new BreadRoute();
 
-        router.get(`${BreadRoute.publicRoute}`, (req: Request, res: Response, next: NextFunction) => {
-            breadRoute.getBreads(req, res, next);
+        router.get(`${BreadRoute.publicRoute}`, (req: Request, res: Response) => {
+            breadRoute.getBreads(req, res);
         });
     }
 
@@ -49,7 +49,7 @@ export class BreadRoute extends BaseRoute {
      * @param res {Response} The express Response object.
      * @next {NextFunction} Execute the next method.
      */
-    public getBreads(req: Request, res: Response, next: NextFunction) {
+    public getBreads(req: Request, res: Response) {
         this.breadBl.getBreads()
             .then(breads => {
                 res.json(breads);

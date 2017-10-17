@@ -1,5 +1,5 @@
 import { UserModel } from '../models/user.model';
-import { getRepository, Repository } from 'typeorm';
+import { getRepository } from 'typeorm';
 import { UserEntity } from '../entyties/user.entity';
 import * as bcrypt from 'bcrypt';
 

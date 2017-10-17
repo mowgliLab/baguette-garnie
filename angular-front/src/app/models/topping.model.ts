@@ -3,4 +3,5 @@ export class ToppingModel {
     public name: string;
     public price: number;
     public orderNumber: number;
+    public type: number;
 }
