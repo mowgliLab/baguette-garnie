@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
+import { environment } from '../../environments/environment';
+import { constants } from '../../environments/constants';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -8,14 +10,13 @@ import { MenuModel } from '../models/menu.model';
 @Injectable()
 export class MenuService {
 
-    private baseUrl = 'http://localhost:8080/'
-    private menuUrl = 'api/public/menu';
+    private baseUrl = environment.webServiceBaseUrl + constants.menuApi.baseUrl;
     private headers = new Headers({'Content-Type': 'application/json'});
 
     constructor(private http: Http) {}
 
     getMenu(): Promise<MenuModel> {
-        return this.http.get(this.baseUrl + this.menuUrl)
+        return this.http.get(this.baseUrl)
             .toPromise()
             .then(response => response.json() as MenuModel)
             .catch(this.handleError);

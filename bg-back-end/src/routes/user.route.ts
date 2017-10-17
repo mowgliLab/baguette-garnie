@@ -107,7 +107,6 @@ export class UserRoute extends BaseRoute {
         if (req.session) {
             req.session.destroy(err => {
                 if (err) {
-                    // console.log('logout error' + err);
                     return next(err);
                 } else {
                     res.sendStatus(200);
@@ -122,7 +121,6 @@ export class UserRoute extends BaseRoute {
         if (req.session && req.session.userId) {
             response.status = true;
         }
-
         res.json(response);
     }
 
