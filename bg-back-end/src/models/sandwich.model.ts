@@ -2,6 +2,7 @@ import { SandwichEntity } from '../entyties/sandwich.entity';
 import { SandwichOnMenuEntity } from '../entyties/sandwich-on-menu.entity';
 import { ToppingModel } from './topping.model';
 import { BreadModel } from './bread.model';
+import { ToppingEntity } from '../entyties/topping.entity';
 
 export class SandwichModel {
     public id: number;
@@ -13,18 +14,6 @@ export class SandwichModel {
     public price: number;
     public toppings: ToppingModel[];
     public bread: BreadModel;
-
-    public static fromDbRow(dbRow: any): SandwichModel {
-        console.log(dbRow);
-        return <SandwichModel> {
-            id: dbRow.sandwich_id,
-            name: dbRow.sandwich_name,
-            description: dbRow.sandwich_description,
-            imageSrc: dbRow.sandwich_image_src,
-            orderNumber: dbRow.sandwich_order_number,
-            price: dbRow.sandwich_price
-        };
-    }
 
     public static fromEntity(entity: SandwichEntity | SandwichOnMenuEntity): SandwichModel {
         const result = new SandwichModel();
@@ -54,6 +43,25 @@ export class SandwichModel {
         }
 
         result.bread = BreadModel.fromEntity(sandwichEntity.bread);
+
+        return result;
+    }
+
+    public static toEntity(model: SandwichModel, isCustom = false): SandwichEntity {
+        const result = new SandwichEntity();
+
+        result.id = model.id;
+        result.name = model.name;
+        result.description = model.description;
+        result.imageSrc = model.imageSrc;
+        result.isCustom = isCustom;
+
+        result.toppings = [];
+        for (const topping of model.toppings) {
+            result.toppings.push(ToppingModel.toEntity(topping));
+        }
+        result.bread = BreadModel.toEntity(model.bread);
+
 
         return result;
     }

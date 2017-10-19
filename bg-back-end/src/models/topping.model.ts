@@ -18,4 +18,16 @@ export class ToppingModel {
 
         return result;
     }
+
+    public static toEntity(model: ToppingModel): ToppingEntity {
+        const result = new ToppingEntity();
+
+        result.id = model.id;
+        result.name = model.name;
+        result.price = model.price;
+        result.orderNumber = model.orderNumber;
+        result.type = model.type;
+
+        return result;
+    }
 }

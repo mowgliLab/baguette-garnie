@@ -20,4 +20,16 @@ export class BreadModel {
         return result;
     }
 
+    public static toEntity(model: BreadModel): BreadEntity {
+        const result = new BreadEntity();
+
+        result.id = model.id;
+        result.name = model.name;
+        result.description = model.description;
+        result.price = model.price;
+        result.orderNumber = model.orderNumber;
+
+        return result;
+    }
+
 }
