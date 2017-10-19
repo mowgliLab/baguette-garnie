@@ -1,6 +1,9 @@
 import { Request, Response, Router } from 'express';
 import { BaseRoute } from './base-route';
 import { SandwichBl } from '../business-logic/sandwich.bl';
+import { UserBl } from '../business-logic/user.bl';
+import { SandwichModel } from '../models/sandwich.model';
+import { UserModel } from '../models/user.model';
 
 
 /**
@@ -12,6 +15,7 @@ export class SandwichRoute extends BaseRoute {
 
     static readonly publicRoute = '/public/sandwich';
     private sandwichBl: SandwichBl;
+    private userBl: UserBl;
 
     /**
      * Create the routes.
@@ -26,6 +30,10 @@ export class SandwichRoute extends BaseRoute {
         router.get(`${SandwichRoute.publicRoute}/:id`, (req: Request, res: Response) => {
             new SandwichRoute().getSandwich(req, res);
         });
+
+        router.post(`${SandwichRoute.publicRoute}/custom`, (req: Request, res: Response) => {
+            new SandwichRoute().createCustomSandwich(req, res);
+        });
     }
 
     /**
@@ -37,6 +45,7 @@ export class SandwichRoute extends BaseRoute {
     constructor() {
         super();
         this.sandwichBl = new SandwichBl();
+        this.userBl = new UserBl();
     }
 
     /**
@@ -53,5 +62,20 @@ export class SandwichRoute extends BaseRoute {
             .then(sandwich => {
                 res.json(sandwich);
             });
+    }
+
+    public createCustomSandwich(req: Request, res: Response) {
+        // const currentUser = req.session.user;
+        const sandwich = req.body['sandwich'] as SandwichModel;
+        console.log(sandwich);
+
+        this.userBl.getUser(1).then(user => {
+            const currentUser = user as UserModel;
+            console.log(currentUser);
+
+            this.sandwichBl.saveCustomSandwich(sandwich, currentUser).then(result => {
+                res.json(result);
+            }).catch(err => res.json(err));
+        });
     }
 }

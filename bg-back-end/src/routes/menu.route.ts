@@ -54,6 +54,7 @@ export class MenuRoute extends BaseRoute {
         this.menuBl.getActiveMenu()
             .then(menu => {
                 res.json(menu);
-            });
+            })
+            .catch(err => res.json(err));
     }
 }
