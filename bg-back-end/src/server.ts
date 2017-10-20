@@ -21,6 +21,8 @@ import { BreadEntity } from './entyties/bread.entity';
 import { BreadRoute } from './routes/bread.route';
 import { UserEntity } from './entyties/user.entity';
 import { UserRoute } from './routes/user.route';
+import { OrderRoute } from './routes/order.route';
+import { OrderEntity } from './entyties/order.entity';
 
 /**
  * The server.
@@ -77,6 +79,7 @@ export class Server {
         ToppingRoute.create(router);
         BreadRoute.create(router);
         UserRoute.create(router);
+        OrderRoute.create(router);
 
         // Use router middleware
         this.app.use('/api', router);
@@ -129,20 +132,13 @@ export class Server {
         const connectionManager: ConnectionManager = getConnectionManager();
         const options = _.merge(ConnectionManagerBl.connexionOptions, ConnectionManagerBl.entities);
         connectionManager.create(options).connect().then(connection => {
-            // create menuRepository
+            // create repositories
             connection.getRepository(MenuEntity);
-
-            // create sandwichRepository
             connection.getRepository(SandwichEntity);
-
-            // create toppingRepository
             connection.getRepository(ToppingEntity);
-
-            // create breadRepository
             connection.getRepository(BreadEntity);
-
-            // create userRepository
             connection.getRepository(UserEntity);
+            connection.getRepository(OrderEntity);
         });
 
         // catch 404 and forward to error handler
