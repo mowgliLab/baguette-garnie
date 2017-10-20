@@ -16,7 +16,7 @@ CREATE TABLE user (
   user_lastname      VARCHAR(60)            NOT NULL,
   user_password      VARBINARY(200)         NOT NULL,
   user_total_loyalty INT                    NOT NULL DEFAULT 0,
-  user_role          ENUM ('user', 'admin') NOT NULL DEFAULT 0
+  user_role          ENUM ('user', 'admin') NOT NULL DEFAULT 'user'
 );
 
 CREATE TABLE bread (
@@ -33,7 +33,7 @@ CREATE TABLE topping (
   topping_name         VARCHAR(50) NOT NULL,
   topping_price        DOUBLE      NOT NULL,
   /* 1 = element principal / 2 = crudités / 3 = sauce */
-  topping_type			INT		NOT NULL 
+  topping_type         INT         NOT NULL
 );
 
 CREATE TABLE sandwich (
@@ -75,7 +75,7 @@ CREATE TABLE purchase_order (
   order_id      INT                              NOT NULL AUTO_INCREMENT PRIMARY KEY,
   order_date    DATETIME                         NOT NULL,
   order_user_id INT                              NOT NULL,
-  order_status  ENUM ('open', 'payed', 'closed') NOT NULL DEFAULT 0,
+  order_status  ENUM ('open', 'payed', 'closed') NOT NULL DEFAULT 'open',
   FOREIGN KEY (order_user_id) REFERENCES user (user_id)
 );
 
@@ -94,12 +94,12 @@ CREATE TABLE order_row (
 /* -------------- FILL SOME DATAS -------------- */
 
 INSERT INTO user (user_mail, user_firstname, user_lastname, user_password, user_role) VALUES
-  ('d.targ@got.com', 'Daenerys', 'Targaryen', 'drogo', 0),
-  ('j.snow@got.com', 'John', 'Snow', 'winter', 1),
-  ('c.lanni@got.com', 'Cersei', 'Lannister', 'queen', 0),
-  ('t.lanni@got.com', 'Tyrion', 'Lannister', 'halfman', 0),
-  ('s.stark@got.com', 'Sansa', 'Stark', 'queen', 0),
-  ('a.stark@got.com', 'Arya', 'Stark', 'faceless', 0);
+  ('d.targ@got.com', 'Daenerys', 'Targaryen', 'drogo', 'user'),
+  ('j.snow@got.com', 'John', 'Snow', 'winter', 'admin'),
+  ('c.lanni@got.com', 'Cersei', 'Lannister', 'queen', 'user'),
+  ('t.lanni@got.com', 'Tyrion', 'Lannister', 'halfman', 'user'),
+  ('s.stark@got.com', 'Sansa', 'Stark', 'queen', 'user'),
+  ('a.stark@got.com', 'Arya', 'Stark', 'faceless', 'user');
 
 INSERT INTO bread (bread_name, bread_price, bread_description) VALUES
   ('Baguette de pain blanc', 2.50, 'Pain blanc légé et digeste.'),
@@ -116,22 +116,22 @@ INSERT INTO topping (topping_name, topping_price, topping_type) VALUES
   ('Cornichons', 0.05, 2),
   ('Oignons blancs', 0.05, 2),
   ('Tomates', 0.05, 2),
-  ('Oeufs', 0.15 , 2),
-  ('Thon mayonaise', 0.80 , 1),
-  ('Thon cocktail', 0.80 , 1),
-  ('Jambon de Parme', 0.90 , 1),
-  ('Mozzarella', 0.75 , 1),
-  ('Parmesan', 0.70 , 1),
+  ('Oeufs', 0.15, 2),
+  ('Thon mayonaise', 0.80, 1),
+  ('Thon cocktail', 0.80, 1),
+  ('Jambon de Parme', 0.90, 1),
+  ('Mozzarella', 0.75, 1),
+  ('Parmesan', 0.70, 1),
   ('Carpaccio 100% pur boeuf', 1.10, 1),
-  ('Roquette', 0.10 , 2),
-  ('Crème balsamique', 0.05 , 3),
-  ('Poivrons rouges grillés', 0.10 , 2),
-  ('Fillets de poulets rotis', 0.70 , 1),
-  ('Poulet croquants', 0.70 , 1),
-  ('Boulettes', 0.70 , 1),
-  ('Saucisses roties', 0.70 , 1),
-  ('Lardons', 0.15 , 2),
-  ('Chedar', 0.05 , 1);
+  ('Roquette', 0.10, 2),
+  ('Crème balsamique', 0.05, 3),
+  ('Poivrons rouges grillés', 0.10, 2),
+  ('Fillets de poulets rotis', 0.70, 1),
+  ('Poulet croquants', 0.70, 1),
+  ('Boulettes', 0.70, 1),
+  ('Saucisses roties', 0.70, 1),
+  ('Lardons', 0.15, 2),
+  ('Chedar', 0.05, 1);
 
 INSERT INTO sandwich (sandwich_name, sandwich_description, sandwich_bread_id, sandwich_is_custom, sandwich_image_src)
 VALUES
@@ -196,22 +196,22 @@ INSERT INTO sandwich_on_menu (som_sandwich_id, som_menu_id) VALUES
   (6, 1);
 
 INSERT INTO purchase_order (order_date, order_user_id, order_status) VALUES
-  ('2017-08-06', 1, 2),
-  ('2017-08-08', 3, 2),
-  ('2017-08-15', 1, 2),
-  ('2017-08-25', 1, 2),
-  ('2017-08-21', 5, 2),
-  ('2017-08-31', 6, 2),
-  ('2017-09-01', 2, 2),
-  ('2017-09-06', 1, 2),
-  ('2017-09-07', 4, 2),
-  ('2017-09-08', 1, 2),
-  ('2017-09-11', 2, 2),
-  ('2017-09-15', 1, 2),
-  ('2017-09-19', 2, 2),
-  ('2017-09-23', 2, 2),
-  ('2017-09-24', 4, 2),
-  ('2017-09-25', 1, 2);
+  ('2017-08-06', 1, 'open'),
+  ('2017-08-08', 3, 'open'),
+  ('2017-08-15', 1, 'open'),
+  ('2017-08-25', 1, 'open'),
+  ('2017-08-21', 5, 'open'),
+  ('2017-08-31', 6, 'open'),
+  ('2017-09-01', 2, 'open'),
+  ('2017-09-06', 1, 'open'),
+  ('2017-09-07', 4, 'open'),
+  ('2017-09-08', 1, 'open'),
+  ('2017-09-11', 2, 'open'),
+  ('2017-09-15', 1, 'open'),
+  ('2017-09-19', 2, 'open'),
+  ('2017-09-23', 2, 'open'),
+  ('2017-09-24', 4, 'open'),
+  ('2017-09-25', 1, 'open');
 
 
 INSERT INTO order_row (or_sandwich_id, or_order_id, or_quantity, or_size) VALUES
