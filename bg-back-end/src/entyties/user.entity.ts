@@ -14,6 +14,13 @@ export class UserEntity {
     public id: number;
 
     @Column({
+        name: 'user_role',
+        type: 'enum',
+        enum: ['user', 'admin']
+    })
+    pulbic role: string;
+
+    @Column({
         name: 'user_mail',
         type: 'varchar'
     })

@@ -20,6 +20,12 @@ export class OrderEntity {
     })
     public date: Date;
 
+    @column({
+        name: 'order_status',
+        type: 'enum',
+        enum: ['open', 'payed', 'closed']
+    })
+
 
     // ---------------- RELATIONS ----------------
     @ManyToOne(type => UserEntity, user => user.orders)
