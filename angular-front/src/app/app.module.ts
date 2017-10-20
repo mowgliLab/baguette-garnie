@@ -15,6 +15,9 @@ import { TeamPageComponent } from './components/team-page/team-page.component';
 import { FormsModule } from '@angular/forms';
 import { ModalModule, BsModalService } from 'ngx-bootstrap/modal';
 import { SandwichService } from './services/sandwich.service';
+import { CustomSandwichComponent } from './components/custom-sandwich/custom-sandwich.component';
+import { ToppingService } from './services/topping.service';
+import { BreadService } from './services/bread.service';
 
 @NgModule({
     declarations: [
@@ -24,7 +27,8 @@ import { SandwichService } from './services/sandwich.service';
         MenuPageComponent,
         SandwichElementComponent,
         ContactPageComponent,
-        TeamPageComponent
+        TeamPageComponent,
+        CustomSandwichComponent
     ],
     imports: [
         BrowserModule,
@@ -36,6 +40,8 @@ import { SandwichService } from './services/sandwich.service';
     providers: [
         MenuService,
         SandwichService,
+        ToppingService,
+        BreadService,
         BsModalService
     ],
     bootstrap: [AppComponent]

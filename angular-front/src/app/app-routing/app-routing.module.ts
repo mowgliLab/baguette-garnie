@@ -5,6 +5,7 @@ import { HomeComponent } from "../components/home/home.component";
 import { MenuPageComponent } from '../components/menu-page/menu-page.component';
 import { TeamPageComponent } from '../components/team-page/team-page.component';
 import { ContactPageComponent } from '../components/contact-page/contact-page.component';
+import { CustomSandwichComponent } from '../components/custom-sandwich/custom-sandwich.component';
 
 const routes: Routes = [
     {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -12,6 +13,7 @@ const routes: Routes = [
     {path: 'menu', component: MenuPageComponent},
     {path: 'team', component: TeamPageComponent},
     {path: 'contact', component: ContactPageComponent},
+    {path: 'custom', component: CustomSandwichComponent},
 
     // otherwise redirect to home
     { path: '**', redirectTo: '' }

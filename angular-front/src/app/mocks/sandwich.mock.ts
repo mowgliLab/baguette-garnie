@@ -11,22 +11,26 @@ export const SANDWICH: SandwichModel = {
         id: 1,
         name: 'Jambon',
         orderNumber: undefined,
-        price: 0.5
+        price: 0.5,
+        type: 1
     }, {
         id: 2,
         name: 'Fromage',
         orderNumber: undefined,
-        price: 0.5
+        price: 0.5,
+        type: 1
     }, {
         id: 3,
         name: 'Salade',
         orderNumber: undefined,
-        price: 0.5
+        price: 0.5,
+        type: 1
     }, {
         id: 4,
         name: 'Cornichons',
         orderNumber: undefined,
-        price: 0.5
+        price: 0.5,
+        type: 1
     }],
     bread: {
         id: 3,

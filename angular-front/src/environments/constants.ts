@@ -5,5 +5,12 @@ export const constants = {
     },
     sandwichApi: {
         baseUrl: '/api/public/sandwich'
+    },
+    toppingApi: {
+        baseUrl: '/api/public/topping'
+    },
+    //modif perso
+    breadApi:{
+        baseUrl: '/api/public/bread'
     }
 };

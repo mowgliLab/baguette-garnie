@@ -30,7 +30,9 @@ CREATE TABLE topping (
   topping_id           INT         NOT NULL AUTO_INCREMENT PRIMARY KEY,
   topping_order_number INT, # used to order the toppings into the menu (if equals, use alphabetic)
   topping_name         VARCHAR(50) NOT NULL,
-  topping_price        DOUBLE      NOT NULL
+  topping_price        DOUBLE      NOT NULL,
+  /* 1 = element principal / 2 = crudités / 3 = sauce */
+  topping_type			INT		NOT NULL 
 );
 
 CREATE TABLE sandwich (
@@ -105,29 +107,29 @@ INSERT INTO bread (bread_name, bread_price, bread_description) VALUES
   ('Baguette au noix', 3.20, 'Pain légèrement gris agrémentés de noix.'),
   ('Baguette complète', 3.20, 'Pain gris presque noir riche en fibres.');
 
-INSERT INTO topping (topping_name, topping_price) VALUES
-  ('Jambon', 0.50),
-  ('Fromage', 0.50),
-  ('Salade', 0.05),
-  ('Cornichons', 0.05),
-  ('Oignons blancs', 0.05),
-  ('Tomates', 0.05),
-  ('Oeufs', 0.15),
-  ('Thon mayonaise', 0.80),
-  ('Thon cocktail', 0.80),
-  ('Jambon de Parme', 0.90),
-  ('Mozzarella', 0.75),
-  ('Parmesan', 0.70),
-  ('Carpaccio 100% pur boeuf', 1.10),
-  ('Roquette', 0.10),
-  ('Crème balsamique', 0.05),
-  ('Poivrons rouges grillés', 0.10),
-  ('Fillets de poulets rotis', 0.70),
-  ('Poulet croquants', 0.70),
-  ('Boulettes', 0.70),
-  ('Saucisses roties', 0.70),
-  ('Lardons', 0.15),
-  ('Chedar', 0.05);
+INSERT INTO topping (topping_name, topping_price, topping_type) VALUES
+  ('Jambon', 0.50, 1),
+  ('Fromage', 0.50, 1),
+  ('Salade', 0.05, 2),
+  ('Cornichons', 0.05, 2),
+  ('Oignons blancs', 0.05, 2),
+  ('Tomates', 0.05, 2),
+  ('Oeufs', 0.15 , 2),
+  ('Thon mayonaise', 0.80 , 1),
+  ('Thon cocktail', 0.80 , 1),
+  ('Jambon de Parme', 0.90 , 1),
+  ('Mozzarella', 0.75 , 1),
+  ('Parmesan', 0.70 , 1),
+  ('Carpaccio 100% pur boeuf', 1.10, 1),
+  ('Roquette', 0.10 , 2),
+  ('Crème balsamique', 0.05 , 3),
+  ('Poivrons rouges grillés', 0.10 , 2),
+  ('Fillets de poulets rotis', 0.70 , 1),
+  ('Poulet croquants', 0.70 , 1),
+  ('Boulettes', 0.70 , 1),
+  ('Saucisses roties', 0.70 , 1),
+  ('Lardons', 0.15 , 2),
+  ('Chedar', 0.05 , 1);
 
 INSERT INTO sandwich (sandwich_name, sandwich_description, sandwich_bread_id, sandwich_is_custom, sandwich_image_src)
 VALUES
