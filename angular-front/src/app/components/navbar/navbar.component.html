@@ -28,14 +28,34 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav ml-auto">
-                <li class="nav-item">
+
+                <!-- Login and register button when logged out -->
+                <li *ngIf="!isLoggedIn" class="nav-item">
                     <a class="nav-link" href="#"><i class="fa fa-user-circle"></i> Inscription</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fa fa-sign-in"></i> Connexion</a>
+                <li *ngIf="!isLoggedIn" class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)" (click)="loggin(true)"><i class="fa fa-sign-in"></i> Connexion</a>
+                </li>
+
+                <!-- User profil dropdown visible when logged in -->
+                <li *ngIf="isLoggedIn" class="nav-item btn-group" dropdown>
+                    <a dropdownToggle class="nav-link dropdown-toggle"
+                       href="javascript:void(0)" role="button">
+                        <i class="fa fa-user-circle"></i>
+                    </a>
+                    <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
+                        <li role="menuitem"><a class="dropdown-item" href="#">Profil</a></li>
+                        <li role="menuitem"><a class="dropdown-item" href="#">Mes sandwiches</a></li>
+                        <li role="menuitem"><a class="dropdown-item" href="#">Commandes</a></li>
+                        <li class="divider dropdown-divider"></li>
+                        <li role="menuitem"><a class="dropdown-item" href="javascript:void(0)" (click)="loggin(false)">Déconnexion</a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fa fa-shopping-cart"></i></a>
+                    <a class="nav-link" href="#">
+                        <i class="fa fa-shopping-cart"> <span *ngIf="orderSandwichCount > 0" class="badge badge-primary">{{orderSandwichCount}}</span></i>
+                    </a>
                 </li>
             </ul>
         </div>
