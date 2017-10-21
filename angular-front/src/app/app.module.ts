@@ -20,6 +20,7 @@ import { ToppingService } from './services/topping.service';
 import { BreadService } from './services/bread.service';
 import { MemoryService } from './services/memory.service';
 import { BsDropdownModule } from 'ngx-bootstrap';
+import { OrderPageComponent } from './components/order-page/order-page.component';
 
 @NgModule({
     declarations: [
@@ -30,7 +31,8 @@ import { BsDropdownModule } from 'ngx-bootstrap';
         SandwichElementComponent,
         ContactPageComponent,
         TeamPageComponent,
-        CustomSandwichComponent
+        CustomSandwichComponent,
+        OrderPageComponent
     ],
     imports: [
         BrowserModule,
