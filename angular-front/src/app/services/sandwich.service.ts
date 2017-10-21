@@ -10,14 +10,14 @@ import { constants } from '../../environments/constants';
 @Injectable()
 export class SandwichService {
 
-    private baseUrl = environment.webServiceBaseUrl + constants.sandwichApi;
+    private baseUrl = environment.webServiceBaseUrl + constants.sandwichApi.baseUrl;
     private headers = new Headers({'Content-Type': 'application/json'});
 
     constructor(private http: Http) {
     }
 
     getSandwich(id: number): Promise<SandwichModel> {
-        return this.http.get(`${this.baseUrl}}/${id}`)
+        return this.http.get(`${this.baseUrl}/${id}`)
             .toPromise()
             .then(response => response.json() as SandwichModel)
             .catch(this.handleError);
