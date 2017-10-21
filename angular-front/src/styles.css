@@ -32,3 +32,7 @@
 .titleTeam {
     color: grey;
 }
+
+.has-error {
+    border: solid 1px red;
+}

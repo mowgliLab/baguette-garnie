@@ -4,8 +4,9 @@ import { MenuModel } from '../../models/menu.model';
 import { SandwichModel } from '../../models/sandwich.model';
 import { SandwichService } from '../../services/sandwich.service';
 import * as _ from 'lodash';
-import { BreadModel } from '../../models/bread.model';
-import { ToppingModel } from '../../models/topping.model';
+import { OrderedSandwichModel, OrderModel } from '../../models/order.model';
+import { MemoryService } from '../../services/memory.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-menu-page',
@@ -16,14 +17,21 @@ export class MenuPageComponent implements OnInit {
 
     menu: MenuModel;
     selectedSandwich: SandwichModel;
-    availlableBreads: BreadModel[];
-    availlableToppings: ToppingModel[];
-    availlableSize: any;
+    availlableSize = [];
 
-    constructor(
-        private menuService: MenuService,
-        private sandwichService: SandwichService
-    ) { }
+    orderForm: FormGroup;
+    orderedSandwich: OrderedSandwichModel;
+    currentOrder: OrderModel;
+
+    constructor(private menuService: MenuService,
+                private sandwichService: SandwichService,
+                private memoryService: MemoryService,
+                private formBuilder: FormBuilder) {
+        this.orderForm = formBuilder.group({
+            quantity: [1, Validators.required],
+            sandwichSize: 1
+        });
+    }
 
     ngOnInit() {
         this.menuService.getMenu()
@@ -32,29 +40,45 @@ export class MenuPageComponent implements OnInit {
                 this.menu = menu;
             });
         this.availlableSize = SandwichModel.sizeValues;
-    }
-
-    openCustomSandwichEditor(event: any) {
-        event.stopPropagation();
-        alert('open editor');
-        return false;
+        this.memoryService.currentOrder.subscribe(order => this.currentOrder = order);
     }
 
     showDetails(sandwich: SandwichModel, modalTemplate: any) {
         if (sandwich) {
             this.selectedSandwich = sandwich;
             this.sandwichService.getSandwich(this.selectedSandwich.id)
-                .then(sandwich => _.merge(this.selectedSandwich, sandwich));
+                .then(sandwichRes => _.merge(this.selectedSandwich, sandwichRes));
         }
         modalTemplate.show();
     }
 
-    addOrder(sandwich: SandwichModel, modalTemplate: any) {
+    openAddOrder(sandwich: SandwichModel, modalTemplate: any) {
         if (sandwich) {
             this.selectedSandwich = sandwich;
             this.sandwichService.getSandwich(this.selectedSandwich.id)
-                .then(sandwich => _.merge(this.selectedSandwich, sandwich));
+                .then(sandwichRes => {
+                    _.merge(this.selectedSandwich, sandwichRes);
+                    this.orderedSandwich = Object.assign(new OrderedSandwichModel(), sandwichRes);
+                });
         }
         modalTemplate.show();
+    }
+
+    addToOrder(value: any, modalTemplate: any) {
+        console.log(this.orderedSandwich);
+        this.orderedSandwich.quantity = value.quantity;
+        this.orderedSandwich.sandwichSize = value.sandwichSize;
+
+        this.currentOrder.sandwiches.push(this.orderedSandwich);
+        this.memoryService.setOrder(this.currentOrder);
+
+        this.selectedSandwich = undefined;
+        modalTemplate.hide();
+        console.log(this.currentOrder);
+    }
+
+    submitForm(value: any): void {
+        console.log('Reactive Form Data: ');
+        console.log(value);
     }
 }
