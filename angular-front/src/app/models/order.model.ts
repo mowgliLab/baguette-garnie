@@ -3,15 +3,6 @@ import { SandwichModel } from './sandwich.model';
 export class OrderModel {
     public id: number;
     public date: Date;
-    // public totalPrice: number;
-
-    get totalPrice() {
-        let total = 0;
-        for (const sand of this.sandwiches) {
-            total += sand.price * sand.quantity;
-        }
-        return total;
-    }
 
     public sandwiches: Array<OrderedSandwichModel>;
 

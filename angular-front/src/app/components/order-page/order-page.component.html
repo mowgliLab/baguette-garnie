@@ -3,7 +3,7 @@
 </div>
 
 <div class="row">
-    <div class="col-md-12" align="center">
+    <div class="col-md-12" align="center" *ngIf="!isLoggedIn">
         <p>
             <a href="#">Inscrivez-vous</a> ou <a href="#">connectez-vous</a> pour pouvoir passer votre commande.
         </p>
@@ -22,21 +22,24 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr *ngFor="let sandwichRow of currentOrder.sandwiches">
+                    <tr *ngFor="let sandwichRow of currentOrder.sandwiches;let i = index">
                         <td>{{sandwichRow.name}}</td>
                         <td class="text-center">
-                            <select id="size" class="form-control" [value]="sandwichRow.sandwichSize">
+                            <select id="size" [name]="'size' + i" class="form-control"
+                                    [(ngModel)]="sandwichRow.sandwichSize" (change)="updateOrder()">
                                 <option *ngFor="let size of availlableSize" value="{{size.value}}">{{size.name}}</option>
                             </select>
                         </td>
                         <td class="text-center">
-                            <input id="quantity" type="number" class="form-control" min="1" max="100" [value]="sandwichRow.quantity" (change)="updateQuantity()">
+                            <input id="quantity" [name]="'quantity' + i" type="number"
+                                   class="form-control" min="1" max="100"
+                                   [(ngModel)]="sandwichRow.quantity" (change)="updateOrder()">
                         </td>
                         <td class="text-right">
                             {{sandwichRow.price}}
                         </td>
                         <td>
-                            <button type="button" class="close pull-right" aria-label="Close">
+                            <button type="button" class="close pull-right" aria-label="Close" (click)="removeSandwich(sandwichRow)">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </td>
@@ -45,7 +48,7 @@
                 </table>
 
                 <div class="container text-right">
-                    <p>Total ({{orderedSandwichCount}} sandwiche{{orderedSandwichCount > 1 ? 's' : ''}}): <b>{{currentOrder.totalPrice | currency:'EUR':true}}</b></p>
+                    <p>Total ({{totalSandwiches}} sandwiche{{orderedSandwichCount > 1 ? 's' : ''}}): <b>{{orderPrice | currency:'EUR':true}}</b></p>
                 </div>
                 <div class="container text-right">
                     <button type="submit" class="btn btn-primary align">Passer commande</button>
