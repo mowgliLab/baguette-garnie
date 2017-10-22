@@ -1,3 +1,59 @@
-<p>
-  order-page works!
-</p>
+<div class="col-md-12" align="center">
+    <h2><u>Vos commandes :</u></h2>
+</div>
+
+<div class="row">
+    <div class="col-md-12" align="center">
+        <p>
+            <a href="#">Inscrivez-vous</a> ou <a href="#">connectez-vous</a> pour pouvoir passer votre commande.
+        </p>
+    </div>
+    <div class="container section" id="order-section">
+        <div class="row">
+            <form  *ngIf="currentOrder?.sandwiches && currentOrder.sandwiches.length > 0">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col" class="w-50">Sandwiches</th>
+                        <th scope="col" class="text-center">Taille</th>
+                        <th scope="col" class="text-center">Quantité</th>
+                        <th scope="col" class="text-right w-25">Prix unitaire</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let sandwichRow of currentOrder.sandwiches">
+                        <td>{{sandwichRow.name}}</td>
+                        <td class="text-center">
+                            <select id="size" class="form-control" [value]="sandwichRow.sandwichSize">
+                                <option *ngFor="let size of availlableSize" value="{{size.value}}">{{size.name}}</option>
+                            </select>
+                        </td>
+                        <td class="text-center">
+                            <input id="quantity" type="number" class="form-control" min="1" max="100" [value]="sandwichRow.quantity" (change)="updateQuantity()">
+                        </td>
+                        <td class="text-right">
+                            {{sandwichRow.price}}
+                        </td>
+                        <td>
+                            <button type="button" class="close pull-right" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="container text-right">
+                    <p>Total ({{orderedSandwichCount}} sandwiche{{orderedSandwichCount > 1 ? 's' : ''}}): <b>{{currentOrder.totalPrice | currency:'EUR':true}}</b></p>
+                </div>
+                <div class="container text-right">
+                    <button type="submit" class="btn btn-primary align">Passer commande</button>
+                </div>
+            </form>
+
+            <div *ngIf="!currentOrder?.sandwiches || currentOrder.sandwiches.length <= 0" class="container text-center"><p><b>Aucun sandwich commandé.</b></p></div>
+
+        </div>
+    </div>
+</div>

@@ -16,7 +16,12 @@ export class MemoryService {
     private _currentOrder = new BehaviorSubject<OrderModel>(new OrderModel());
     currentOrder = this._currentOrder.asObservable();
 
-    constructor () { }
+    constructor () {
+        const storageCurrentOrder = JSON.parse(localStorage.getItem('currentOrder')) as OrderModel;
+        if (storageCurrentOrder) {
+            this.setOrder(storageCurrentOrder);
+        }
+    }
 
     setIsLoggedIn(newValue: boolean) {
         this._isLoggedIn.next(newValue);
@@ -29,6 +34,9 @@ export class MemoryService {
         if (order.sandwiches && order.sandwiches.length >= 0) {
             sandwichCount = _.sumBy(order.sandwiches, s => s.quantity);
         }
+
+        localStorage.setItem('currentOrder', JSON.stringify(order));
+
         this._currentOrder.next(order);
         this._orderSandwichesCount.next(sandwichCount);
     }
