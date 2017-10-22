@@ -10,7 +10,8 @@
     </div>
     <div class="container section" id="order-section">
         <div class="row">
-            <form  *ngIf="currentOrder?.sandwiches && currentOrder.sandwiches.length > 0">
+            <form *ngIf="currentOrder?.sandwiches && currentOrder.sandwiches.length > 0"
+                  (submit)="postOrder()">
                 <table class="table">
                     <thead>
                     <tr>
@@ -27,19 +28,22 @@
                         <td class="text-center">
                             <select id="size" [name]="'size' + i" class="form-control"
                                     [(ngModel)]="sandwichRow.sandwichSize" (change)="updateOrder()">
-                                <option *ngFor="let size of availlableSize" value="{{size.value}}">{{size.name}}</option>
+                                <option *ngFor="let size of availlableSize" value="{{size.value}}">{{size.name}}
+                                </option>
                             </select>
                         </td>
                         <td class="text-center">
                             <input id="quantity" [name]="'quantity' + i" type="number"
                                    class="form-control" min="1" max="100"
+                                   [ngClass]="{'has-error': sandwichRow.quantity < 1}"
                                    [(ngModel)]="sandwichRow.quantity" (change)="updateOrder()">
                         </td>
                         <td class="text-right">
                             {{sandwichRow.price}}
                         </td>
                         <td>
-                            <button type="button" class="close pull-right" aria-label="Close" (click)="removeSandwich(sandwichRow)">
+                            <button type="button" class="close pull-right" aria-label="Close"
+                                    (click)="removeSandwich(sandwichRow)">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </td>
@@ -48,14 +52,16 @@
                 </table>
 
                 <div class="container text-right">
-                    <p>Total ({{totalSandwiches}} sandwiche{{orderedSandwichCount > 1 ? 's' : ''}}): <b>{{orderPrice | currency:'EUR':true}}</b></p>
+                    <p>Total ({{totalSandwiches}} sandwiche{{orderedSandwichCount > 1 ? 's' : ''}}): <b>{{orderPrice |
+                        currency:'EUR':true}}</b></p>
                 </div>
                 <div class="container text-right">
-                    <button type="submit" class="btn btn-primary align">Passer commande</button>
+                    <button [disabled]="hasError" type="submit" class="btn btn-primary align">Passer commande</button>
                 </div>
             </form>
 
-            <div *ngIf="!currentOrder?.sandwiches || currentOrder.sandwiches.length <= 0" class="container text-center"><p><b>Aucun sandwich commandé.</b></p></div>
+            <div *ngIf="!currentOrder?.sandwiches || currentOrder.sandwiches.length <= 0" class="container text-center">
+                <p><b>Aucun sandwich commandé.</b></p></div>
 
         </div>
     </div>

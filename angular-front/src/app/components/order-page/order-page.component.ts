@@ -16,6 +16,7 @@ export class OrderPageComponent implements OnInit {
     currentOrder: OrderModel;
     orderedSandwichCount: number;
     isLoggedIn: boolean;
+    hasError: boolean;
 
     constructor(private memoryService: MemoryService,
                 private ref: ChangeDetectorRef) {
@@ -23,7 +24,10 @@ export class OrderPageComponent implements OnInit {
 
     ngOnInit() {
         this.availlableSize = SandwichModel.sizeValues;
-        this.memoryService.currentOrder.subscribe(order => this.currentOrder = order);
+        this.memoryService.currentOrder.subscribe(order => {
+            this.hasError = _.some(order.sandwiches, s => s.quantity < 1);
+            this.currentOrder = order;
+        });
         this.memoryService.orderSandwichesCount.subscribe(count => this.orderedSandwichCount = count);
         this.memoryService.isLoggedIn.subscribe(res => this.isLoggedIn = res);
     }
@@ -43,5 +47,9 @@ export class OrderPageComponent implements OnInit {
     removeSandwich(sandwich: OrderedSandwichModel) {
         _.remove(this.currentOrder.sandwiches, s => s === sandwich);
         this.updateOrder();
+    }
+
+    postOrder() {
+        console.log('appel de la fonction pour créer lorder', this.currentOrder);
     }
 }

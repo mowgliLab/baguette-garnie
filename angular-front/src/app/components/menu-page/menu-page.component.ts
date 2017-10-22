@@ -6,7 +6,7 @@ import { SandwichService } from '../../services/sandwich.service';
 import * as _ from 'lodash';
 import { OrderedSandwichModel, OrderModel } from '../../models/order.model';
 import { MemoryService } from '../../services/memory.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-menu-page',
@@ -28,7 +28,7 @@ export class MenuPageComponent implements OnInit {
                 private memoryService: MemoryService,
                 private formBuilder: FormBuilder) {
         this.orderForm = formBuilder.group({
-            quantity: [1, Validators.required],
+            quantity: new FormControl(1, [Validators.required, Validators.min(1)]),
             sandwichSize: 1
         });
     }
