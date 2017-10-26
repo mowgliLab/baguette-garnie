@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SandwichModel } from '../../models/sandwich.model';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
+import { SandwichUtil } from '../../utils/sandwich.util';
 
 @Component({
     selector: 'app-sandwich-element',
@@ -32,4 +33,7 @@ export class SandwichElementComponent implements OnInit {
         return false;
     }
 
+    get computedPrice(): number {
+        return SandwichUtil.computeSandwichPriceFromFullPrice(this.sandwich);
+    }
 }

@@ -3,6 +3,7 @@ import { SandwichOnMenuEntity } from '../entyties/sandwich-on-menu.entity';
 import { ToppingModel } from './topping.model';
 import { BreadModel } from './bread.model';
 import { ToppingEntity } from '../entyties/topping.entity';
+import { SandwichUtil } from '../utils/sandwich.util';
 
 export class SandwichModel {
     public id: number;
@@ -33,7 +34,8 @@ export class SandwichModel {
         result.description = sandwichEntity.description;
         result.imageSrc = sandwichEntity.imageSrc;
         result.orderNumber = orderNumber;
-        result.price = 5.25; // TODO Implement!!!
+        result.price = SandwichUtil.computeSandwichPrice(sandwichEntity);
+
 
         if (sandwichEntity.toppings && sandwichEntity.toppings.length > 0) {
             result.toppings = [];

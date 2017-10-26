@@ -4,6 +4,7 @@ import { MemoryService } from '../../services/memory.service';
 import { SandwichModel } from '../../models/sandwich.model';
 import { OrderUtil } from '../../utils/order.util';
 import * as _ from 'lodash';
+import { SandwichUtil } from '../../utils/sandwich.util';
 
 @Component({
     selector: 'app-order-page',
@@ -51,5 +52,9 @@ export class OrderPageComponent implements OnInit {
 
     postOrder() {
         console.log('appel de la fonction pour créer lorder', this.currentOrder);
+    }
+
+    computeRowPrice(sandwich: OrderedSandwichModel): number {
+        return SandwichUtil.computeSandwichPriceFromFullPrice(sandwich, sandwich.sandwichSize);
     }
 }

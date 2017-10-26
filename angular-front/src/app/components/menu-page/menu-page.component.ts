@@ -7,6 +7,7 @@ import * as _ from 'lodash';
 import { OrderedSandwichModel, OrderModel } from '../../models/order.model';
 import { MemoryService } from '../../services/memory.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { SandwichUtil } from '../../utils/sandwich.util';
 
 @Component({
     selector: 'app-menu-page',
@@ -22,6 +23,7 @@ export class MenuPageComponent implements OnInit {
     orderForm: FormGroup;
     orderedSandwich: OrderedSandwichModel;
     currentOrder: OrderModel;
+    totalOrderRowPrice: number;
 
     constructor(private menuService: MenuService,
                 private sandwichService: SandwichService,
@@ -47,7 +49,9 @@ export class MenuPageComponent implements OnInit {
         if (sandwich) {
             this.selectedSandwich = sandwich;
             this.sandwichService.getSandwich(this.selectedSandwich.id)
-                .then(sandwichRes => _.merge(this.selectedSandwich, sandwichRes));
+                .then(sandwichRes => {
+                    _.merge(this.selectedSandwich, sandwichRes);
+                });
         }
         modalTemplate.show();
     }
@@ -59,6 +63,7 @@ export class MenuPageComponent implements OnInit {
                 .then(sandwichRes => {
                     _.merge(this.selectedSandwich, sandwichRes);
                     this.orderedSandwich = Object.assign(new OrderedSandwichModel(), sandwichRes);
+                    this.totalOrderRowPrice = SandwichUtil.computeSandwichPriceFromFullPrice(this.orderedSandwich, 1) * 1;
                 });
         }
         modalTemplate.show();
@@ -80,5 +85,9 @@ export class MenuPageComponent implements OnInit {
     submitForm(value: any): void {
         console.log('Reactive Form Data: ');
         console.log(value);
+    }
+
+    computeTotalPrice(value: any) {
+        this.totalOrderRowPrice = SandwichUtil.computeSandwichPriceFromFullPrice(this.orderedSandwich, value.sandwichSize) * value.quantity;
     }
 }

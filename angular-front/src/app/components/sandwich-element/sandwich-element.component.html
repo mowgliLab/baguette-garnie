@@ -4,7 +4,7 @@
     <div class="card-body">
         <h4 class="card-title">{{sandwich.name}}</h4>
         <p class="card-text">{{sandwich.description}}</p>
-        <p><b>{{sandwich.price | currency:'EUR':true}}</b></p>
+        <p><b>{{computedPrice | currency:'EUR':true}}</b></p>
         <button (click)="addToOrderClick($event)" class="btn btn-primary">
             Ajouter au panier
         </button>

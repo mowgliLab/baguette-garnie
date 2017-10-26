@@ -39,7 +39,7 @@
                                    [(ngModel)]="sandwichRow.quantity" (change)="updateOrder()">
                         </td>
                         <td class="text-right">
-                            {{sandwichRow.price}}
+                            {{computeRowPrice(sandwichRow) | currency:'EUR':true}}
                         </td>
                         <td>
                             <button type="button" class="close pull-right" aria-label="Close"

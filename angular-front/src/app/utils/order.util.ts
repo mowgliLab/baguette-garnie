@@ -1,5 +1,6 @@
 import { OrderModel } from '../models/order.model';
 import * as _ from 'lodash';
+import { SandwichUtil } from './sandwich.util';
 
 export class OrderUtil {
     public static computeOrderPrice(order: OrderModel): number {
@@ -8,7 +9,7 @@ export class OrderUtil {
 
         let total = 0;
         for (const sand of order.sandwiches) {
-            total += sand.price * sand.quantity;
+            total += SandwichUtil.computeSandwichPrice(sand, sand.sandwichSize) * sand.quantity;
         }
         return total;
     }
