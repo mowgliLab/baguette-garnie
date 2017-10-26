@@ -1,10 +1,13 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { OrderedSandwichModel, OrderModel } from '../../models/order.model';
+import { Component, OnInit } from '@angular/core';
+import * as _ from 'lodash';
+
 import { MemoryService } from '../../services/memory.service';
+
+import { OrderedSandwichModel, OrderModel } from '../../models/order.model';
 import { SandwichModel } from '../../models/sandwich.model';
 import { OrderUtil } from '../../utils/order.util';
-import * as _ from 'lodash';
 import { SandwichUtil } from '../../utils/sandwich.util';
+
 
 @Component({
     selector: 'app-order-page',
@@ -14,13 +17,13 @@ import { SandwichUtil } from '../../utils/sandwich.util';
 export class OrderPageComponent implements OnInit {
 
     availlableSize = [];
+
     currentOrder: OrderModel;
     orderedSandwichCount: number;
     isLoggedIn: boolean;
     hasError: boolean;
 
-    constructor(private memoryService: MemoryService,
-                private ref: ChangeDetectorRef) {
+    constructor(private memoryService: MemoryService) {
     }
 
     ngOnInit() {
@@ -33,16 +36,12 @@ export class OrderPageComponent implements OnInit {
         this.memoryService.isLoggedIn.subscribe(res => this.isLoggedIn = res);
     }
 
+
+    // *********************************
+    // Manage Order
+    // *********************************
     updateOrder() {
         this.memoryService.setOrder(this.currentOrder);
-    }
-
-    get orderPrice() {
-        return OrderUtil.computeOrderPrice(this.currentOrder);
-    }
-
-    get totalSandwiches() {
-        return OrderUtil.computeTotalOrderedSandwiches(this.currentOrder);
     }
 
     removeSandwich(sandwich: OrderedSandwichModel) {
@@ -52,6 +51,18 @@ export class OrderPageComponent implements OnInit {
 
     postOrder() {
         console.log('appel de la fonction pour créer lorder', this.currentOrder);
+    }
+
+
+    // *********************************
+    // Computed values to display
+    // *********************************
+    get orderPrice() {
+        return OrderUtil.computeOrderPrice(this.currentOrder);
+    }
+
+    get totalSandwiches() {
+        return OrderUtil.computeTotalOrderedSandwiches(this.currentOrder);
     }
 
     computeRowPrice(sandwich: OrderedSandwichModel): number {

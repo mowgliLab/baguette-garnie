@@ -1,12 +1,14 @@
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import * as _ from 'lodash';
+
 import { MenuService } from '../../services/menu.service';
+import { SandwichService } from '../../services/sandwich.service';
+import { MemoryService } from '../../services/memory.service';
+
 import { MenuModel } from '../../models/menu.model';
 import { SandwichModel } from '../../models/sandwich.model';
-import { SandwichService } from '../../services/sandwich.service';
-import * as _ from 'lodash';
 import { OrderedSandwichModel, OrderModel } from '../../models/order.model';
-import { MemoryService } from '../../services/memory.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SandwichUtil } from '../../utils/sandwich.util';
 
 @Component({
@@ -19,11 +21,11 @@ export class MenuPageComponent implements OnInit {
     menu: MenuModel;
     selectedSandwich: SandwichModel;
     availlableSize = [];
-
-    orderForm: FormGroup;
     orderedSandwich: OrderedSandwichModel;
     currentOrder: OrderModel;
     totalOrderRowPrice: number;
+
+    orderForm: FormGroup;
 
     constructor(private menuService: MenuService,
                 private sandwichService: SandwichService,
@@ -45,6 +47,10 @@ export class MenuPageComponent implements OnInit {
         this.memoryService.currentOrder.subscribe(order => this.currentOrder = order);
     }
 
+
+    // *********************************
+    // Elements clicks
+    // *********************************
     showDetails(sandwich: SandwichModel, modalTemplate: any) {
         if (sandwich) {
             this.selectedSandwich = sandwich;
@@ -69,6 +75,10 @@ export class MenuPageComponent implements OnInit {
         modalTemplate.show();
     }
 
+
+    // *********************************
+    // Manage Order
+    // *********************************
     addToOrder(value: any, modalTemplate: any) {
         console.log(this.orderedSandwich);
         this.orderedSandwich.quantity = value.quantity;
@@ -82,11 +92,10 @@ export class MenuPageComponent implements OnInit {
         console.log(this.currentOrder);
     }
 
-    submitForm(value: any): void {
-        console.log('Reactive Form Data: ');
-        console.log(value);
-    }
 
+    // *********************************
+    // Manage computed values to display
+    // *********************************
     computeTotalPrice(value: any) {
         this.totalOrderRowPrice = SandwichUtil.computeSandwichPriceFromFullPrice(this.orderedSandwich, value.sandwichSize) * value.quantity;
     }
