@@ -7,6 +7,7 @@ export class UserModel {
     public mail: string;
     public totalLoyalty: number;
     public password: string;
+    // public role: string;
 
     public static fromEntity(entity: UserEntity): UserModel {
         const result = new UserModel();
@@ -17,6 +18,7 @@ export class UserModel {
         result.mail = entity.mail;
         result.totalLoyalty = entity.totalLoyalty;
         result.password = entity.password;
+        // result.role = entity.role;
 
         return result;
     }

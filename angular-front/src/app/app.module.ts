@@ -21,6 +21,11 @@ import { BreadService } from './services/bread.service';
 import { MemoryService } from './services/memory.service';
 import { BsDropdownModule } from 'ngx-bootstrap';
 import { OrderPageComponent } from './components/order-page/order-page.component';
+import { RegisterPageComponent } from './components/register-page/register-page.component';
+import { LoginPageComponent } from './components/login-page/login-page.component';
+import { ProfilPageComponent } from './components/profil-page/profil-page.component';
+import { MySandwichesPageComponent } from './components/my-sandwiches-page/my-sandwiches-page.component';
+import { OrderHistoryPageComponent } from './components/order-history-page/order-history-page.component';
 
 @NgModule({
     declarations: [
@@ -32,7 +37,12 @@ import { OrderPageComponent } from './components/order-page/order-page.component
         ContactPageComponent,
         TeamPageComponent,
         CustomSandwichComponent,
-        OrderPageComponent
+        OrderPageComponent,
+        RegisterPageComponent,
+        LoginPageComponent,
+        ProfilPageComponent,
+        MySandwichesPageComponent,
+        OrderHistoryPageComponent
     ],
     imports: [
         BrowserModule,

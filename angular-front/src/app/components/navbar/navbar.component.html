@@ -31,10 +31,10 @@
 
                 <!-- Login and register button when logged out -->
                 <li *ngIf="!isLoggedIn" class="nav-item">
-                    <a class="nav-link" href="#"><i class="fa fa-user-circle"></i> Inscription</a>
+                    <a class="nav-link" routerLink="/register"><i class="fa fa-user-circle"></i> Inscription</a>
                 </li>
                 <li *ngIf="!isLoggedIn" class="nav-item">
-                    <a class="nav-link" href="javascript:void(0)" (click)="loggin(true)"><i class="fa fa-sign-in"></i> Connexion</a>
+                    <a class="nav-link" routerLink="/login"><i class="fa fa-sign-in"></i> Connexion</a>
                 </li>
 
                 <!-- User profil dropdown visible when logged in -->
@@ -44,9 +44,9 @@
                         <i class="fa fa-user-circle"></i>
                     </a>
                     <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
-                        <li role="menuitem"><a class="dropdown-item" href="#">Profil</a></li>
-                        <li role="menuitem"><a class="dropdown-item" href="#">Mes sandwiches</a></li>
-                        <li role="menuitem"><a class="dropdown-item" href="#">Commandes</a></li>
+                        <li role="menuitem"><a class="dropdown-item" routerLink="/my-profil">Profil</a></li>
+                        <li role="menuitem"><a class="dropdown-item" routerLink="/my-sandwiches">Mes sandwiches</a></li>
+                        <li role="menuitem"><a class="dropdown-item" routerLink="/my-orders">Commandes</a></li>
                         <li class="divider dropdown-divider"></li>
                         <li role="menuitem"><a class="dropdown-item" href="javascript:void(0)" (click)="loggin(false)">Déconnexion</a>
                         </li>
