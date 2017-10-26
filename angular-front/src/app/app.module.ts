@@ -26,6 +26,7 @@ import { LoginPageComponent } from './components/login-page/login-page.component
 import { ProfilPageComponent } from './components/profil-page/profil-page.component';
 import { MySandwichesPageComponent } from './components/my-sandwiches-page/my-sandwiches-page.component';
 import { OrderHistoryPageComponent } from './components/order-history-page/order-history-page.component';
+import { AuthenticationGuard } from './guards/AuthenticationGuard';
 
 @NgModule({
     declarations: [
@@ -60,7 +61,8 @@ import { OrderHistoryPageComponent } from './components/order-history-page/order
         BreadService,
         BsModalService,
         MemoryService,
-        FormBuilder
+        FormBuilder,
+        AuthenticationGuard
     ],
     bootstrap: [AppComponent]
 })

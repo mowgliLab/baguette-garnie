@@ -12,6 +12,7 @@ import { LoginPageComponent } from '../components/login-page/login-page.componen
 import { ProfilPageComponent } from '../components/profil-page/profil-page.component';
 import { OrderHistoryPageComponent } from '../components/order-history-page/order-history-page.component';
 import { MySandwichesPageComponent } from '../components/my-sandwiches-page/my-sandwiches-page.component';
+import { AuthenticationGuard } from '../guards/AuthenticationGuard';
 
 const routes: Routes = [
     {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -23,9 +24,9 @@ const routes: Routes = [
     {path: 'order', component: OrderPageComponent},
     {path: 'register', component: RegisterPageComponent},
     {path: 'login', component: LoginPageComponent},
-    {path: 'my-profil', component: ProfilPageComponent},
-    {path: 'my-orders', component: OrderHistoryPageComponent},
-    {path: 'my-sandwiches', component: MySandwichesPageComponent},
+    {path: 'my-profil', component: ProfilPageComponent, canActivate: [AuthenticationGuard] },
+    {path: 'my-orders', component: OrderHistoryPageComponent, canActivate: [AuthenticationGuard] },
+    {path: 'my-sandwiches', component: MySandwichesPageComponent,  canActivate: [AuthenticationGuard] },
 
     // otherwise redirect to home
     { path: '**', redirectTo: '' }
