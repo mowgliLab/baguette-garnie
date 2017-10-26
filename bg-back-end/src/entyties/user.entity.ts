@@ -18,7 +18,7 @@ export class UserEntity {
         type: 'enum',
         enum: ['user', 'admin']
     })
-    pulbic role: string;
+    public role: string;
 
     @Column({
         name: 'user_mail',

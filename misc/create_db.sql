@@ -187,13 +187,13 @@ INSERT INTO topping_on_sandwich (tos_sandwich_id, tos_topping_id) VALUES
 INSERT INTO menu (menu_name, menu_is_active) VALUES
   ('Winter menu', TRUE);
 
-INSERT INTO sandwich_on_menu (som_sandwich_id, som_menu_id) VALUES
-  (1, 1),
-  (2, 1),
-  (3, 1),
-  (4, 1),
-  (5, 1),
-  (6, 1);
+INSERT INTO sandwich_on_menu (som_sandwich_id, som_menu_id, som_order_number) VALUES
+  (1, 1, 2),
+  (2, 1, 4),
+  (3, 1, 1),
+  (4, 1, 0),
+  (5, 1, 3),
+  (6, 1, 5);
 
 INSERT INTO purchase_order (order_date, order_user_id, order_status) VALUES
   ('2017-08-06', 1, 'open'),

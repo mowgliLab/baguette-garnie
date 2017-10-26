@@ -20,7 +20,7 @@ export class OrderEntity {
     })
     public date: Date;
 
-    @column({
+    @Column({
         name: 'order_status',
         type: 'enum',
         enum: ['open', 'payed', 'closed']

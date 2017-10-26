@@ -12,7 +12,7 @@ export class MenuBl {
             .leftJoinAndSelect('sandwichOnMenu.sandwich', 'sandwich')
             .leftJoinAndSelect('sandwich.toppings', 'topping')
             .leftJoinAndSelect('sandwich.bread', 'bread')
-            .where('menu.isActive = true').getOne().then(menu => {
+            .where('menu.isActive = true').orderBy('sandwichOnMenu.orderNumber, sandwich.name').getOne().then(menu => {
                 return MenuModel.fromEntity(menu);
         });
     }
