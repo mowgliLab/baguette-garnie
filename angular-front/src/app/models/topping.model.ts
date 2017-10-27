@@ -4,4 +4,6 @@ export class ToppingModel {
     public price: number;
     public orderNumber: number;
     public type: number;
+    public checked?: boolean;
+  
 }

@@ -1,3 +1,47 @@
+
+<div class="row">
+  <div class="col-md-12" align="center">
+      <h2>Customisez votre sandwich</h2>
+  </div>
+  <div class="col-md-12" align="center">
+      <h3>1. Choix du pain</h3>
+  </div>
+  <div class="row justify-content-center">
+    <div (click)="addBreadInBasket(bread.name)" *ngFor="let bread of breads" class="col-md-4 clickable-card" id="breadCart" align="center">
+        <p>{{bread.name}}</p>
+        <p>{{bread.description}}</p>
+    </div>
+  </div>
+  <div class="col-md-12" align="center">
+      <h3>2. Choix des éléments</h3>
+  </div>
+</div>
+<ul>
+  <div *ngFor="let topping of toppings">
+    <!--
+      <label [class.selected]="cb1.checked">
+          <input #cb1 type="checkbox" value="{{topping.name}}" (change)="writeInBasket(cb1)">&nbsp;{{topping.price}}€<span class="tab">{{topping.name}}</span>
+      </label>
+    -->
+    <label>
+        <input type="checkbox"
+               name="toppings"
+               value="{{topping.id}}"
+               [(ngModel)]="topping.checked"/>
+        {{topping.name}}
+    </label>
+  </div>
+</ul>
+
+  
+<div class="basketDiv">
+  
+    <h3 align="center"><u>Panier</u></h3>
+    <pre>{{logBreadName}}</pre>
+    <p *ngFor="let option of selectedOptions">{{option.name}}</p>
+</div>
+
+
 <ul>
   <li *ngFor="let topping of toppings" >
     {{topping.name}}
@@ -8,3 +52,4 @@
   {{bread.name}}
   </li>
 </ul>
+

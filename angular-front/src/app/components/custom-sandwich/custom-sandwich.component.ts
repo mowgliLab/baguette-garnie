@@ -18,8 +18,16 @@ export class CustomSandwichComponent implements OnInit {
 
   ) { }
 
+  private logToppingName: string ='';
   
-  
+  private writeInBasket(element: HTMLInputElement): void {
+    this.logToppingName += `${element.value} \n`;
+  }
+  private logBreadName ='';
+
+  private addBreadInBasket(element: string) : void {
+    this.logBreadName = `${element} \n`;
+  }
   
 
   ngOnInit() {
@@ -34,6 +42,13 @@ export class CustomSandwichComponent implements OnInit {
       this.breads = breads;
     } )
 // this.availlableSize = SandwichModel.sizeValues;
+
   }
+
+  get selectedOptions() { 
+  return this.toppings
+            .filter(opt => opt.checked);
+}
+  
 
 }
