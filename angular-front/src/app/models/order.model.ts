@@ -1,8 +1,16 @@
 import { SandwichModel } from './sandwich.model';
 
 export class OrderModel {
+
+    public static readonly statusValues = {
+        open: 'open',
+        closed: 'closed',
+        canceled: 'canceled'
+    };
+
     public id: number;
     public date: Date;
+    public status: string;
 
     public sandwiches: Array<OrderedSandwichModel>;
 

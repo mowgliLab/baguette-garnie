@@ -3,6 +3,8 @@ import { OrderEntity } from '../entyties/order.entity';
 import { OrderRowEntity } from '../entyties/order-row.entity';
 
 export class OrderModel {
+
+
     public id: number;
     public date: Date;
     public totalPrice: number;

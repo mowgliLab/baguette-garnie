@@ -1,0 +1,60 @@
+<div class="row">
+    <div class="col-md-12" align="center">
+        <h2><u>Payment</u></h2>
+    </div>
+    <div class="col-md-12" align="center">
+        <p>
+            Votre commande sera disponible dans notre magasin à partir de<br>30 minutes après validation de votre payement.
+        </p>
+    </div>
+    <div class="col-md-12">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col" class="w-50">Sandwiches</th>
+                <th scope="col" class="text-center">Taille</th>
+                <th scope="col" class="text-center">Quantité</th>
+                <th scope="col" class="text-right w-25">Prix unitaire</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let sandwichRow of currentOrder.sandwiches;let i = index">
+                <td>{{sandwichRow.name}}</td>
+                <td class="text-center">{{getRowSizeName(sandwichRow)}}</td>
+                <td class="text-center">{{sandwichRow.quantity}}</td>
+                <td class="text-right">
+                    {{computeRowPrice(sandwichRow) | currency:'EUR':true}}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div align="center">
+            <button type="button" (click)="onCancel()" class="btn btn-default">annuler</button>
+            <button type="button" (click)="onValidatePayment(successModal)" class="btn btn-primary">payer</button>
+        </div>
+    </div>
+</div>
+
+<div bsModal #successModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Validé</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="successModal.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p>Merci pour votre confiance.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" (click)="successModal.hide()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

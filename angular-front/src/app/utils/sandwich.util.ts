@@ -12,7 +12,6 @@ export class SandwichUtil {
         totalPrice += sandwich.bread.price;
 
         return totalPrice * (2 + (+size)) / 5;
-
     }
 
     public static computeSandwichPriceFromFullPrice(sandwich: SandwichModel, size = 1) {
@@ -22,6 +21,10 @@ export class SandwichUtil {
 
         // use formula sizedSandwichPrice = sandwichFullPrice * (2 + size)/5
         return sandwich.price * (2 + (+size)) / 5;
+    }
 
+    public static getSizeName(sizeValue: number | string): string {
+        const values = SandwichModel.sizeValues;
+        return _.find(values, v => v.value === +sizeValue).name;
     }
 }

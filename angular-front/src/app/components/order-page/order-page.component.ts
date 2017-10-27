@@ -7,6 +7,7 @@ import { OrderedSandwichModel, OrderModel } from '../../models/order.model';
 import { SandwichModel } from '../../models/sandwich.model';
 import { OrderUtil } from '../../utils/order.util';
 import { SandwichUtil } from '../../utils/sandwich.util';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -23,7 +24,8 @@ export class OrderPageComponent implements OnInit {
     isLoggedIn: boolean;
     hasError: boolean;
 
-    constructor(private memoryService: MemoryService) {
+    constructor(private memoryService: MemoryService,
+                private route: Router) {
     }
 
     ngOnInit() {
@@ -51,6 +53,7 @@ export class OrderPageComponent implements OnInit {
 
     postOrder() {
         console.log('appel de la fonction pour créer lorder', this.currentOrder);
+        this.route.navigate(['confirm']);
     }
 
 

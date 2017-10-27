@@ -1,4 +1,3 @@
-
 export const constants = {
     menuApi: {
         baseUrl: '/api/public/menu'
@@ -9,8 +8,11 @@ export const constants = {
     toppingApi: {
         baseUrl: '/api/public/topping'
     },
-    //modif perso
-    breadApi:{
+    // modif perso
+    breadApi: {
         baseUrl: '/api/public/bread'
+    },
+    orderApi: {
+        baseUrl: '/api/public/order'
     }
 };

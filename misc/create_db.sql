@@ -75,7 +75,7 @@ CREATE TABLE purchase_order (
   order_id      INT                              NOT NULL AUTO_INCREMENT PRIMARY KEY,
   order_date    DATETIME                         NOT NULL,
   order_user_id INT                              NOT NULL,
-  order_status  ENUM ('open', 'payed', 'closed') NOT NULL DEFAULT 'open',
+  order_status  ENUM ('open', 'closed', 'canceled') NOT NULL DEFAULT 'open',
   FOREIGN KEY (order_user_id) REFERENCES user (user_id)
 );
 
@@ -196,22 +196,22 @@ INSERT INTO sandwich_on_menu (som_sandwich_id, som_menu_id, som_order_number) VA
   (6, 1, 5);
 
 INSERT INTO purchase_order (order_date, order_user_id, order_status) VALUES
-  ('2017-08-06', 1, 'open'),
-  ('2017-08-08', 3, 'open'),
-  ('2017-08-15', 1, 'open'),
-  ('2017-08-25', 1, 'open'),
-  ('2017-08-21', 5, 'open'),
-  ('2017-08-31', 6, 'open'),
-  ('2017-09-01', 2, 'open'),
-  ('2017-09-06', 1, 'open'),
-  ('2017-09-07', 4, 'open'),
-  ('2017-09-08', 1, 'open'),
-  ('2017-09-11', 2, 'open'),
-  ('2017-09-15', 1, 'open'),
-  ('2017-09-19', 2, 'open'),
-  ('2017-09-23', 2, 'open'),
-  ('2017-09-24', 4, 'open'),
-  ('2017-09-25', 1, 'open');
+  ('2017-08-06', 1, 'closed'),
+  ('2017-08-08', 3, 'closed'),
+  ('2017-08-15', 1, 'canceled'),
+  ('2017-08-25', 1, 'closed'),
+  ('2017-08-21', 5, 'closed'),
+  ('2017-08-31', 6, 'closed'),
+  ('2017-09-01', 2, 'closed'),
+  ('2017-09-06', 1, 'closed'),
+  ('2017-09-07', 4, 'closed'),
+  ('2017-09-08', 1, 'canceled'),
+  ('2017-09-11', 2, 'closed'),
+  ('2017-09-15', 1, 'closed'),
+  ('2017-09-19', 2, 'canceled'),
+  ('2017-09-23', 2, 'closed'),
+  ('2017-09-24', 4, 'closed'),
+  ('2017-09-25', 1, 'closed');
 
 
 INSERT INTO order_row (or_sandwich_id, or_order_id, or_quantity, or_size) VALUES
