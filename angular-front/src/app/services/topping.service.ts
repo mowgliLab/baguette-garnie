@@ -21,7 +21,7 @@ export class ToppingService {
             .then(response => response.json() as Array<ToppingModel>)
             .catch(this.handleError);
     }
-
+    
     // ---------------- PRIVATE ----------------
     private handleError(error: any): Promise<any> {
         console.error('An error occured', error); // for demo purpose only.

@@ -1,8 +1,22 @@
 #breadCart {
     border-style: solid;
 }
-
-
+#elmntCart {
+    border-style: solid;
+}
+#elmntCart h4{
+    text-align: center;
+    padding: 20px;
+}
+#title {
+    padding : 30px;
+}
+#line {
+    width: auto;
+    height: 2px;
+    border-style: solid black;
+    position: absolute;
+}
 .clickable-card {
     cursor: pointer;
     cursor: hand;
