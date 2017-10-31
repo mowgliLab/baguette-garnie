@@ -5,171 +5,65 @@
 
 
 <div class="row justify-content-center">
-<div class="col-md-3">
-    <form class="well form-horizontal" action=" " method="post"
-        role="form" id="profil_form">
-
-        <fieldset>
-
-            <!-- Text input-->
-
+    <div class="col-md-3">
+        <form #f="ngForm" novalidate (ngSubmit)="save(f.value, f.valid)">
             <div class="form-group">
-                <label class="control-label">Prénom</label>
-                <div class="inputGroupContainer">
-                    <div class="input-group">
-                         <input name="firstname"
-                            value=""
-                            placeholder="Prénom"
-                            class="form-control" type="text">
-                    </div>
-                </div>
+                <label>Nom</label>
+                <input type="text" class="form-control" 
+                name="name" [(ngModel)]="user.name" 
+                #name="ngModel" required minlength="1">
+                <small [hidden]="name.valid || (name.pristine && !f.submitted)" class="text-danger">
+                    Nom requis (minimum 1 caractère) !
+                    </small>
+                
             </div>
-
-            <!-- Text input-->
-
             <div class="form-group">
-                <label class="control-label">Nom</label>
-                <div class="inputGroupContainer">
-                    <div class="input-group">
-                        <input name="lastname"
-                            value=""
-                            placeholder="Nom"
-                            class="form-control" type="text">
-                    </div>
-                </div>
+                <label>Prénom</label>
+                <input type="text" class="form-control" 
+                    name="firstname" [(ngModel)]="user.firstname" 
+                    #firstname="ngModel" required minlength="1">
+                <small [hidden]="firstname.valid || (firstname.pristine && !f.submitted)" class="text-danger">
+                        Prénom requis (minimum 1 caractère) !
+                    </small>
+                
             </div>
-
-            <!-- Text input-->
             <div class="form-group">
-                <label class="control-label">e-Mail</label>
-                <div class="inputGroupContainer">
-                    <div class="input-group">
-                        <input id="emailInscr" name="email"
-                            value=""
-                            placeholder="e-Mail"
-                            class="form-control" type="text">
-                    </div>
-                </div>
+                <label>e-Mail</label>
+                <input type="email" class="form-control" 
+                    name="mail" [(ngModel)]="user.mail" 
+                    #mail="ngModel" required email>
+                <small [hidden]="mail.valid || (mail.pristine && !f.submitted)" class="text-danger">
+                        e-Mail invalide !
+                    </small>
+                
             </div>
-
-
-    
-
-            <!-- Text input-->
-
             <div class="form-group">
-                <label class="control-label">Adresse</label>
-                <div class="inputGroupContainer">
-                    <div class="input-group">
-                        <input name="address"
-                            value=""
-                            placeholder="Adresse"
-                            class="form-control" type="text">
-                    </div>
-                </div>
+                <label>Mot de passe</label>
+                <input type="password" class="form-control" 
+                    name="password" [(ngModel)]="user.password" 
+                    #password="ngModel" required minlength="8">
+                <small [hidden]="password.valid || (password.pristine && !f.submitted)" class="text-danger">
+                        Le mot de passe doit comporter au moins 8 caractères !
+                    </small>
+                
             </div>
-
-            <!-- Text input-->
-
-            <div class="form-group">
-                <label class="control-label">Ville</label>
-                <div class="inputGroupContainer">
-                    <div class="input-group">
-                        <input name="city"
-                            value=""
-                            placeholder="Ville"
-                            class="form-control" type="text">
-                    </div>
-                </div>
-            </div>
-
-            
-
-            <!-- Text input-->
-
-            <div class="form-group">
-                <label class="control-label">Code postal</label>
-                <div class="inputGroupContainer">
-                    <div class="input-group">
-                        <input name="postcode"
-                            value=""
-                            placeholder="Code postal"
-                            class="form-control" type="number">
-                    </div>
-                </div>
-            </div>
-
-            <!-- Text input-->
-
-            <div class="form-group">
-                    <label class="control-label">Nom d'utilisateur</label>
-                    <div class="inputGroupContainer">
-                        <div class="input-group">
-                            <input name="user"
-                                value=""
-                                placeholder="Nom d'utilisateur"
-                                class="form-control" type="text">
-                        </div>
-                    </div>
-                </div>
-
             
             
-
-            <!-- Text input-->
-
-            <div class="form-group">
-                <label class="control-label">Mot de passe</label>
-                <div class="inputGroupContainer">
-                    <div class="input-group">
-                        <input
-                            name="password"
-                            value=""
-                            placeholder="Mot de passe"
-                            class="form-control" type="password">
-                    </div>
-                </div>
-            </div>
-
-            <!-- Text input-->
-
-            <div class="form-group">
-                <label class="control-label">Confirmer mot de passe</label>
-                <div class="inputGroupContainer">
-                    <div class="input-group">
-                        <input
-                            name="confirmationpassword"
-                            placeholder="Mot de passe"
-                            class="form-control" type="password">
-                    </div>
-                </div>
-            </div>
-
-
-            
-
-            
-            
-
             <!-- Button -->
             <div class="form-group">
                 <label class="col-md-4 control-label"></label>
                 <div class="col-md-6">
-                    <!--  <button type="submit" class="btn btn-primary">-->
+                    
                     <button type="submit" id="InscriptionButton" class="btn btn-primary">
                         S'enregister
                         <span class="glyphicon glyphicon-send"></span>
                     </button>
-                    <button type="button" class="btn btn-default"
-                        data-dismiss="modal">
+                    <button type="button" class="btn btn-default">
                         Annuler
                     </button>
                 </div>
             </div>
-
-        </fieldset>
-
-    </form>
-</div>
+        </form>
+    </div>
 </div>
 

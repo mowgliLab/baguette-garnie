@@ -57,6 +57,7 @@ import { OrderConfirmPageComponent } from './components/order-confirm-page/order
         BsDropdownModule.forRoot()
     ],
     providers: [
+        
         MenuService,
         SandwichService,
         ToppingService,
