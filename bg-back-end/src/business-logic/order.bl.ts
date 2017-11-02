@@ -1,5 +1,3 @@
-import { MenuModel } from '../models/menu.model';
-import { MenuEntity } from '../entyties/menu.entity';
 import { getRepository } from 'typeorm';
 import { OrderModel } from '../models/order.model';
 import { OrderEntity } from '../entyties/order.entity';

@@ -14,6 +14,7 @@ import { UserModel } from '../models/user.model';
 export class SandwichRoute extends BaseRoute {
 
     static readonly publicRoute = '/public/sandwich';
+    static readonly privateRoute = '/private/sandwich';
     private sandwichBl: SandwichBl;
     private userBl: UserBl;
 
@@ -24,16 +25,17 @@ export class SandwichRoute extends BaseRoute {
      * @method create
      * @static
      */
-    public static create(router: Router) {
+    public static create(router: Router, loginRouter: Router) {
         console.log('[SandwichRoute::create] Creating sandwich route.');
+
+        loginRouter.post(`${SandwichRoute.privateRoute}/custom`, (req: Request, res: Response) => {
+            new SandwichRoute().createCustomSandwich(req, res);
+        });
 
         router.get(`${SandwichRoute.publicRoute}/:id`, (req: Request, res: Response) => {
             new SandwichRoute().getSandwich(req, res);
         });
 
-        router.post(`${SandwichRoute.publicRoute}/custom`, (req: Request, res: Response) => {
-            new SandwichRoute().createCustomSandwich(req, res);
-        });
     }
 
     /**
