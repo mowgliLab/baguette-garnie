@@ -51,7 +51,7 @@ export class UserRoute extends BaseRoute {
             userRoute.getUser(req, res);
         });
 
-        adminRouter.get(`${UserRoute.adminRoute}`, (req: Request, res: Response) => {
+        router.get(`${UserRoute.adminRoute}`, (req: Request, res: Response) => {
             userRoute.getUsers(req, res);
         });
     }
@@ -137,13 +137,13 @@ export class UserRoute extends BaseRoute {
     public getUsers(req: Request, res: Response) {
         this.userBl.getUsers().then(users => {
             res.json(users);
-        });
+        }).catch(err => res.json(err));
     }
 
     public getUser(req: Request, res: Response) {
         this.userBl.getUser(+req.params['id']).then(user => {
             res.json(user);
-        });
+        }).catch(err => res.json(err));
     }
 
 }

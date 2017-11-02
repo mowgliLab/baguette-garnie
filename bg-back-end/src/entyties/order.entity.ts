@@ -8,6 +8,8 @@ import { OrderRowEntity } from './order-row.entity';
 @Entity('purchase_order')
 export class OrderEntity {
 
+    public static readonly statusEnum = ['open', 'payed', 'closed'];
+
     @PrimaryGeneratedColumn({
         name: 'order_id',
         type: 'int'
@@ -23,9 +25,9 @@ export class OrderEntity {
     @Column({
         name: 'order_status',
         type: 'enum',
-        enum: ['open', 'payed', 'closed']
+        enum: OrderEntity.statusEnum
     })
-
+    public status: string;
 
     // ---------------- RELATIONS ----------------
     @ManyToOne(type => UserEntity, user => user.orders)

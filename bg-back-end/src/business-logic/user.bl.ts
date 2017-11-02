@@ -54,6 +54,20 @@ export class UserBl {
 
     public getUsers(): Promise<UserModel[]> {
         const userRepository = getRepository(UserEntity);
+
+
+        // return userRepository
+        //     .createQueryBuilder('user')
+        //     .where('user.id IN (:idList)', {idList: [1,2,3]})
+        //     .getMany()
+        //     .then(users => {
+        //         const result = [];
+        //         for (const u of users) {
+        //             result.push(UserModel.fromEntity(u));
+        //         }
+        //         return result;
+        //     });
+
         return userRepository
             .find()
             .then(users => {

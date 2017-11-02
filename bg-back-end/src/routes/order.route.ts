@@ -2,6 +2,9 @@ import { Request, Response, Router } from 'express';
 import { BaseRoute } from './base-route';
 
 import { OrderBl } from '../business-logic/order.bl';
+import { OrderModel } from '../models/order.model';
+import { UserBl } from '../business-logic/user.bl';
+import { UserModel } from '../models/user.model';
 
 
 /**
@@ -13,6 +16,7 @@ export class OrderRoute extends BaseRoute {
 
     static readonly publicRoute = '/public/order';
     private orderBl: OrderBl;
+    private userBl: UserBl;
 
     /**
      * Create the routes.
@@ -33,6 +37,10 @@ export class OrderRoute extends BaseRoute {
         router.get(`${OrderRoute.publicRoute}/:id`, (req: Request, res: Response) => {
             new OrderRoute().getOrdersFromUser(req, res);
         });
+
+        router.post(OrderRoute.publicRoute, (req: Request, res: Response) => {
+            new OrderRoute().createOrder(req, res);
+        });
     }
 
     /**
@@ -44,6 +52,7 @@ export class OrderRoute extends BaseRoute {
     constructor() {
         super();
         this.orderBl = new OrderBl();
+        this.userBl = new UserBl();
     }
 
     /**
@@ -67,11 +76,19 @@ export class OrderRoute extends BaseRoute {
             .catch(err => res.json(err));
     }
 
-    public addOrder(req: Request, res: Response) {
-        // Add a new order to the current user.
-        // Get user from session
-        // Link User and Order
-        // Compute unit prices for rows
-        // Send to DB
+    public createOrder(req: Request, res: Response) {
+        this.userBl.getUser(1).then(user => {
+            const currentUser = user as UserModel;
+            const order = req.body['order'] as OrderModel;
+
+            this.orderBl.createOrder(order, currentUser)
+                .then(orderResult => res.json(orderResult))
+                .catch(err => res.json(err));
+        }).catch(err => console.log(err));
+        // const user = req.session.user;
+        // const order = req.body['order'] as OrderModel;
+        // this.orderBl.createOrder(order, user)
+        //     .then(orderResult => res.json(orderResult))
+        //     .catch(err => res.json(err));
     }
 }
