@@ -25,7 +25,7 @@ export class OrderRoute extends BaseRoute {
      * @method create
      * @static
      */
-    public static create(router: Router) {
+    public static create(router: Router, loginRouter: Router) {
         console.log('[OrderRoute::create] Creating order route.');
 
         // add home page route
@@ -38,6 +38,8 @@ export class OrderRoute extends BaseRoute {
             new OrderRoute().getOrdersFromUser(req, res);
         });
 
+        // TODO Uncomment after login integration
+        // loginRouter.post(OrderRoute.publicRoute, (req: Request, res: Response) => {
         router.post(OrderRoute.publicRoute, (req: Request, res: Response) => {
             new OrderRoute().createOrder(req, res);
         });

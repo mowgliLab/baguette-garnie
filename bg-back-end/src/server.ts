@@ -86,7 +86,7 @@ export class Server {
         ToppingRoute.create(router);
         BreadRoute.create(router);
         UserRoute.create(router, loginRouter, adminRouter);
-        OrderRoute.create(router);
+        OrderRoute.create(router, loginRouter);
 
         // Use router middleware
         this.app.use('/api', [router, loginRouter, adminRouter]);

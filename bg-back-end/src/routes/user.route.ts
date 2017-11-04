@@ -43,15 +43,21 @@ export class UserRoute extends BaseRoute {
 
 
         // --------------- USER UTILS ---------------
-        adminRouter.get(`${UserRoute.adminRoute}/encrypt`, (req: Request, res: Response) => {
+        // TODO Uncomment after login integration
+        // adminRouter.get(`${UserRoute.adminRoute}/encrypt`, (req: Request, res: Response) => {
+        router.get(`${UserRoute.adminRoute}/encrypt`, (req: Request, res: Response) => {
             userRoute.encryptAll(req, res);
         });
 
-        loginRouter.get(`${UserRoute.privateRoute}/:id`, (req: Request, res: Response) => {
+        // TODO Uncomment after login integration
+        // loginRouter.get(`${UserRoute.privateRoute}/:id`, (req: Request, res: Response) => {
+        router.get(`${UserRoute.privateRoute}/:id`, (req: Request, res: Response) => {
             userRoute.getUser(req, res);
         });
 
+        // TODO Uncomment after login integration
         router.get(`${UserRoute.adminRoute}`, (req: Request, res: Response) => {
+        // adminRouter.get(`${UserRoute.adminRoute}`, (req: Request, res: Response) => {
             userRoute.getUsers(req, res);
         });
     }
