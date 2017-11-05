@@ -4,6 +4,10 @@ import { UserEntity } from '../entyties/user.entity';
 import * as bcrypt from 'bcrypt';
 import { OrderModel } from '../models/order.model';
 import { OrderEntity } from '../entyties/order.entity';
+import { SandwichEntity } from '../entyties/sandwich.entity';
+import { SandwichModel } from '../models/sandwich.model';
+
+import * as _ from 'lodash';
 
 export class UserBl {
 
@@ -59,6 +63,16 @@ export class UserBl {
 
                 return result;
             });
+    }
+
+    public getCustomSandwichesOfUser(userId: number): Promise<Array<SandwichModel>> {
+        const sandwichRepository = getRepository(SandwichEntity);
+        return sandwichRepository.createQueryBuilder('sandwich')
+            .leftJoinAndSelect('sandwich.toppings', 'topping')
+            .leftJoinAndSelect('sandwich.bread', 'bread')
+            .leftJoin('sandwich.user', 'user')
+            .where(`user.id = ${userId}`)
+            .getMany().then(sandwiches => _.map(sandwiches, s => SandwichModel.fromEntity(s)));
     }
 
     // TODO remove after tests

@@ -48,6 +48,11 @@ export class UserRoute extends BaseRoute {
             userRoute.getUserOrders(req, res);
         });
 
+        router.get(`${UserRoute.privateRoute}/:id/sandwiches`, (req: Request, res: Response) => {
+        // loginRouter.get(`${UserRoute.privateRoute}/:id/sandwiches`, (req: Request, res: Response) => {
+            userRoute.getUserSandwiches(req, res);
+        })
+
 
         // --------------- USER UTILS ---------------
         // TODO Uncomment after login integration
@@ -162,6 +167,12 @@ export class UserRoute extends BaseRoute {
     public getUserOrders(req: Request, res: Response) {
         this.userBl.getOrdersForUser(+req.params['id'])
             .then(orders => res.json(orders))
+            .catch(err => res.json(err));
+    }
+
+    public getUserSandwiches(req: Request, res: Response) {
+        this.userBl.getCustomSandwichesOfUser(+req.params['id'])
+            .then(response => res.json(response))
             .catch(err => res.json(err));
     }
 }
