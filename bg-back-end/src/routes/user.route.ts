@@ -42,6 +42,13 @@ export class UserRoute extends BaseRoute {
         });
 
 
+        // --------------- USER ORDERS ---------------
+        router.get(`${UserRoute.privateRoute}/:id/orders`, (req: Request, res: Response) => {
+        // loginRouter.get(`${UserRoute.privateRoute}/:id/orders`, (req: Request, res: Response) => {
+            userRoute.getUserOrders(req, res);
+        });
+
+
         // --------------- USER UTILS ---------------
         // TODO Uncomment after login integration
         // adminRouter.get(`${UserRoute.adminRoute}/encrypt`, (req: Request, res: Response) => {
@@ -152,4 +159,9 @@ export class UserRoute extends BaseRoute {
         }).catch(err => res.json(err));
     }
 
+    public getUserOrders(req: Request, res: Response) {
+        this.userBl.getOrdersForUser(+req.params['id'])
+            .then(orders => res.json(orders))
+            .catch(err => res.json(err));
+    }
 }

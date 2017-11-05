@@ -2,6 +2,8 @@ import { UserModel } from '../models/user.model';
 import { getRepository } from 'typeorm';
 import { UserEntity } from '../entyties/user.entity';
 import * as bcrypt from 'bcrypt';
+import { OrderModel } from '../models/order.model';
+import { OrderEntity } from '../entyties/order.entity';
 
 export class UserBl {
 
@@ -16,16 +18,14 @@ export class UserBl {
         const userRepository = getRepository(UserEntity);
         return userRepository
             .save(UserModel.toEntity(user))
-            .then(res => res.id)
-            .catch(error => -1);
+            .then(res => res.id);
     }
 
     public updateUser(user: UserModel): Promise<boolean> {
         const userRepository = getRepository(UserEntity);
         return userRepository
             .updateById(user.id, UserModel.toEntity(user))
-            .then(res => true)
-            .catch(error => false);
+            .then(res => true);
     }
 
     public checkAuthentication(mail: string, password: string): Promise<UserModel> {
@@ -42,14 +42,32 @@ export class UserBl {
     }
 
 
+    public getOrdersForUser(userId: number): Promise<Array<OrderModel>> {
+        const orderRepository = getRepository(OrderEntity);
+        return orderRepository.createQueryBuilder('order')
+            .leftJoinAndSelect('order.orderRows', 'row')
+            .leftJoinAndSelect('order.user', 'user')
+            .leftJoinAndSelect('row.sandwich', 'sandwich')
+            .leftJoinAndSelect('sandwich.toppings', 'topping')
+            .leftJoinAndSelect('sandwich.bread', 'bread')
+            .where(`user.id = ${userId}`).getMany().then(orders => {
+                const result = [];
+
+                for (const order of orders) {
+                    result.push(OrderModel.fromEntity(order));
+                }
+
+                return result;
+            });
+    }
+
     // TODO remove after tests
     // ----------UTILS----------
     public getUser(userId: number): Promise<UserModel | void> {
         const userRepository = getRepository(UserEntity);
         return userRepository
             .findOneById(userId)
-            .then(user => UserModel.fromEntity(user))
-            .catch(error => console.log('user doesnot exist'));
+            .then(user => UserModel.fromEntity(user));
     }
 
     public getUsers(): Promise<UserModel[]> {

@@ -28,24 +28,6 @@ export class OrderBl {
             });
     }
 
-    public getOrdersForUser(userId: number): Promise<Array<OrderModel>> {
-        const orderRepository = getRepository(OrderEntity);
-        return orderRepository.createQueryBuilder('order')
-            .leftJoinAndSelect('order.orderRows', 'row')
-            .leftJoinAndSelect('order.user', 'user')
-            .leftJoinAndSelect('row.sandwich', 'sandwich')
-            .leftJoinAndSelect('sandwich.toppings', 'topping')
-            .leftJoinAndSelect('sandwich.bread', 'bread')
-            .where(`user.id = ${userId}`).getMany().then(orders => {
-                const result = [];
-
-                for (const order of orders) {
-                    result.push(OrderModel.fromEntity(order));
-                }
-
-                return result;
-            });
-    }
 
     public createOrder(order: OrderModel, user: UserModel): Promise<OrderModel> {
         // create correct entity with relation.
@@ -82,6 +64,32 @@ export class OrderBl {
                 const test = OrderModel.fromEntity(result);
                 console.log('test', test);
                 return test;
+            });
+    }
+
+    public getOrder(orderId: number): Promise<OrderModel> {
+        const orderRepository = getRepository(OrderEntity);
+        console.log(orderId);
+        return orderRepository
+            .findOneById(orderId, {
+                join: {
+                    alias: 'order',
+                    leftJoinAndSelect: {
+                        'sandwicheRow': 'order.orderRows',
+                        'sandwich': 'sandwicheRow.sandwich'
+                    }
+                }
+            })
+            .then(order => OrderModel.fromEntity(order));
+    }
+
+    public updateOrder(orderId: number, orderStatus: string): Promise<boolean> {
+        const orderRepository = getRepository(OrderEntity);
+        return orderRepository
+            .updateById(orderId, {status: orderStatus})
+            .then(res => {
+                console.log(res);
+                return true;
             });
     }
 

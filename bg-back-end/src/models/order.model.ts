@@ -60,15 +60,15 @@ export class OrderedSandwichModel extends SandwichModel {
     public sandwichSize: number;
 
     public static fromRowEntity(entity: OrderRowEntity): OrderedSandwichModel {
-
         let result: OrderedSandwichModel;
+
         if (entity.sandwich) {
             result = SandwichModel.fromEntity(entity.sandwich) as OrderedSandwichModel;
         } else {
             result = new OrderedSandwichModel();
-            result.price = entity.unitPrice;
         }
 
+        result.price = entity.unitPrice || result.price;
         result.quantity = entity.quantity;
         result.sandwichSize = entity.sandwichSize;
 
