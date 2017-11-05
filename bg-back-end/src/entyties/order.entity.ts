@@ -8,7 +8,7 @@ import { OrderRowEntity } from './order-row.entity';
 @Entity('purchase_order')
 export class OrderEntity {
 
-    public static readonly statusEnum = ['open', 'payed', 'closed'];
+    public static readonly statusEnum = ['open', 'closed', 'canceled'];
 
     @PrimaryGeneratedColumn({
         name: 'order_id',

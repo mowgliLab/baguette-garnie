@@ -103,6 +103,10 @@ export class OrderRoute extends BaseRoute {
     }
 
     public updateOrder(req: Request, res: Response) {
-        res.json('TO IMPLEMENT');
+        const orderId = +req.params['id'];
+        const status = req.body['status'];
+        this.orderBl.updateOrder(orderId, status)
+            .then(result => res.json(result))
+            .catch(err => res.json(err));
     }
 }
