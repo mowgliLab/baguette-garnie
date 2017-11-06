@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { OrderedSandwichModel, OrderModel } from '../../models/order.model';
 import { MemoryService } from '../../services/memory.service';
 import { SandwichUtil } from '../../utils/sandwich.util';
+import { OrderService } from '../../services/order.service';
+import { promise } from 'selenium-webdriver';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-order-confirm-page',
@@ -10,9 +13,20 @@ import { SandwichUtil } from '../../utils/sandwich.util';
 })
 export class OrderConfirmPageComponent implements OnInit {
 
+    readonly messageStatus = {
+        paymentAccepted: 'payed',
+        paymentRefused: 'paymentRefused',
+        canceled: 'canceled',
+        error: 'error'
+    };
+    updateStatus: string;
+    @ViewChild('messageModal')messageModal;
+
     currentOrder: OrderModel;
 
-    constructor(private memoryService: MemoryService) {
+    constructor(private memoryService: MemoryService,
+                private orderService: OrderService,
+                private router: Router) {
     }
 
     ngOnInit() {
@@ -24,14 +38,34 @@ export class OrderConfirmPageComponent implements OnInit {
     }
 
     onCancel() {
-        // Appel du service pour mettre à jour la commande en tant que cancelled.
-        // Retour à la page de menu.
-        alert('Cancel Payment');
+        this.updateOrderStatus(OrderModel.statusValues.canceled)
+            .then(res => {
+                if (res) {
+                    this.updateStatus = this.messageStatus.canceled;
+                    this.memoryService.setOrder(new OrderModel());
+                } else {
+                    this.updateStatus = this.messageStatus.error;
+                }
+                this.messageModal.show();
+            });
     }
 
-    onValidatePayment(modal: any) {
+    onValidatePayment() {
         // Passage de la commande comme closed.
-        modal.show();
+        this.updateOrderStatus(OrderModel.statusValues.closed)
+            .then(res => {
+                if (res) {
+                    this.updateStatus = this.messageStatus.paymentAccepted;
+                    this.memoryService.setOrder(new OrderModel());
+                } else {
+                    this.updateStatus = this.messageStatus.paymentRefused;
+                }
+                this.messageModal.show();
+            });
+    }
+
+    continueAfterAction() {
+        this.router.navigate(['/menu']);
     }
 
     computeRowPrice(sandwich: OrderedSandwichModel): number {
@@ -40,5 +74,9 @@ export class OrderConfirmPageComponent implements OnInit {
 
     getRowSizeName(sandwich: OrderedSandwichModel): string {
         return SandwichUtil.getSizeName(sandwich.sandwichSize);
+    }
+
+    private updateOrderStatus(status: string): Promise<boolean> {
+        return this.orderService.updateOrderStatus(this.currentOrder.id, status);
     }
 }

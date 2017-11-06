@@ -10,15 +10,36 @@ import { OrderModel } from '../models/order.model';
 @Injectable()
 export class OrderService {
 
-    private baseUrl = environment.webServiceBaseUrl + constants.orderApi.baseUrl;
+    private publicUrl = environment.webServiceBaseUrl + constants.orderApi.publicUrl;
+    private privateUrl = environment.webServiceBaseUrl + constants.orderApi.privateUrl;
     private headers = new Headers({'Content-Type': 'application/json'});
 
     constructor(private http: Http) {}
 
     getUserOrders(): Promise<OrderModel[]> {
-        return this.http.get(this.baseUrl)
+        return this.http.get(this.privateUrl)
             .toPromise()
             .then(response => response.json() as OrderModel[])
+            .catch(this.handleError);
+    }
+
+    public createNewOrder(order: OrderModel): Promise<OrderModel> {
+        const options = {
+            order: order
+        };
+        return this.http.post(this.privateUrl, options)
+            .toPromise()
+            .then(response => response.json() as OrderModel)
+            .catch(this.handleError);
+    }
+
+    public updateOrderStatus(orderId: number, newStatus: string): Promise<boolean>{
+        const options = {
+            status: newStatus
+        };
+        return this.http.put(`${this.privateUrl}/${orderId}`, options)
+            .toPromise()
+            .then(response => response)
             .catch(this.handleError);
     }
 

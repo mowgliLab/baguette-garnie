@@ -35,26 +35,39 @@
     </div>
 </div>
 
-<div bsModal #successModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+<div bsModal #messageModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
      aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title pull-left">Validé</h4>
-                <button type="button" class="close pull-right" aria-label="Close" (click)="successModal.hide()">
+                <h4 class="modal-title pull-left" *ngIf="updateStatus === messageStatus.paymentAccepted">Validé</h4>
+                <h4 class="modal-title pull-left" *ngIf="updateStatus === messageStatus.canceled">Annulé</h4>
+                <h4 class="modal-title pull-left" *ngIf="updateStatus === messageStatus.error || updateStatus === messageStatus.paymentRefused">Erreur</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="continueAfterAction()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-12" *ngIf="updateStatus === messageStatus.paymentAccepted">
                         <p>Merci pour votre confiance.</p>
+                    </div>
+                    <div class="col-sm-12" *ngIf="updateStatus === messageStatus.paymentRefused">
+                        <p>Un problème est survenu avec votre payment.</p>
+                    </div>
+                    <div class="col-sm-12" *ngIf="updateStatus === messageStatus.canceled">
+                        <p>Votre annulation a été prise en compte.</p>
+                        <p>Nou sespérons vous revoir rapidement.</p>
+                    </div>
+                    <div class="col-sm-12" *ngIf="updateStatus === messageStatus.error">
+                        <p>Un problème est survenu avec l'annulation.</p>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" (click)="successModal.hide()">Close</button>
+                <button type="button" class="btn btn-default" (click)="continueAfterAction()">Fermer</button>
             </div>
         </div>
     </div>
 </div>
+

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import * as _ from 'lodash';
 
 import { MemoryService } from '../../services/memory.service';
@@ -8,6 +8,7 @@ import { SandwichModel } from '../../models/sandwich.model';
 import { OrderUtil } from '../../utils/order.util';
 import { SandwichUtil } from '../../utils/sandwich.util';
 import { Router } from '@angular/router';
+import { OrderService } from '../../services/order.service';
 
 
 @Component({
@@ -16,6 +17,7 @@ import { Router } from '@angular/router';
     styleUrls: ['./order-page.component.css']
 })
 export class OrderPageComponent implements OnInit {
+    @ViewChild('orderErrorAlert')orderErrorAlert: any;
 
     availlableSize = [];
 
@@ -25,6 +27,7 @@ export class OrderPageComponent implements OnInit {
     hasError: boolean;
 
     constructor(private memoryService: MemoryService,
+                private orderService: OrderService,
                 private route: Router) {
     }
 
@@ -52,8 +55,15 @@ export class OrderPageComponent implements OnInit {
     }
 
     postOrder() {
-        console.log('appel de la fonction pour créer lorder', this.currentOrder);
-        this.route.navigate(['confirm']);
+        this.orderService.createNewOrder(this.currentOrder)
+            .then(res => {
+                if (res) {
+                    this.memoryService.setOrder(res);
+                    this.route.navigate(['confirm']);
+                } else {
+                    // Affichage de l'alert pour signaler l'erreur.
+                }
+            });
     }
 
 

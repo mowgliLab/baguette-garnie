@@ -19,7 +19,7 @@ import { CustomSandwichComponent } from './components/custom-sandwich/custom-san
 import { ToppingService } from './services/topping.service';
 import { BreadService } from './services/bread.service';
 import { MemoryService } from './services/memory.service';
-import { BsDropdownModule } from 'ngx-bootstrap';
+import { BsDropdownModule, AlertModule } from 'ngx-bootstrap';
 import { OrderPageComponent } from './components/order-page/order-page.component';
 import { RegisterPageComponent } from './components/register-page/register-page.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
@@ -28,6 +28,7 @@ import { MySandwichesPageComponent } from './components/my-sandwiches-page/my-sa
 import { OrderHistoryPageComponent } from './components/order-history-page/order-history-page.component';
 import { AuthenticationGuard } from './guards/AuthenticationGuard';
 import { OrderConfirmPageComponent } from './components/order-confirm-page/order-confirm-page.component';
+import { OrderService } from './services/order.service';
 
 @NgModule({
     declarations: [
@@ -54,10 +55,11 @@ import { OrderConfirmPageComponent } from './components/order-confirm-page/order
         FormsModule,
         ReactiveFormsModule,
         ModalModule.forRoot(),
-        BsDropdownModule.forRoot()
+        BsDropdownModule.forRoot(),
+        AlertModule.forRoot()
     ],
     providers: [
-        
+        OrderService,
         MenuService,
         SandwichService,
         ToppingService,
