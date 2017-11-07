@@ -19,11 +19,12 @@
 
 
 </div>
+<ng-container *ngIf="toppings">
 <div class="row">
   <div class="col-3" id="elmntCart">
     <h4>Principal</h4>
     <ul>
-      <div *ngFor="let topping of toppings">
+      <div *ngFor="let topping of toppings['1']">
         <label>
             <input type="checkbox"
                    name="toppings"
@@ -37,13 +38,13 @@
   <div class="col-md-3" id="elmntCart">
     <h4>Crudités</h4>
     <ul>
-      <div *ngFor="let topping of toppings">
+      <div *ngFor="let topping of toppings[2]">
         <label>
-            <input type="checkbox"
-                   name="toppings"
-                   value="{{topping.id}}"
-                   [(ngModel)]="topping.checked"/>
-            {{topping.name}}
+          <input type="checkbox"
+          name="toppings"
+          value="{{topping.id}}"
+          [(ngModel)]="topping.checked"/>
+          {{topping.name}}
         </label>
       </div>
     </ul>
@@ -51,19 +52,20 @@
   <div class="col-md-3" id="elmntCart">
     <h4>Sauce</h4>
     <ul>
-      <div *ngFor="let topping of toppings">
+      <div *ngFor="let topping of toppings[3]">
         
         <label>
-            <input type="checkbox"
-                   name="toppings"
-                   value="{{topping.id}}"
-                   [(ngModel)]="topping.checked"/>
-            {{topping.name}}
+          <input type="checkbox"
+          name="toppings"
+          value="{{topping.id}}"
+          [(ngModel)]="topping.checked"/>
+          {{topping.name}}
         </label>
       </div>
     </ul>
   </div>
 </div>
+</ng-container>
 <div class="col-md-12" align="center">
   <h3 id="title">3. Validation</h3>
 </div>

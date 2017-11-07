@@ -3,6 +3,7 @@ import { ToppingService } from '../../services/topping.service';
 import { ToppingModel } from '../../models/topping.model';
 import { BreadService } from '../../services/bread.service';
 import { BreadModel } from '../../models/bread.model';
+import * as _ from 'lodash';
 @Component({
   selector: 'app-custom-sandwich',
   templateUrl: './custom-sandwich.component.html',
@@ -10,7 +11,8 @@ import { BreadModel } from '../../models/bread.model';
 })
 export class CustomSandwichComponent implements OnInit {
 
-  toppings: Array<ToppingModel>;
+  toppings = {};
+  toppingsArray = [];
   breads: Array<BreadModel>;
   constructor(
     private toppingService: ToppingService,
@@ -31,10 +33,15 @@ export class CustomSandwichComponent implements OnInit {
   
 
   ngOnInit() {
+
     this.toppingService.getToppings()
     .then(toppings => {
-        console.log('getToppings end', toppings);
-        this.toppings = toppings;
+        //this.toppings = toppings;
+        this.toppings = _.groupBy(toppings, t => t.type);
+        this.toppingsArray = toppings
+        console.log('getToppings end', this.toppings);
+
+        
     });
     this.breadService.getBreads()
     .then(breads => {
@@ -47,7 +54,7 @@ export class CustomSandwichComponent implements OnInit {
   }
 
   get selectedOptions() { 
-  return this.toppings
+  return this.toppingsArray
             .filter(opt => opt.checked);
   }
   getTotalToppings() {
@@ -59,6 +66,7 @@ export class CustomSandwichComponent implements OnInit {
         }
     }
     return total;
+  
 }
   
   
