@@ -8,6 +8,8 @@ import * as _ from 'lodash';
 export class UserRoute extends BaseRoute {
 
     static readonly publicRoute = '/public/user';
+    static readonly adminRoute = '/admin/user';
+    static readonly privateRoute = '/private/user';
     private userBl: UserBl;
     private saltRound = 10;
 
@@ -18,7 +20,7 @@ export class UserRoute extends BaseRoute {
      * @method create
      * @static
      */
-    public static create(router: Router) {
+    public static create(router: Router, loginRouter: Router, adminRouter: Router) {
         console.log('[UserRoute::create] Creating user route.');
         const userRoute = new UserRoute();
 
@@ -40,17 +42,34 @@ export class UserRoute extends BaseRoute {
         });
 
 
+        // --------------- USER ORDERS ---------------
+        router.get(`${UserRoute.privateRoute}/:id/orders`, (req: Request, res: Response) => {
+        // loginRouter.get(`${UserRoute.privateRoute}/:id/orders`, (req: Request, res: Response) => {
+            userRoute.getUserOrders(req, res);
+        });
+
+        router.get(`${UserRoute.privateRoute}/:id/sandwiches`, (req: Request, res: Response) => {
+        // loginRouter.get(`${UserRoute.privateRoute}/:id/sandwiches`, (req: Request, res: Response) => {
+            userRoute.getUserSandwiches(req, res);
+        })
+
 
         // --------------- USER UTILS ---------------
-        router.get(`${UserRoute.publicRoute}/encrypt`, (req: Request, res: Response) => {
+        // TODO Uncomment after login integration
+        // adminRouter.get(`${UserRoute.adminRoute}/encrypt`, (req: Request, res: Response) => {
+        router.get(`${UserRoute.adminRoute}/encrypt`, (req: Request, res: Response) => {
             userRoute.encryptAll(req, res);
         });
 
-        router.get(`${UserRoute.publicRoute}/:id`, (req: Request, res: Response) => {
+        // TODO Uncomment after login integration
+        // loginRouter.get(`${UserRoute.privateRoute}/:id`, (req: Request, res: Response) => {
+        router.get(`${UserRoute.privateRoute}/:id`, (req: Request, res: Response) => {
             userRoute.getUser(req, res);
         });
 
-        router.get(`${UserRoute.publicRoute}`, (req: Request, res: Response) => {
+        // TODO Uncomment after login integration
+        router.get(`${UserRoute.adminRoute}`, (req: Request, res: Response) => {
+        // adminRouter.get(`${UserRoute.adminRoute}`, (req: Request, res: Response) => {
             userRoute.getUsers(req, res);
         });
     }
@@ -92,7 +111,7 @@ export class UserRoute extends BaseRoute {
             .then(user => {
                 if (user) {
                     req.session.userId = user.id;
-                    // req.session.role = 'admin';
+                    req.session.user = user;
                     return res.json(user);
                 } else {
                     return res.sendStatus(401);
@@ -114,14 +133,11 @@ export class UserRoute extends BaseRoute {
 
     public isAuthenticate(req: Request, res: Response) {
         const response = {status: false};
-        console.log(req.session);
-        if (req.session && req.session.userId) {
+        if (req.session && req.session.userId && req.session.cookie.originalMaxAge > 0) {
             response.status = true;
         }
         res.json(response);
     }
-
-
 
 
     // TODO remove after dev.
@@ -130,7 +146,7 @@ export class UserRoute extends BaseRoute {
             for (const u of users) {
                 u.password = bcrypt.hashSync(u.password, this.saltRound);
                 this.userBl.updateUser(u).then(success => {
-                    console.log((success ? 'SUCCESS' : 'ERROR') + ' : updated');
+                    console.log((success ? 'SUCCESS' : 'ERROR') + ' : updated', u.password);
                 });
             }
         }).then(() => res.json({message: 'Consult logs for further informations.'}));
@@ -139,13 +155,24 @@ export class UserRoute extends BaseRoute {
     public getUsers(req: Request, res: Response) {
         this.userBl.getUsers().then(users => {
             res.json(users);
-        });
+        }).catch(err => res.json(err));
     }
 
     public getUser(req: Request, res: Response) {
         this.userBl.getUser(+req.params['id']).then(user => {
             res.json(user);
-        });
+        }).catch(err => res.json(err));
     }
 
+    public getUserOrders(req: Request, res: Response) {
+        this.userBl.getOrdersForUser(+req.params['id'])
+            .then(orders => res.json(orders))
+            .catch(err => res.json(err));
+    }
+
+    public getUserSandwiches(req: Request, res: Response) {
+        this.userBl.getCustomSandwichesOfUser(+req.params['id'])
+            .then(response => res.json(response))
+            .catch(err => res.json(err));
+    }
 }

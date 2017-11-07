@@ -1,10 +1,11 @@
 import { SandwichModel } from '../models/sandwich.model';
 import * as _ from 'lodash';
 import { SandwichEntity } from '../entyties/sandwich.entity';
+import { SandwichBl } from '../business-logic/sandwich.bl';
 
 export class SandwichUtil {
     public static computeSandwichPrice(sandwich: SandwichModel | SandwichEntity, size = 3) {
-        if (!sandwich.toppings || sandwich.toppings.length < 0 || !sandwich.bread) {
+        if (!sandwich || !sandwich.toppings || sandwich.toppings.length < 0 || !sandwich.bread) {
             return null;
         }
 

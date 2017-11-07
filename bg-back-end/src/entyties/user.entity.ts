@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, BeforeInsert, AfterLoad } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, BeforeInsert, AfterLoad, BeforeUpdate } from 'typeorm';
 import { SandwichEntity } from './sandwich.entity';
 import { OrderEntity } from './order.entity';
 
@@ -6,6 +6,7 @@ import * as bcrypt from 'bcrypt';
 
 @Entity('user')
 export class UserEntity {
+    public static readonly roles = ['user', 'admin'];
 
     @PrimaryGeneratedColumn({
         name: 'user_id',
@@ -16,7 +17,7 @@ export class UserEntity {
     @Column({
         name: 'user_role',
         type: 'enum',
-        enum: ['user', 'admin']
+        enum: UserEntity.roles
     })
     public role: string;
 
@@ -71,5 +72,10 @@ export class UserEntity {
     @AfterLoad()
     fillPasswordString() {
         this.password = this.passwordBfr.toString();
+    }
+
+    @BeforeUpdate()
+    updatePassword() {
+        this.passwordBfr = new Buffer(this.password);
     }
 }

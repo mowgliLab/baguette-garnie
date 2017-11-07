@@ -23,6 +23,7 @@ import { UserEntity } from './entyties/user.entity';
 import { UserRoute } from './routes/user.route';
 import { OrderRoute } from './routes/order.route';
 import { OrderEntity } from './entyties/order.entity';
+import { BaseRoute } from './routes/base-route';
 
 /**
  * The server.
@@ -72,17 +73,23 @@ export class Server {
         // Create a router to handle api request
         let router: express.Router;
         router = express.Router();
+        let loginRouter: express.Router;
+        loginRouter = express.Router();
+        loginRouter.use(BaseRoute.requireLogin);
+        let adminRouter: express.Router;
+        adminRouter = express.Router();
+        adminRouter.use(BaseRoute.requireLoginAdmin);
 
         // Menu request
         MenuRoute.create(router);
-        SandwichRoute.create(router);
+        SandwichRoute.create(router, loginRouter);
         ToppingRoute.create(router);
         BreadRoute.create(router);
-        UserRoute.create(router);
-        OrderRoute.create(router);
+        UserRoute.create(router, loginRouter, adminRouter);
+        OrderRoute.create(router, loginRouter);
 
         // Use router middleware
-        this.app.use('/api', router);
+        this.app.use('/api', [router, loginRouter, adminRouter]);
     }
 
     /**
@@ -123,6 +130,7 @@ export class Server {
         // Allow cross origine
         this.app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
             res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
+            res.header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
             res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
             res.header('Access-Control-Allow-Credentials', 'true');
             next();
@@ -131,14 +139,16 @@ export class Server {
         // Create connection
         const connectionManager: ConnectionManager = getConnectionManager();
         const options = _.merge(ConnectionManagerBl.connexionOptions, ConnectionManagerBl.entities);
+
         connectionManager.create(options).connect().then(connection => {
-            // create repositories
             connection.getRepository(MenuEntity);
             connection.getRepository(SandwichEntity);
             connection.getRepository(ToppingEntity);
             connection.getRepository(BreadEntity);
             connection.getRepository(UserEntity);
             connection.getRepository(OrderEntity);
+        }).catch(err => {
+            console.log('Error on create connection', err);
         });
 
         // catch 404 and forward to error handler

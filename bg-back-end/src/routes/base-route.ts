@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { UserEntity } from '../entyties/user.entity';
 
 /**
  * Constructor
@@ -18,11 +19,22 @@ export class BaseRoute {
 
 
     // --------------- MIDDLEWARE ---------------
-    public requireLogin(req: Request, res: Response, next: NextFunction) {
-        if (req.session && req.session.userId) {
+    public static requireLogin(req: Request, res: Response, next: NextFunction) {
+        if (req.session && req.session.user && req.session.cookie.originalMaxAge > 0) {
             return next();
         } else {
             const err = new Error('You must be logged in to view this page.');
+            return next(err);
+        }
+    }
+
+    public static requireLoginAdmin(req: Request, res: Response, next: NextFunction) {
+        if (req.session && req.session.user
+            && req.session.user.role === UserEntity.roles[1]
+            && req.session.cookie.originalMaxAge > 0) {
+            return next();
+        } else {
+            const err = new Error('You must be admin in to view this page.');
             return next(err);
         }
     }

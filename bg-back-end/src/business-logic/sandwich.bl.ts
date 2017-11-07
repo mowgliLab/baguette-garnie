@@ -16,10 +16,6 @@ export class SandwichBl {
             });
     }
 
-    public getSandwiches(): SandwichModel {
-        return new SandwichModel();
-    }
-
     public saveCustomSandwich(sandwich: SandwichModel, user: UserModel): Promise<any> {
         const sandwichRepository = getRepository(SandwichEntity);
         const sandwichEntity = SandwichModel.toEntity(sandwich, true);

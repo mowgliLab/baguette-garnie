@@ -27,24 +27,26 @@ export class SandwichModel {
         } else {
             sandwichEntity = entity;
         }
-        console.log(sandwichEntity);
 
         result.id = sandwichEntity.id;
         result.name = sandwichEntity.name;
         result.description = sandwichEntity.description;
         result.imageSrc = sandwichEntity.imageSrc;
         result.orderNumber = orderNumber;
-        result.price = SandwichUtil.computeSandwichPrice(sandwichEntity);
 
+        console.log(sandwichEntity);
 
         if (sandwichEntity.toppings && sandwichEntity.toppings.length > 0) {
+            console.log('ADA TEST computePrice');
+            if (sandwichEntity.bread) {
+                result.price = SandwichUtil.computeSandwichPrice(sandwichEntity);
+                result.bread = BreadModel.fromEntity(sandwichEntity.bread);
+            }
             result.toppings = [];
             for (const topping of sandwichEntity.toppings) {
                 result.toppings.push(ToppingModel.fromEntity(topping));
             }
         }
-
-        result.bread = BreadModel.fromEntity(sandwichEntity.bread);
 
         return result;
     }

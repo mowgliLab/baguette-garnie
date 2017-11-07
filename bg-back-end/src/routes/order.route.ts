@@ -2,6 +2,9 @@ import { Request, Response, Router } from 'express';
 import { BaseRoute } from './base-route';
 
 import { OrderBl } from '../business-logic/order.bl';
+import { OrderModel } from '../models/order.model';
+import { UserBl } from '../business-logic/user.bl';
+import { UserModel } from '../models/user.model';
 
 
 /**
@@ -12,7 +15,9 @@ import { OrderBl } from '../business-logic/order.bl';
 export class OrderRoute extends BaseRoute {
 
     static readonly publicRoute = '/public/order';
+    static readonly privateRoute = '/private/order';
     private orderBl: OrderBl;
+    private userBl: UserBl;
 
     /**
      * Create the routes.
@@ -21,18 +26,31 @@ export class OrderRoute extends BaseRoute {
      * @method create
      * @static
      */
-    public static create(router: Router) {
+    public static create(router: Router, loginRouter: Router) {
         console.log('[OrderRoute::create] Creating order route.');
+        const orderRoute = new OrderRoute();
 
-        // add home page route
+
+        // loginRouter.route(`${OrderRoute.privateRoute}/:id`)
+        router.route(`${OrderRoute.privateRoute}/:id`)
+            .get((req: Request, res: Response) => {
+                // orderRoute.getOrdersFromUser(req, res);
+                orderRoute.getOrder(req, res);
+            })
+            .put((req: Request, res: Response) => {
+                orderRoute.updateOrder(req, res);
+            });
+
+        // TODO Uncomment after login integration
+        // loginRouter.post(OrderRoute.publicRoute, (req: Request, res: Response) => {
+        router.post(OrderRoute.privateRoute, (req: Request, res: Response) => {
+            new OrderRoute().createOrder(req, res);
+        });
+
         router.get(OrderRoute.publicRoute, (req: Request, res: Response) => {
-            new OrderRoute().getOrders(req, res);
+            orderRoute.getOrders(req, res);
         });
 
-
-        router.get(`${OrderRoute.publicRoute}/:id`, (req: Request, res: Response) => {
-            new OrderRoute().getOrdersFromUser(req, res);
-        });
     }
 
     /**
@@ -44,6 +62,7 @@ export class OrderRoute extends BaseRoute {
     constructor() {
         super();
         this.orderBl = new OrderBl();
+        this.userBl = new UserBl();
     }
 
     /**
@@ -61,17 +80,33 @@ export class OrderRoute extends BaseRoute {
             .catch(err => res.json(err));
     }
 
-    public getOrdersFromUser(req: Request, res: Response) {
-        this.orderBl.getOrdersForUser(+req.params['id'])
-            .then(orders => res.json(orders))
+    public createOrder(req: Request, res: Response) {
+        this.userBl.getUser(1).then(user => {
+            const currentUser = user as UserModel;
+            const order = req.body['order'] as OrderModel;
+
+            this.orderBl.createOrder(order, currentUser)
+                .then(orderResult => res.json(orderResult))
+                .catch(err => res.json(err));
+        }).catch(err => console.log(err));
+        // const user = req.session.user;
+        // const order = req.body['order'] as OrderModel;
+        // this.orderBl.createOrder(order, user)
+        //     .then(orderResult => res.json(orderResult))
+        //     .catch(err => res.json(err));
+    }
+
+    public getOrder(req: Request, res: Response) {
+        this.orderBl.getOrder(+req.params['id'])
+            .then(order => res.json(order))
             .catch(err => res.json(err));
     }
 
-    public addOrder(req: Request, res: Response) {
-        // Add a new order to the current user.
-        // Get user from session
-        // Link User and Order
-        // Compute unit prices for rows
-        // Send to DB
+    public updateOrder(req: Request, res: Response) {
+        const orderId = +req.params['id'];
+        const status = req.body['status'];
+        this.orderBl.updateOrder(orderId, status)
+            .then(result => res.json(result))
+            .catch(err => res.json(err));
     }
 }

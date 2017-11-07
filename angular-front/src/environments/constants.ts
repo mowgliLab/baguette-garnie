@@ -13,6 +13,7 @@ export const constants = {
         baseUrl: '/api/public/bread'
     },
     orderApi: {
-        baseUrl: '/api/public/order'
+        publicUrl: '/api/public/order',
+        privateUrl: '/api/private/order'
     }
 };
