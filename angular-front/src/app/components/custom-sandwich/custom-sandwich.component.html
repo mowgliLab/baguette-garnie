@@ -6,10 +6,11 @@
   <div class="col-md-12" align="center">
       <h3 id="title">1. Choix du pain</h3>
   </div>
-  <div class="row justify-content-center">
+  <div class="row col-md-9 justify-content-center">
     <div (click)="addBreadInBasket(bread.name)" *ngFor="let bread of breads" class="col-md-4 clickable-card" id="breadCart" align="center">
         <p>{{bread.name}}</p>
         <p>{{bread.description}}</p>
+        <p>{{bread.price}}€</p>
     </div>
   </div>
   <div class="col-md-12" align="center">
