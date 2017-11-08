@@ -1,3 +1,110 @@
-<p>
-    Display user custom sandwiches
-</p>
+<div class="row" *ngIf="sandwiches">
+    <div class="col-md-12" align="center">
+        <h2><u>Mes sandwiches</u></h2>
+    </div>
+    <div class="container section" id="menu-section">
+        <div class="row">
+            <!--<app-sandwich-element class="col-md-4" *ngFor="let sandwich of sandwiches"-->
+                                  <!--[sandwich]="sandwich" (addToOrder)="openAddOrder($event, addOrderModal)"-->
+                                  <!--(showDetails)="showDetails($event, detailsModel)"></app-sandwich-element>-->
+
+            <div *ngFor="let sandwich of sandwiches" (click)="showDetails(sandwich, detailsModel)" class="card clickable-card" style="width: 20rem;">
+                <div class="card-body">
+                    <h4 class="card-title">{{sandwich.name}}</h4>
+                    <p class="card-text">{{sandwich.description}}</p>
+                    <p><b>{{computedPrice | currency:'EUR':true}}</b></p>
+                    <button class="btn btn-primary" (click)="openAddOrder(sandwich, addOrderModal)">
+                        Ajouter au panier
+                    </button>
+                </div>
+            </div>
+
+            <div class="card clickable-card" style="width: 20rem;" routerLink="/custom">
+                <img class="card-img-top" src="../../../assets/img/mystery-sandwich.jpg"
+                     alt="sandwich">
+                <div class="card-body">
+                    <h4 class="card-title">Nouveau Sandwich</h4>
+                    <p><b>€???</b></p>
+                    <button routerLink="/custom" class="btn btn-primary">Créer mon sandwich
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #detailsModel="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog" *ngIf="selectedSandwich">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">{{selectedSandwich.name}}</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="detailsModel.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-7">
+                        <p>{{selectedSandwich.description}}</p>
+                        <h4>{{selectedSandwich.bread?.name}}</h4>
+                        <p>{{selectedSandwich.bread?.description}}</p>
+                        <h4>Garnitures</h4>
+                        <ul class="list-unstyled">
+                            <li *ngFor="let topping of selectedSandwich.toppings">{{topping.name}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" (click)="detailsModel.hide()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #addOrderModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog" *ngIf="selectedSandwich">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">{{selectedSandwich.name}}</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="addOrderModal.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form [formGroup]="orderForm" (ngSubmit)="addToOrder(orderForm.value,addOrderModal)">
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="qty" class="col-sm-5 col-form-label">Quantité</label>
+                        <div class="col-sm-5">
+                            <input type="number" class="form-control" id="qty" min="0" max="100"
+                                   [formControl]="orderForm.controls['quantity']" (change)="computeTotalPrice(orderForm.value)"
+                                   [ngClass]="{'has-error':!orderForm.controls['quantity'].valid && orderForm.controls['quantity'].touched}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="size" class="col-sm-5 col-form-label">Taille</label>
+                        <div class="col-sm-5">
+                            <select id="size" class="form-control" (change)="computeTotalPrice(orderForm.value)"
+                                    [formControl]="orderForm.controls['sandwichSize']">
+                                <option *ngFor="let size of availlableSize" value="{{size.value}}">{{size.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="size" class="col-sm-5 col-form-label">Prix</label>
+                        <div class="col-sm-5">
+                            <p>{{totalOrderRowPrice | currency:'EUR':true}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <!--<button type="button" class="btn btn-default" routerLink="/custom">Modifier la composition</button>-->
+                    <button type="submit" class="btn btn-primary" [disabled]="!orderForm.valid">Ajouter à la commande</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

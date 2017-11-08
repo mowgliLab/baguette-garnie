@@ -78,7 +78,7 @@ export class Server {
         loginRouter.use(BaseRoute.requireLogin);
         let adminRouter: express.Router;
         adminRouter = express.Router();
-        adminRouter.use(BaseRoute.requireLoginAdmin);
+        // adminRouter.use(BaseRoute.requireLoginAdmin);
 
         // Menu request
         MenuRoute.create(router);

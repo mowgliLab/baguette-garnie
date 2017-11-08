@@ -43,33 +43,29 @@ export class UserRoute extends BaseRoute {
 
 
         // --------------- USER ORDERS ---------------
-        router.get(`${UserRoute.privateRoute}/:id/orders`, (req: Request, res: Response) => {
-        // loginRouter.get(`${UserRoute.privateRoute}/:id/orders`, (req: Request, res: Response) => {
-            userRoute.getUserOrders(req, res);
-        });
+        // router.get(`${UserRoute.privateRoute}/orders`,
+        loginRouter.get(`${UserRoute.privateRoute}/orders`,
+            (req: Request, res: Response) => {
+                userRoute.getUserOrders(req, res);
+            });
 
-        router.get(`${UserRoute.privateRoute}/:id/sandwiches`, (req: Request, res: Response) => {
-        // loginRouter.get(`${UserRoute.privateRoute}/:id/sandwiches`, (req: Request, res: Response) => {
-            userRoute.getUserSandwiches(req, res);
-        })
+        // router.get(`${UserRoute.privateRoute}/sandwiches`,
+        loginRouter.get(`${UserRoute.privateRoute}/sandwiches`,
+            (req: Request, res: Response) => {
+                userRoute.getUserSandwiches(req, res);
+            });
 
 
         // --------------- USER UTILS ---------------
-        // TODO Uncomment after login integration
-        // adminRouter.get(`${UserRoute.adminRoute}/encrypt`, (req: Request, res: Response) => {
-        router.get(`${UserRoute.adminRoute}/encrypt`, (req: Request, res: Response) => {
+        adminRouter.get(`${UserRoute.adminRoute}/encrypt`, (req: Request, res: Response) => {
             userRoute.encryptAll(req, res);
         });
 
-        // TODO Uncomment after login integration
-        // loginRouter.get(`${UserRoute.privateRoute}/:id`, (req: Request, res: Response) => {
-        router.get(`${UserRoute.privateRoute}/:id`, (req: Request, res: Response) => {
+        loginRouter.get(`${UserRoute.privateRoute}/:id`, (req: Request, res: Response) => {
             userRoute.getUser(req, res);
         });
 
-        // TODO Uncomment after login integration
-        router.get(`${UserRoute.adminRoute}`, (req: Request, res: Response) => {
-        // adminRouter.get(`${UserRoute.adminRoute}`, (req: Request, res: Response) => {
+        adminRouter.get(`${UserRoute.adminRoute}`, (req: Request, res: Response) => {
             userRoute.getUsers(req, res);
         });
     }
@@ -168,14 +164,25 @@ export class UserRoute extends BaseRoute {
     }
 
     public getUserOrders(req: Request, res: Response) {
-        this.userBl.getOrdersForUser(+req.params['id'])
+        this.userBl.getOrdersForUser(req.session.user.id)
             .then(orders => res.json(orders))
             .catch(err => res.json(err));
     }
 
     public getUserSandwiches(req: Request, res: Response) {
-        this.userBl.getCustomSandwichesOfUser(+req.params['id'])
+        this.userBl.getCustomSandwichesOfUser(req.session.user.id)
             .then(response => res.json(response))
             .catch(err => res.json(err));
     }
+
+    // private checkUserPathValidity(req: Request, res: Response, next: NextFunction) {
+    //     const paramUserId = +req.params['id'];
+    //     const sessionUserId = req.session.user.id;
+    //     if (paramUserId === sessionUserId) {
+    //         return next();
+    //     } else {
+    //         const err = new Error('You are not allowed to see other user informations.');
+    //         return next(err);
+    //     }
+    // }
 }

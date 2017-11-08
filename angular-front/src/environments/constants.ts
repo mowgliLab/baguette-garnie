@@ -20,6 +20,7 @@ export const constants = {
         publicUrl: '/api/public/user'
     },
     userApi: {
-        publicUrl: '/api/public/user'
+        publicUrl: '/api/public/user',
+        privateUrl: '/api/private/user'
     }
 };
