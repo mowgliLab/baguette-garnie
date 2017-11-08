@@ -31,6 +31,8 @@ import { OrderConfirmPageComponent } from './components/order-confirm-page/order
 import { OrderService } from './services/order.service';
 import { AuthenticationService } from './services/authentication.service';
 import { UserService } from './services/user.service';
+import { AlertComponent } from './components/alert/alert.component';
+import { AlertService } from './services/alert.service';
 
 @NgModule({
     declarations: [
@@ -48,7 +50,8 @@ import { UserService } from './services/user.service';
         ProfilPageComponent,
         MySandwichesPageComponent,
         OrderHistoryPageComponent,
-        OrderConfirmPageComponent
+        OrderConfirmPageComponent,
+        AlertComponent
     ],
     imports: [
         BrowserModule,
@@ -57,8 +60,7 @@ import { UserService } from './services/user.service';
         FormsModule,
         ReactiveFormsModule,
         ModalModule.forRoot(),
-        BsDropdownModule.forRoot(),
-        AlertModule.forRoot()
+        BsDropdownModule.forRoot()
     ],
     providers: [
         OrderService,
@@ -70,6 +72,7 @@ import { UserService } from './services/user.service';
         MemoryService,
         AuthenticationService,
         UserService,
+        AlertService,
         FormBuilder,
         AuthenticationGuard
     ],

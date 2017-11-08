@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MemoryService } from '../../services/memory.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication.service';
+import { AlertService } from '../../services/alert.service';
 
 @Component({
     selector: 'app-login-page',
@@ -18,7 +19,8 @@ export class LoginPageComponent implements OnInit {
                 private authService: AuthenticationService,
                 private route: ActivatedRoute,
                 private router: Router,
-                private formBuilder: FormBuilder) {
+                private formBuilder: FormBuilder,
+                private alertService: AlertService) {
         this.loginForm = formBuilder.group({
             username: new FormControl('', [Validators.required]),
             password: new FormControl('', [Validators.required])
@@ -34,13 +36,13 @@ export class LoginPageComponent implements OnInit {
         this.authService.login(value.username, value.password)
             .subscribe(
                 data => {
-                    // this.alertService.success('Login SUCCESS');
                     this.memoryService.setIsLoggedIn(true);
                     this.router.navigate([this.returnUrl]);
+                    this.alertService.success('Login SUCCESS');
                 },
                 error => {
                     this.memoryService.setIsLoggedIn(false);
-                    // this.alertService.error(error);
+                    this.alertService.error('Email ou mot de passe incorrect');
                 });
     }
 

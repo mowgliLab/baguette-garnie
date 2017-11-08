@@ -54,12 +54,8 @@
                 <label class="col-md-4 control-label"></label>
                 <div class="col-md-6">
 
-                    <button type="submit" id="InscriptionButton" class="btn btn-primary">
+                    <button [disabled]="!f.valid" type="submit" id="InscriptionButton" class="btn btn-primary">
                         S'enregister
-                        <span class="glyphicon glyphicon-send"></span>
-                    </button>
-                    <button type="button" class="btn btn-default">
-                        Annuler
                     </button>
                 </div>
             </div>

@@ -97,6 +97,9 @@ export class UserRoute extends BaseRoute {
     public register(req: Request, res: Response) {
         const user = req.body['user'] as UserModel;
         console.log(user);
+        if (!user || !user.mail || !user.password) {
+            res.sendStatus(400);
+        }
         this.userBl.addUser(user).then(id => {
             user.id = id;
             res.json(_.omit(user, ['password']));
