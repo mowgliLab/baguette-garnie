@@ -3,7 +3,8 @@ export const constants = {
         publicUrl: '/api/public/menu'
     },
     sandwichApi: {
-        publicUrl: '/api/public/sandwich'
+        publicUrl: '/api/public/sandwich',
+        privateUrl: '/api/private/sandwich'
     },
     toppingApi: {
         publicUrl: '/api/public/topping'

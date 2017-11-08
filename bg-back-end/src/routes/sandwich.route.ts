@@ -28,7 +28,8 @@ export class SandwichRoute extends BaseRoute {
     public static create(router: Router, loginRouter: Router) {
         console.log('[SandwichRoute::create] Creating sandwich route.');
 
-        loginRouter.post(`${SandwichRoute.privateRoute}/custom`, (req: Request, res: Response) => {
+        router.post(`${SandwichRoute.privateRoute}/custom`, (req: Request, res: Response) => {
+        // loginRouter.post(`${SandwichRoute.privateRoute}/custom`, (req: Request, res: Response) => {
             new SandwichRoute().createCustomSandwich(req, res);
         });
 

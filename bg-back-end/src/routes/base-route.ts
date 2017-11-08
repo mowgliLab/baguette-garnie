@@ -20,6 +20,7 @@ export class BaseRoute {
 
     // --------------- MIDDLEWARE ---------------
     public static requireLogin(req: Request, res: Response, next: NextFunction) {
+        console.log(req.session);
         if (req.session && req.session.user && req.session.cookie.originalMaxAge > 0) {
             return next();
         } else {
