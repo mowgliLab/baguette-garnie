@@ -17,6 +17,9 @@ export const constants = {
         privateUrl: '/api/private/order'
     },
     authApi: {
-        publicUrl: 'http://localhost:8080/api/public/user'
+        publicUrl: '/api/public/user'
+    },
+    userApi: {
+        publicUrl: '/api/public/user'
     }
 };

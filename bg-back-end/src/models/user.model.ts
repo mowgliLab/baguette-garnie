@@ -33,6 +33,7 @@ export class UserModel {
         entity.totalLoyalty = user.totalLoyalty;
         entity.password = user.password;
 
+        console.log('userEntity', entity);
         return entity;
     }
 }

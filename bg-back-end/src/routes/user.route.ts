@@ -95,12 +95,12 @@ export class UserRoute extends BaseRoute {
      * @next {NextFunction} Execute the next method.
      */
     public register(req: Request, res: Response) {
-        console.log(req);
         const user = req.body['user'] as UserModel;
+        console.log(user);
         this.userBl.addUser(user).then(id => {
             user.id = id;
             res.json(_.omit(user, ['password']));
-        });
+        }).catch(err => res.json(err));
     }
 
     public authenticate(req: Request, res: Response) {

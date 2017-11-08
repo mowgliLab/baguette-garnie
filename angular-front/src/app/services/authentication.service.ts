@@ -3,13 +3,14 @@ import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { constants } from '../../environments/constants';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class AuthenticationService {
     constructor(private http: Http) {
     }
 
-    private baseUrl = constants.authApi.publicUrl;
+    private baseUrl = environment.webServiceBaseUrl + constants.authApi.publicUrl;
     private headers = new Headers({'Content-Type': 'application/json'});
 
     login(username: string, password: string): Observable<boolean> {

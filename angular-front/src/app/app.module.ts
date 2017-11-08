@@ -30,6 +30,7 @@ import { AuthenticationGuard } from './guards/AuthenticationGuard';
 import { OrderConfirmPageComponent } from './components/order-confirm-page/order-confirm-page.component';
 import { OrderService } from './services/order.service';
 import { AuthenticationService } from './services/authentication.service';
+import { UserService } from './services/user.service';
 
 @NgModule({
     declarations: [
@@ -68,6 +69,7 @@ import { AuthenticationService } from './services/authentication.service';
         BsModalService,
         MemoryService,
         AuthenticationService,
+        UserService,
         FormBuilder,
         AuthenticationGuard
     ],

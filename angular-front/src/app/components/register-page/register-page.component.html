@@ -9,51 +9,51 @@
         <form #f="ngForm" novalidate (ngSubmit)="save(f.value, f.valid)">
             <div class="form-group">
                 <label>Nom</label>
-                <input type="text" class="form-control" 
-                name="name" [(ngModel)]="user.name" 
-                #name="ngModel" required minlength="1">
-                <small [hidden]="name.valid || (name.pristine && !f.submitted)" class="text-danger">
+                <input type="text" class="form-control"
+                name="lastname" [(ngModel)]="user.lastname"
+                #lastname="ngModel" required minlength="1">
+                <small [hidden]="lastname.valid || (lastname.pristine && !f.submitted)" class="text-danger">
                     Nom requis (minimum 1 caractère) !
                     </small>
-                
+
             </div>
             <div class="form-group">
                 <label>Prénom</label>
-                <input type="text" class="form-control" 
-                    name="firstname" [(ngModel)]="user.firstname" 
+                <input type="text" class="form-control"
+                    name="firstname" [(ngModel)]="user.firstname"
                     #firstname="ngModel" required minlength="1">
                 <small [hidden]="firstname.valid || (firstname.pristine && !f.submitted)" class="text-danger">
                         Prénom requis (minimum 1 caractère) !
                     </small>
-                
+
             </div>
             <div class="form-group">
                 <label>e-Mail</label>
-                <input type="email" class="form-control" 
-                    name="mail" [(ngModel)]="user.mail" 
+                <input type="email" class="form-control"
+                    name="mail" [(ngModel)]="user.mail"
                     #mail="ngModel" required email>
                 <small [hidden]="mail.valid || (mail.pristine && !f.submitted)" class="text-danger">
                         e-Mail invalide !
                     </small>
-                
+
             </div>
             <div class="form-group">
                 <label>Mot de passe</label>
-                <input type="password" class="form-control" 
-                    name="password" [(ngModel)]="user.password" 
+                <input type="password" class="form-control"
+                    name="password" [(ngModel)]="user.password"
                     #password="ngModel" required minlength="8">
                 <small [hidden]="password.valid || (password.pristine && !f.submitted)" class="text-danger">
                         Le mot de passe doit comporter au moins 8 caractères !
                     </small>
-                
+
             </div>
-            
-            
+
+
             <!-- Button -->
             <div class="form-group">
                 <label class="col-md-4 control-label"></label>
                 <div class="col-md-6">
-                    
+
                     <button type="submit" id="InscriptionButton" class="btn btn-primary">
                         S'enregister
                         <span class="glyphicon glyphicon-send"></span>
