@@ -10,7 +10,7 @@ import { ToppingModel } from '../models/topping.model';
 @Injectable()
 export class ToppingService {
 
-    private baseUrl = environment.webServiceBaseUrl + constants.toppingApi.baseUrl;
+    private baseUrl = environment.webServiceBaseUrl + constants.toppingApi.publicUrl;
     private headers = new Headers({'Content-Type': 'application/json'});
 
     constructor(private http: Http) {}
@@ -21,7 +21,7 @@ export class ToppingService {
             .then(response => response.json() as Array<ToppingModel>)
             .catch(this.handleError);
     }
-    
+
     // ---------------- PRIVATE ----------------
     private handleError(error: any): Promise<any> {
         console.error('An error occured', error); // for demo purpose only.

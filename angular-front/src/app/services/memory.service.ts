@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { OrderModel } from '../models/order.model';
 
 import * as _ from 'lodash';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable()
 export class MemoryService {
@@ -16,11 +17,14 @@ export class MemoryService {
     private _currentOrder = new BehaviorSubject<OrderModel>(new OrderModel());
     currentOrder = this._currentOrder.asObservable();
 
-    constructor () {
+    constructor (private authService: AuthenticationService) {
         const storageCurrentOrder = JSON.parse(localStorage.getItem('currentOrder')) as OrderModel;
         if (storageCurrentOrder) {
             this.setOrder(storageCurrentOrder);
         }
+        this.authService.checkSessionValidity().subscribe(result => {
+            this.setIsLoggedIn(result);
+        });
     }
 
     setIsLoggedIn(newValue: boolean) {

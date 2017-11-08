@@ -10,7 +10,7 @@ import { constants } from '../../environments/constants';
 @Injectable()
 export class SandwichService {
 
-    private baseUrl = environment.webServiceBaseUrl + constants.sandwichApi.baseUrl;
+    private baseUrl = environment.webServiceBaseUrl + constants.sandwichApi.publicUrl;
     private headers = new Headers({'Content-Type': 'application/json'});
 
     constructor(private http: Http) {

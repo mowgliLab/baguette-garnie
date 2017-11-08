@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MemoryService } from '../../services/memory.service';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
     selector: 'app-navbar',
@@ -11,7 +12,8 @@ export class NavbarComponent implements OnInit {
     orderSandwichCount: number;
     isLoggedIn: boolean;
 
-    constructor(private memoryService: MemoryService) {
+    constructor(private memoryService: MemoryService,
+                private authService: AuthenticationService) {
     }
 
     ngOnInit() {
@@ -19,8 +21,11 @@ export class NavbarComponent implements OnInit {
         this.memoryService.isLoggedIn.subscribe(res => this.isLoggedIn = res);
     }
 
-    loggin(newValue: boolean) {
-        this.memoryService.setIsLoggedIn(newValue);
+    logout() {
+        this.authService.logout().subscribe(res => {
+            console.log(res);
+            this.memoryService.setIsLoggedIn(false);
+        });
     }
 
 }

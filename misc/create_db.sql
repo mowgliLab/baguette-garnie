@@ -94,12 +94,12 @@ CREATE TABLE order_row (
 /* -------------- FILL SOME DATAS -------------- */
 
 INSERT INTO user (user_mail, user_firstname, user_lastname, user_password, user_role) VALUES
-  ('d.targ@got.com', 'Daenerys', 'Targaryen', 'drogo', 'user'),
-  ('j.snow@got.com', 'John', 'Snow', 'winter', 'admin'),
-  ('c.lanni@got.com', 'Cersei', 'Lannister', 'queen', 'user'),
-  ('t.lanni@got.com', 'Tyrion', 'Lannister', 'halfman', 'user'),
-  ('s.stark@got.com', 'Sansa', 'Stark', 'queen', 'user'),
-  ('a.stark@got.com', 'Arya', 'Stark', 'faceless', 'user');
+  ('d.targ@got.com', 'Daenerys', 'Targaryen', '$2a$10$gt7.q57EdS1j3LFG35ijnOLqmLN92lYN8oq9yZ1KR3NaM3Q.40yrO', 'user'),
+  ('j.snow@got.com', 'John', 'Snow', '$2a$10$P1kAyqQFTZ4EJm1eXf1ZVuSCGd9/NqDmC5KFoA4Bu4RY/uGJ9OeUe', 'admin'),
+  ('c.lanni@got.com', 'Cersei', 'Lannister', '$2a$10$FoLMHKdQBq/npzB9x96XpufW07LUQDHm.S268StKa.z5PpUKshBmm', 'user'),
+  ('t.lanni@got.com', 'Tyrion', 'Lannister', '$2a$10$FYKt8bSTwyQvJpzWT5ZQmu2/4mdt.H4dWA730rxN.3OzzmOyk0EQO', 'user'),
+  ('s.stark@got.com', 'Sansa', 'Stark', '$2a$10$i03E2P9DBLLE4TbJvlFPTewSacmZdJp3esdBbSpIga4WcG6aPH5wW', 'user'),
+  ('a.stark@got.com', 'Arya', 'Stark', '$2a$10$2lz7pp2pZzX42cgXUcsXselJ6UhU.T59uQIUIjKOykBb25RS.pINa', 'user');
 
 INSERT INTO bread (bread_name, bread_price, bread_description) VALUES
   ('Baguette de pain blanc', 2.50, 'Pain blanc légé et digeste.'),

@@ -10,7 +10,7 @@ import { MenuModel } from '../models/menu.model';
 @Injectable()
 export class MenuService {
 
-    private baseUrl = environment.webServiceBaseUrl + constants.menuApi.baseUrl;
+    private baseUrl = environment.webServiceBaseUrl + constants.menuApi.publicUrl;
     private headers = new Headers({'Content-Type': 'application/json'});
 
     constructor(private http: Http) {}

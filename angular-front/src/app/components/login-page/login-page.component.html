@@ -1,15 +1,16 @@
 <div class="row justify-content-center">
-        
+
         <div class="col-md-3">
 
-            <form class="form-horizontal" action=" " method="post"
-                role="formConnect" id="login_form">
+            <form [formGroup]="loginForm" class="form-horizontal"
+                  (ngSubmit)="login(loginForm.value)" role="formConnect" id="login_form">
                 <div class="form-group">
-                    <label class="col-md-4 control-label">Utilisateur</label>
+                    <label class="col-md-4 control-label">Email</label>
+                    <ng-container></ng-container>
                     <div class="col-md-6">
                         <input id="emailConnect" name="emailConnect"
-                            value="" type="text"
-                            class="form-control">
+                            value="" type="text" [formControl]="loginForm.controls['username']"
+                            class="form-control" [ngClass]="{'has-error':!loginForm.controls['username'].valid && loginForm.controls['username'].touched}">
                     </div>
                 </div>
 
@@ -18,11 +19,11 @@
                     <label class="col-md-4 control-label">Mot de passe</label>
                     <div class="col-md-6">
                         <input id="passwordConnect" name="passwordConnect"
-                            type="password" value=""
-                            class="form-control">
+                               type="password" [formControl]="loginForm.controls['password']"
+                               class="form-control" [ngClass]="{'has-error':!loginForm.controls['password'].valid && loginForm.controls['password'].touched}">
                     </div>
                 </div>
-                                                                
+
                     <!-- Alert message -->
                     <div class="alert alert-danger" role="alert"
                         id="failconnect_message">
@@ -36,7 +37,7 @@
                     <label class="col-md-4 control-label"></label>
                     <div class="col-md-4">
                         <!--  <button type="submit" class="btn btn-primary">-->
-                        <button type="button" id="connectButton" class="btn btn-primary" (click)="loggin(true)">
+                        <button type="submit" id="connectButton" class="btn btn-primary">
                             Se connecter
                             <span class="glyphicon glyphicon-log-in"></span>
                         </button>

@@ -10,7 +10,7 @@ import { BreadModel } from '../models/bread.model';
 @Injectable()
 export class BreadService {
 
-    private baseUrl = environment.webServiceBaseUrl + constants.breadApi.baseUrl;
+    private baseUrl = environment.webServiceBaseUrl + constants.breadApi.publicUrl;
     private headers = new Headers({'Content-Type': 'application/json'});
 
     constructor(private http: Http) {}

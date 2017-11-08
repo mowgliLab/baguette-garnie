@@ -29,6 +29,7 @@ import { OrderHistoryPageComponent } from './components/order-history-page/order
 import { AuthenticationGuard } from './guards/AuthenticationGuard';
 import { OrderConfirmPageComponent } from './components/order-confirm-page/order-confirm-page.component';
 import { OrderService } from './services/order.service';
+import { AuthenticationService } from './services/authentication.service';
 
 @NgModule({
     declarations: [
@@ -66,6 +67,7 @@ import { OrderService } from './services/order.service';
         BreadService,
         BsModalService,
         MemoryService,
+        AuthenticationService,
         FormBuilder,
         AuthenticationGuard
     ],

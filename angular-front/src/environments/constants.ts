@@ -1,19 +1,22 @@
 export const constants = {
     menuApi: {
-        baseUrl: '/api/public/menu'
+        publicUrl: '/api/public/menu'
     },
     sandwichApi: {
-        baseUrl: '/api/public/sandwich'
+        publicUrl: '/api/public/sandwich'
     },
     toppingApi: {
-        baseUrl: '/api/public/topping'
+        publicUrl: '/api/public/topping'
     },
     // modif perso
     breadApi: {
-        baseUrl: '/api/public/bread'
+        publicUrl: '/api/public/bread'
     },
     orderApi: {
         publicUrl: '/api/public/order',
         privateUrl: '/api/private/order'
+    },
+    authApi: {
+        publicUrl: 'http://localhost:8080/api/public/user'
     }
 };
