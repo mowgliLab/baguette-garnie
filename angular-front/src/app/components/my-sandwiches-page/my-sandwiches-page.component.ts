@@ -21,6 +21,7 @@ export class MySandwichesPageComponent implements OnInit {
     totalOrderRowPrice: number;
     currentOrder: OrderModel;
     availlableSize = [];
+    sandwichUtil = SandwichUtil;
 
     orderForm: FormGroup;
 

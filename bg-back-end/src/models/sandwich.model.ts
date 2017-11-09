@@ -37,7 +37,6 @@ export class SandwichModel {
         console.log(sandwichEntity);
 
         if (sandwichEntity.toppings && sandwichEntity.toppings.length > 0) {
-            console.log('ADA TEST computePrice');
             if (sandwichEntity.bread) {
                 result.price = SandwichUtil.computeSandwichPrice(sandwichEntity);
                 result.bread = BreadModel.fromEntity(sandwichEntity.bread);

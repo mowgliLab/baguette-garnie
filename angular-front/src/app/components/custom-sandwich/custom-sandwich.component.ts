@@ -2,9 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ToppingService } from '../../services/topping.service';
 import { BreadService } from '../../services/bread.service';
 import { BreadModel } from '../../models/bread.model';
-import * as _ from 'lodash';
 import { SandwichService } from '../../services/sandwich.service';
 import { SandwichModel } from '../../models/sandwich.model';
+import { MemoryService } from '../../services/memory.service';
+import * as _ from 'lodash';
+import { AlertService } from '../../services/alert.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-custom-sandwich',
@@ -17,35 +20,44 @@ export class CustomSandwichComponent implements OnInit {
     toppingsArray = [];
     breads: Array<BreadModel>;
 
+    currentCustomSandwich: SandwichModel;
+    isLogedIn: boolean;
+
     constructor(private toppingService: ToppingService,
                 private breadService: BreadService,
-                private sandwichService: SandwichService) {
+                private sandwichService: SandwichService,
+                private memoryService: MemoryService,
+                private router: Router,
+                private alertService: AlertService) {
     }
-
-    private logToppingName = '';
-
-    private writeInBasket(element: HTMLInputElement): void {
-        this.logToppingName += `${element.value} \n`;
-    }
-
-    private logBreadName = '';
-
-    private addBreadInBasket(element: string): void {
-        this.logBreadName = `${element} \n`;
-    }
-
 
     ngOnInit() {
 
+        this.memoryService.currentCustomSandwich
+            .subscribe(sandwich => {
+                this.currentCustomSandwich = sandwich;
+            });
+
+        this.memoryService.isLoggedIn
+            .subscribe(res => {
+                this.isLogedIn = res;
+            });
+
         this.toppingService.getToppings()
             .then(toppings => {
-                //this.toppings = toppings;
+                // Pre check elements from sandwich in memory service.
+                if (this.currentCustomSandwich.toppings) {
+                    const checkedIds = _.map(this.currentCustomSandwich.toppings, t => t.id);
+                    _.forEach(toppings, t => {
+                        t.checked = checkedIds.indexOf(t.id) > 0;
+                    });
+                }
+
                 this.toppings = _.groupBy(toppings, t => t.type);
                 this.toppingsArray = toppings;
                 console.log('getToppings end', this.toppings);
-
-
             });
+
         this.breadService.getBreads()
             .then(breads => {
                 console.log('getBreads end', breads);
@@ -56,68 +68,102 @@ export class CustomSandwichComponent implements OnInit {
 
     }
 
-    get selectedOptions() {
-        return this.toppingsArray
-            .filter(opt => opt.checked);
+
+    private addBreadInBasket(element: BreadModel): void {
+        this.currentCustomSandwich.bread = element;
     }
 
-    getTotalToppings() {
-        let total = 0;
-        for (let i = 0; i < this.selectedOptions.length; i++) {
-            if (this.selectedOptions[i].price) {
-                total += this.selectedOptions[i].price;
+    selectedOptionsChanged() {
+        this.currentCustomSandwich.toppings = this.toppingsArray
+                .filter(opt => opt.checked);
+    }
 
+    // get selectedOptions() {
+    //     const this.currentCustomSandwich.toppings = this.toppingsArray
+    //         .filter(opt => opt.checked);
+    //     // this.currentCustomSandwich.toppings = selectedOpt;
+    //     return selectedOpt;
+    // }
+
+    get totalPrice() {
+        let total = 0;
+
+        if (this.currentCustomSandwich.bread) {
+            total = this.currentCustomSandwich.bread.price;
+        }
+
+        if (this.currentCustomSandwich.toppings) {
+            for (let i = 0; i < this.currentCustomSandwich.toppings.length; i++) {
+                if (this.currentCustomSandwich.toppings[i].price) {
+                    total += this.currentCustomSandwich.toppings[i].price;
+                }
             }
         }
-        return total;
 
+        return _.round(total, 2);
     }
 
-    saveSandwich() {
-        this.sandwichService.saveCustomSandwich(<SandwichModel>{
-            'name': 'ItalienCustom',
-            'description': 'Une délicieuse baguette ornée de jambon italien, de mozzarella et de crudités.',
-            'toppings': [{
-                'id': 6,
-                'name': 'Tomates',
-                'price': 0.05,
-                'orderNumber': null,
-                'type': 0
-            },
-                {
-                    'id': 10,
-                    'name': 'Jambon de Parme',
-                    'price': 0.9,
-                    'orderNumber': null,
-                    'type': 0
-                },
-                {
-                    'id': 11,
-                    'name': 'Mozzarella',
-                    'price': 0.75,
-                    'orderNumber': null,
-                    'type': 0
-                },
-                {
-                    'id': 15,
-                    'name': 'Crème balsamique',
-                    'price': 0.05,
-                    'orderNumber': null,
-                    'type': 0
-                }],
-            'bread': {
-                'id': 1,
-                'name': 'Baguette de pain blanc',
-                'description': 'Pain blanc légé et digeste.',
-                'price': 2.5,
-                'orderNumber': null
-            }
-        });
-    }
+
+    // ---------- OPEN MODAL / SAVE PART 1 ----------------
 
     showModalSave(modalTemplate: any) {
-        
-        modalTemplate.show();
+        console.log('save current sandwich', this.currentCustomSandwich);
+        this.memoryService.setCustomSandwich(this.currentCustomSandwich);
+
+        if (this.sandwichIsValid1()) {
+            modalTemplate.show();
+        }
+    }
+
+    private sandwichIsValid1() {
+
+        if (!this.currentCustomSandwich.bread) {
+            alert('Erreur : Veuillez choisir un pain');
+            return false;
+        }
+
+        if (!this.currentCustomSandwich.toppings
+            || this.currentCustomSandwich.toppings.length <= 0) {
+            alert('Erreur : Veuillez choisir une garniture');
+            return false;
+        }
+
+        return true;
+    }
+
+
+    // ---------- CLOSE MODAL / SAVE PART 2 ----------------
+
+    saveSandwich(modalTemplate: any) {
+        if (this.sandwichIsValid2(modalTemplate)) {
+            if (!this.isLogedIn) {
+                this.memoryService.setCustomSandwich(this.currentCustomSandwich);
+                // If user is not loged in, redirect him to login page with param to get back to this page.
+                this.router.navigate(['/login'], {queryParams: {returnUrl: '/custom'}});
+            } else {
+                this.sandwichService.saveCustomSandwich(this.currentCustomSandwich)
+                    .then(res => {
+                        if (res && res.id) {
+                            this.memoryService.setCustomSandwich(new SandwichModel());
+                            this.router.navigate(['/my-sandwiches']);
+                            this.alertService.success('Sandwich créé avec succès.');
+                        }
+                    });
+            }
+        }
+    }
+
+    private sandwichIsValid2(modalTemplate: any): boolean {
+        if (!this.sandwichIsValid1()) {
+            alert('Fatal error : Veuillez compléter votre commande');
+            modalTemplate.hide();
+            return false;
+        } else if (!this.currentCustomSandwich.name
+            || this.currentCustomSandwich.name.trim() === '') {
+            alert('Erreur : le nom du sandwich est obligatoire.');
+            return false;
+        }
+        return true;
     }
 
 

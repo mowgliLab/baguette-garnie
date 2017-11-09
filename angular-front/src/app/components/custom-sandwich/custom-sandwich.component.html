@@ -1,155 +1,161 @@
-
 <div class="row">
-  <div class="col-md-12" align="center">
-      <h2>Customisez votre sandwich</h2>
-  </div>
-  <div class="col-md-12" align="center">
-      <h3 id="title">1. Choix du pain</h3>
-  </div>
-  <div class="row col-md-9 justify-content-center">
-    <div (click)="addBreadInBasket(bread.name)" *ngFor="let bread of breads" class="col-md-4 clickable-card" id="breadCart" align="center">
-        <p>{{bread.name}}</p>
-        <p>{{bread.description}}</p>
-        <p>{{bread.price}}€</p>
+    <div class="col-md-12" align="center">
+        <h2>Customisez votre sandwich</h2>
     </div>
-  </div>
-  <div class="col-md-12" align="center">
-      <h3 id="title">2. Choix des éléments</h3>
-  </div>
-
+    <div class="col-md-12" align="center">
+        <h3 id="part1">1. Choix du pain</h3>
+    </div>
+    <div class="row col-md-9 justify-content-center">
+        <div (click)="addBreadInBasket(bread)" *ngFor="let bread of breads" class="col-md-4 clickable-card"
+             id="breadCart" align="center">
+            <p>{{bread.name}}</p>
+            <p>{{bread.description}}</p>
+            <p>{{bread.price | currency:'EUR':true}}</p>
+        </div>
+    </div>
+    <div class="col-md-12" align="center">
+        <h3 id="part2">2. Choix des éléments</h3>
+    </div>
 
 
 </div>
 <ng-container *ngIf="toppings">
-<div class="row">
-  <div class="col-3" id="elmntCart">
-    <h4>Principal</h4>
-    <ul>
-      <div *ngFor="let topping of toppings['1']">
-        <label>
-            <input type="checkbox"
-                   name="toppings"
-                   value="{{topping.id}}"
-                   [(ngModel)]="topping.checked"/>
-            {{topping.name}}
-        </label>
-      </div>
-    </ul>
-  </div>
-  <div class="col-md-3" id="elmntCart">
-    <h4>Crudités</h4>
-    <ul>
-      <div *ngFor="let topping of toppings[2]">
-        <label>
-          <input type="checkbox"
-          name="toppings"
-          value="{{topping.id}}"
-          [(ngModel)]="topping.checked"/>
-          {{topping.name}}
-        </label>
-      </div>
-    </ul>
-  </div>
-  <div class="col-md-3" id="elmntCart">
-    <h4>Sauce</h4>
-    <ul>
-      <div *ngFor="let topping of toppings[3]">
+    <div class="row">
+        <div class="col-3" id="generalCart">
+            <h4>Principal</h4>
+            <ul>
+                <div *ngFor="let topping of toppings['1']">
+                    <label>
+                        <input type="checkbox"
+                               name="toppings"
+                               value="{{topping.id}}"
+                               [(ngModel)]="topping.checked"
+                               (ngModelChange)="selectedOptionsChanged()"/>
+                        {{topping.name}}
+                    </label>
+                </div>
+            </ul>
+        </div>
+        <div class="col-md-3" id="vegetCart">
+            <h4>Crudités</h4>
+            <ul>
+                <div *ngFor="let topping of toppings[2]">
+                    <label>
+                        <input type="checkbox"
+                               name="toppings"
+                               value="{{topping.id}}"
+                               [(ngModel)]="topping.checked"
+                               (ngModelChange)="selectedOptionsChanged()"/>
+                        {{topping.name}}
+                    </label>
+                </div>
+            </ul>
+        </div>
+        <div class="col-md-3" id="sauceCart">
+            <h4>Sauce</h4>
+            <ul>
+                <div *ngFor="let topping of toppings[3]">
 
-        <label>
-          <input type="checkbox"
-          name="toppings"
-          value="{{topping.id}}"
-          [(ngModel)]="topping.checked"/>
-          {{topping.name}}
-        </label>
-      </div>
-    </ul>
-  </div>
-</div>
+                    <label>
+                        <input type="checkbox"
+                               name="toppings"
+                               value="{{topping.id}}"
+                               [(ngModel)]="topping.checked"
+                               (ngModelChange)="selectedOptionsChanged()"/>
+                        {{topping.name}}
+                    </label>
+                </div>
+            </ul>
+        </div>
+    </div>
 </ng-container>
 <div class="col-md-12" align="center">
-  <h3 id="title">3. Validation</h3>
+    <h3>3. Validation</h3>
 </div>
 <div class="row justify-content-center">
-  <div class="col-md-2">
-    <button class="btn btn-primary" (click)="showModalSave(detailsModel)">Sauver et continuer
-    </button>
-  </div>
-  <!--
-  <div class="col-md-2">
-    <button class="btn btn-primary">Sauver et commander
-    </button>
-  </div>
--->
+    <div class="col-md-2">
+        <button class="btn btn-primary" (click)="showModalSave(detailsModel)">Sauver et continuer
+        </button>
+    </div>
+    <!--
+    <div class="col-md-2">
+      <button class="btn btn-primary">Sauver et commander
+      </button>
+    </div>
+  -->
 </div>
-
 
 
 <div class="basketDiv">
 
     <h3 align="center"><u>Panier</u></h3>
     <table>
-      <tr>
-        <th>{{logBreadName}}</th>
-        <th></th>
-      </tr>
-      <tr *ngFor="let option of selectedOptions">
-        <th>{{option.name}}</th>
-        <th style="text-align: right">{{option.price}}€</th>
-      </tr>
+        <tr *ngIf="currentCustomSandwich.bread">
+            <th>{{currentCustomSandwich.bread.name}}</th>
+            <th>{{currentCustomSandwich.bread.price | currency:'EUR':true}}</th>
+        </tr>
+        <ng-container *ngIf="currentCustomSandwich.toppings">
+            <tr *ngFor="let option of currentCustomSandwich.toppings">
+                <th>{{option.name}}</th>
+                <th style="text-align: right">{{option.price | currency:'EUR':true}}</th>
+            </tr>
+        </ng-container>
     </table>
 
     <hr noshade>
-    <p>Total = {{getTotalToppings()}}€</p>
+    <p>Total = {{totalPrice | currency:'EUR':true}}</p>
 </div>
 
 <div bsModal #detailsModel="bs-modal" class="modal fade" tabindex="-1" role="dialog"
-aria-hidden="true">
-<div class="modal-dialog modal-lg">
-   <div class="modal-content">
-       <div class="modal-header">
-           <h4>Sauvegarder votre sandwich perso</h4>
-       </div>
-       <div class="modal-body">
-         <div class="row">
-          <div class="form-group col-md-4">
-            <label class="control-label">Nom du sandwich</label>
-            <div class="">
-                <input id="nameCustom" name=""
-                    value="" type="text"
-                    class="form-control">
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Sauvegarder votre sandwich perso</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="detailsModel.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-          </div>
-          <div class="form-group col-md-4">
-              <label class="control-label">Description du sandwich</label>
-              <div class="">
-                  <textarea class="form-control" rows="5" id="descriptionCustom"></textarea>
-              </div>
-          </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Nom du sandwich</label>
+                        <div class="">
+                            <input id="nameCustom" name=""
+                                   [(ngModel)]="currentCustomSandwich.name" type="text"
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Description du sandwich</label>
+                        <div class="">
+                            <textarea class="form-control" [(ngModel)]="currentCustomSandwich.description"
+                                      rows="5" id="descriptionCustom"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Résumé de votre Sandwich : </label>
+                    </div>
+                    <div class="col-md-8">
+                        <label>Votre <b>{{currentCustomSandwich.bread?.name}}</b> sera accompagnée de :</label>
+
+
+                        <ul>
+                            <li *ngFor="let option of currentCustomSandwich.toppings">
+                                {{option.name}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" (click)="detailsModel.hide()">Close</button>
+                <button class="btn btn-primary" (click)="saveSandwich(detailsModel)">Sauver et continuer</button>
+            </div>
         </div>
-          <div class="row">
-            <div class="col-md-4">
-            <label>Résumé de votre Sandwich : </label>
-            </div>
-            <div class="col-md-8">
-            <label>Votre <b>{{logBreadName}}</b> sera accompagnée de :</label>
-            
-              
-            <ul>
-              <li *ngFor="let option of selectedOptions">
-                {{option.name}}
-              </li>
-            </ul>
-          </div>
-          </div>
-       </div>
-       <div class="modal-footer">
-          <button class="btn btn-primary">Sauver et continuer
-            </button>
-           <button type="button" class="btn btn-default" (click)="detailsModel.hide()">Close</button>
-       </div>
-   </div>
-</div>
+    </div>
 </div>
 
 

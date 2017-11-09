@@ -5,5 +5,4 @@ export class ToppingModel {
     public orderNumber: number;
     public type: number;
     public checked?: boolean;
-  
 }

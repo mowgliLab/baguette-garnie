@@ -65,9 +65,6 @@ export class OrderPageComponent implements OnInit {
                         this.memoryService.setOrder(res);
                         this.route.navigate(['confirm']);
                         this.alertService.success('Votre commande a été passée et attend votre finalisation.');
-                    } else {
-                        // Affichage de l'alert pour signaler l'erreur.
-                        // this.alertService.error('Une erreur est survenue. Veuillez réessayer plus tard.');
                     }
                 }).catch(err => {
                 this.alertService.error('Une erreur est survenue. Veuillez réessayer plus tard.');

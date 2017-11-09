@@ -4,6 +4,7 @@ import { OrderModel } from '../models/order.model';
 
 import * as _ from 'lodash';
 import { AuthenticationService } from './authentication.service';
+import { SandwichModel } from '../models/sandwich.model';
 
 @Injectable()
 export class MemoryService {
@@ -16,6 +17,9 @@ export class MemoryService {
 
     private _currentOrder = new BehaviorSubject<OrderModel>(new OrderModel());
     currentOrder = this._currentOrder.asObservable();
+
+    private _currentCustomSandwich = new BehaviorSubject<SandwichModel>(new SandwichModel());
+    currentCustomSandwich = this._currentCustomSandwich.asObservable();
 
     constructor (private authService: AuthenticationService) {
         const storageCurrentOrder = JSON.parse(localStorage.getItem('currentOrder')) as OrderModel;
@@ -43,5 +47,10 @@ export class MemoryService {
 
         this._currentOrder.next(order);
         this._orderSandwichesCount.next(sandwichCount);
+    }
+
+    setCustomSandwich(sandwich: SandwichModel) {
+        if (!sandwich) { return; }
+        this._currentCustomSandwich.next(sandwich);
     }
 }
