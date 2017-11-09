@@ -10,6 +10,7 @@ import { MenuModel } from '../../models/menu.model';
 import { SandwichModel } from '../../models/sandwich.model';
 import { OrderedSandwichModel, OrderModel } from '../../models/order.model';
 import { SandwichUtil } from '../../utils/sandwich.util';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-menu-page',
@@ -30,7 +31,8 @@ export class MenuPageComponent implements OnInit {
     constructor(private menuService: MenuService,
                 private sandwichService: SandwichService,
                 private memoryService: MemoryService,
-                private formBuilder: FormBuilder) {
+                private formBuilder: FormBuilder,
+                private router: Router) {
         this.orderForm = formBuilder.group({
             quantity: new FormControl(1, [Validators.required, Validators.min(1)]),
             sandwichSize: 1
@@ -98,5 +100,14 @@ export class MenuPageComponent implements OnInit {
     // *********************************
     computeTotalPrice(value: any) {
         this.totalOrderRowPrice = SandwichUtil.computeSandwichPriceFromFullPrice(this.orderedSandwich, value.sandwichSize) * value.quantity;
+    }
+
+
+    // *********************************
+    // Manage Customization of current Sandwich
+    // *********************************
+    customizeCustomSandwich() {
+        this.memoryService.setCustomSandwich(this.selectedSandwich);
+        this.router.navigate(['/custom']);
     }
 }

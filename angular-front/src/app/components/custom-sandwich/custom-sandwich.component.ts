@@ -64,8 +64,6 @@ export class CustomSandwichComponent implements OnInit {
                 this.breads = breads;
             });
 
-// this.availlableSize = SandwichModel.sizeValues;
-
     }
 
 
@@ -77,13 +75,6 @@ export class CustomSandwichComponent implements OnInit {
         this.currentCustomSandwich.toppings = this.toppingsArray
                 .filter(opt => opt.checked);
     }
-
-    // get selectedOptions() {
-    //     const this.currentCustomSandwich.toppings = this.toppingsArray
-    //         .filter(opt => opt.checked);
-    //     // this.currentCustomSandwich.toppings = selectedOpt;
-    //     return selectedOpt;
-    // }
 
     get totalPrice() {
         let total = 0;

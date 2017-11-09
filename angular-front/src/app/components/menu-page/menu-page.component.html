@@ -4,7 +4,7 @@
     </div>
     <div class="col-md-12" align="center">
         <p>
-            
+
         </p>
     </div>
     <div class="container section" id="menu-section">
@@ -99,7 +99,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <!--<button type="button" class="btn btn-default" routerLink="/custom">Modifier la composition</button>-->
+                    <button type="button" class="btn btn-default" routerLink="/custom" (click)="customizeCustomSandwich()">Modifier la composition</button>
                     <button type="submit" class="btn btn-primary" [disabled]="!orderForm.valid">Ajouter à la commande</button>
                 </div>
             </form>
