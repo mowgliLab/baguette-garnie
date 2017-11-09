@@ -27,7 +27,7 @@ export class OrderService {
         const options = {
             order: order
         };
-        return this.http.post(this.privateUrl, options)
+        return this.http.post(this.privateUrl, options, {withCredentials: true, headers: this.headers})
             .toPromise()
             .then(response => response.json() as OrderModel)
             .catch(this.handleError);
@@ -37,7 +37,7 @@ export class OrderService {
         const options = {
             status: newStatus
         };
-        return this.http.put(`${this.privateUrl}/${orderId}`, options)
+        return this.http.put(`${this.privateUrl}/${orderId}`, options, {withCredentials: true, headers: this.headers})
             .toPromise()
             .then(response => response)
             .catch(this.handleError);

@@ -134,7 +134,15 @@ export class Server {
             res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
             res.header('Access-Control-Allow-Credentials', 'true');
             res.header('Access-Control-Expose-Headers', 'Authorization');
-            next();
+
+            // intercepts OPTIONS method
+            if ('OPTIONS' === req.method) {
+                // respond with 200
+                res.send(200);
+            } else {
+                // move on
+                next();
+            }
         });
 
         // Create connection

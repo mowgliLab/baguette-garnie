@@ -31,8 +31,8 @@ export class OrderRoute extends BaseRoute {
         const orderRoute = new OrderRoute();
 
 
-        // loginRouter.route(`${OrderRoute.privateRoute}/:id`)
-        router.route(`${OrderRoute.privateRoute}/:id`)
+        loginRouter.route(`${OrderRoute.privateRoute}/:id`)
+        // router.route(`${OrderRoute.privateRoute}/:id`)
             .get((req: Request, res: Response) => {
                 // orderRoute.getOrdersFromUser(req, res);
                 orderRoute.getOrder(req, res);
@@ -41,9 +41,8 @@ export class OrderRoute extends BaseRoute {
                 orderRoute.updateOrder(req, res);
             });
 
-        // TODO Uncomment after login integration
-        // loginRouter.post(OrderRoute.publicRoute, (req: Request, res: Response) => {
-        router.post(OrderRoute.privateRoute, (req: Request, res: Response) => {
+        loginRouter.post(OrderRoute.privateRoute, (req: Request, res: Response) => {
+        // router.post(OrderRoute.privateRoute, (req: Request, res: Response) => {
             new OrderRoute().createOrder(req, res);
         });
 
@@ -81,19 +80,11 @@ export class OrderRoute extends BaseRoute {
     }
 
     public createOrder(req: Request, res: Response) {
-        this.userBl.getUser(1).then(user => {
-            const currentUser = user as UserModel;
-            const order = req.body['order'] as OrderModel;
-
-            this.orderBl.createOrder(order, currentUser)
-                .then(orderResult => res.json(orderResult))
-                .catch(err => res.json(err));
-        }).catch(err => console.log(err));
-        // const user = req.session.user;
-        // const order = req.body['order'] as OrderModel;
-        // this.orderBl.createOrder(order, user)
-        //     .then(orderResult => res.json(orderResult))
-        //     .catch(err => res.json(err));
+        const user = req.session.user;
+        const order = req.body['order'] as OrderModel;
+        this.orderBl.createOrder(order, user)
+            .then(orderResult => res.json(orderResult))
+            .catch(err => res.json(err));
     }
 
     public getOrder(req: Request, res: Response) {

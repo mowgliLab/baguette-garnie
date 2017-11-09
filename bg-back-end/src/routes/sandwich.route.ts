@@ -28,8 +28,8 @@ export class SandwichRoute extends BaseRoute {
     public static create(router: Router, loginRouter: Router) {
         console.log('[SandwichRoute::create] Creating sandwich route.');
 
-        router.post(`${SandwichRoute.privateRoute}/custom`, (req: Request, res: Response) => {
-        // loginRouter.post(`${SandwichRoute.privateRoute}/custom`, (req: Request, res: Response) => {
+        // router.post(`${SandwichRoute.privateRoute}/custom`, (req: Request, res: Response) => {
+        loginRouter.post(`${SandwichRoute.privateRoute}/custom`, (req: Request, res: Response) => {
             new SandwichRoute().createCustomSandwich(req, res);
         });
 
@@ -69,6 +69,7 @@ export class SandwichRoute extends BaseRoute {
 
     public createCustomSandwich(req: Request, res: Response) {
         // const currentUser = req.session.user;
+        console.log(req.session);
         const sandwich = req.body['sandwich'] as SandwichModel;
         console.log(sandwich);
 
