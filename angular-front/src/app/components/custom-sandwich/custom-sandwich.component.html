@@ -72,13 +72,15 @@
 </div>
 <div class="row justify-content-center">
   <div class="col-md-2">
-    <button class="btn btn-primary" (click)="saveSandwich()">Sauver et continuer
+    <button class="btn btn-primary" (click)="showModalSave(detailsModel)">Sauver et continuer
     </button>
   </div>
+  <!--
   <div class="col-md-2">
     <button class="btn btn-primary">Sauver et commander
     </button>
   </div>
+-->
 </div>
 
 
@@ -101,6 +103,43 @@
     <p>Total = {{getTotalToppings()}}€</p>
 </div>
 
-
+<div bsModal #detailsModel="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+aria-hidden="true">
+<div class="modal-dialog modal-lg">
+   <div class="modal-content">
+       <div class="modal-header">
+           <h4>Sauvegarder votre sandwich perso</h4>
+       </div>
+       <div class="modal-body">
+          <div class="form-group col-md-4">
+            <label class="control-label">Nom du sandwich</label>
+            <div class="">
+                <input id="nameCustom" name=""
+                    value="" type="text"
+                    class="form-control">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+            <label>Résumé de votre Sandwich : </label>
+            </div>
+            <div class="col-md-6">
+            <label>Votre <b>{{logBreadName}}</b> sera accompagnée de :</label>
+            
+              
+            <ul>
+              <li *ngFor="let option of selectedOptions">
+                {{option.name}}
+              </li>
+            </ul>
+          </div>
+          </div>
+       </div>
+       <div class="modal-footer">
+           <button type="button" class="btn btn-default" (click)="detailsModel.hide()">Close</button>
+       </div>
+   </div>
+</div>
+</div>
 
 
