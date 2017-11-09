@@ -111,6 +111,7 @@ aria-hidden="true">
            <h4>Sauvegarder votre sandwich perso</h4>
        </div>
        <div class="modal-body">
+         <div class="row">
           <div class="form-group col-md-4">
             <label class="control-label">Nom du sandwich</label>
             <div class="">
@@ -119,11 +120,18 @@ aria-hidden="true">
                     class="form-control">
             </div>
           </div>
+          <div class="form-group col-md-4">
+              <label class="control-label">Description du sandwich</label>
+              <div class="">
+                  <textarea class="form-control" rows="5" id="descriptionCustom"></textarea>
+              </div>
+          </div>
+        </div>
           <div class="row">
             <div class="col-md-4">
             <label>Résumé de votre Sandwich : </label>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-8">
             <label>Votre <b>{{logBreadName}}</b> sera accompagnée de :</label>
             
               
@@ -136,6 +144,8 @@ aria-hidden="true">
           </div>
        </div>
        <div class="modal-footer">
+          <button class="btn btn-primary">Sauver et continuer
+            </button>
            <button type="button" class="btn btn-default" (click)="detailsModel.hide()">Close</button>
        </div>
    </div>
