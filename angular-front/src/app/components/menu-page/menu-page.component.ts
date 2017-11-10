@@ -107,7 +107,9 @@ export class MenuPageComponent implements OnInit {
     // Manage Customization of current Sandwich
     // *********************************
     customizeCustomSandwich() {
-        this.memoryService.setCustomSandwich(this.selectedSandwich);
+        const customizableSandwich = Object.assign({}, this.selectedSandwich);
+        customizableSandwich.id = null;
+        this.memoryService.setCustomSandwich(customizableSandwich);
         this.router.navigate(['/custom']);
     }
 }

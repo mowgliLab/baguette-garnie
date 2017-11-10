@@ -68,18 +68,11 @@ export class SandwichRoute extends BaseRoute {
     }
 
     public createCustomSandwich(req: Request, res: Response) {
-        // const currentUser = req.session.user;
-        console.log(req.session);
+        const currentUser = req.session.user as UserModel;
         const sandwich = req.body['sandwich'] as SandwichModel;
-        console.log(sandwich);
 
-        this.userBl.getUser(1).then(user => {
-            const currentUser = user as UserModel;
-            console.log(currentUser);
-
-            this.sandwichBl.saveCustomSandwich(sandwich, currentUser).then(result => {
-                res.json(result);
-            }).catch(err => res.json(err));
-        });
+        this.sandwichBl.saveCustomSandwich(sandwich, currentUser).then(result => {
+            res.json(result);
+        }).catch(err => res.json(err));
     }
 }
