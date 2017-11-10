@@ -49,3 +49,16 @@ npm run start
 (preview is running on port 4200)
 
 ex: [http://localhost:4200](http://localhost:4200)
+
+
+Fake Users for test purpose
+---------------------------
+
+| firstname | lastname  | mail           | password | 
+| --------- | --------  | ----           | -------- | 
+| Daenerys  | Targaryen | d.targ@got.com | drogo    | 
+| John      | Snow      | j.snow@got.com | winter   | 
+| Cersei|Lannister|c.lanni@got.com|queen|
+|Tyrion|Lannister|t.lanni@got.com|halfman|
+|Sansa|Stark|s.stark@got.com|queen|
+|Arya|Stark|a.stark@got.com|faceless|
