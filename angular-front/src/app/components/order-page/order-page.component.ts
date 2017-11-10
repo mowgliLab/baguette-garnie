@@ -62,7 +62,8 @@ export class OrderPageComponent implements OnInit {
             this.orderService.createNewOrder(this.currentOrder)
                 .then(res => {
                     if (res) {
-                        this.memoryService.setOrder(res);
+                        const fullOrder = _.merge(this.currentOrder, res);
+                        this.memoryService.setOrder(fullOrder);
                         this.route.navigate(['confirm']);
                         this.alertService.success('Votre commande a été passée et attend votre finalisation.');
                     }
